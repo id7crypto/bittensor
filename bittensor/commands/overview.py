@@ -180,33 +180,19 @@ class OverviewCommand:
                 )
             )
         ):
-            # Create a copy of the config without the parser and formatter_class.
-            ## This is needed to pass to the ProcessPoolExecutor, which cannot pickle the parser.
-            copy_config = cli.config.copy()
-            copy_config["__parser"] = None
-            copy_config["formatter_class"] = None
-
             # Pull neuron info for all keys.
-            ## Max len(netuids) or 5 threads.
-            with ProcessPoolExecutor(max_workers=max(len(netuids), 5)) as executor:
-                results = executor.map(
-                    OverviewCommand._get_neurons_for_netuid,
-                    [(copy_config, netuid, all_hotkey_addresses) for netuid in netuids],
-                )
-                executor.shutdown(wait=True)  # wait for all complete
+            for netuid in netuids:
+                netuid, neurons_result, err_msg = OverviewCommand._get_neurons_for_netuid(subtensor, netuid, all_hotkey_addresses)
+                if err_msg is not None:
+                    console.print(f"netuid '{netuid}': {err_msg}")
 
-                for result in results:
-                    netuid, neurons_result, err_msg = result
-                    if err_msg is not None:
-                        console.print(f"netuid '{netuid}': {err_msg}")
-
-                    if len(neurons_result) == 0:
-                        # Remove netuid from overview if no neurons are found.
-                        netuids.remove(netuid)
-                        del neurons[str(netuid)]
-                    else:
-                        # Add neurons to overview.
-                        neurons[str(netuid)] = neurons_result
+                if len(neurons_result) == 0:
+                    # Remove netuid from overview if no neurons are found.
+                    netuids.remove(netuid)
+                    del neurons[str(netuid)]
+                else:
+                    # Add neurons to overview.
+                    neurons[str(netuid)] = neurons_result
 
             total_coldkey_stake_from_metagraph = defaultdict(
                 lambda: bittensor.Balance(0.0)
@@ -566,31 +552,23 @@ class OverviewCommand:
 
     @staticmethod
     def _get_neurons_for_netuid(
-        args_tuple: Tuple["bittensor.Config", int, List[str]]
+        subtensor: "bittensor.subtensor", netuid: int, hot_wallets: List[str]
     ) -> Tuple[int, List["bittensor.NeuronInfoLite"], Optional[str]]:
-        subtensor_config, netuid, hot_wallets = args_tuple
 
         result: List["bittensor.NeuronInfoLite"] = []
 
         try:
-            subtensor = bittensor.subtensor(config=subtensor_config, log_verbose=False)
-
             all_neurons: List["bittensor.NeuronInfoLite"] = subtensor.neurons_lite(
                 netuid=netuid
             )
             # Map the hotkeys to uids
             hotkey_to_neurons = {n.hotkey: n.uid for n in all_neurons}
-            for hot_wallet_addr in hot_wallets:
-                uid = hotkey_to_neurons.get(hot_wallet_addr)
-                if uid is not None:
-                    nn = all_neurons[uid]
-                    result.append(nn)
+            result = [
+                all_neurons[uid] for h_wallet in hot_wallets
+                if hotkey_to_neurons.get(h_wallet) is not None
+            ]
         except Exception as e:
             return netuid, [], "Error: {}".format(e)
-        finally:
-            if "subtensor" in locals():
-                subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
 
         return netuid, result, None
 
@@ -633,10 +611,6 @@ class OverviewCommand:
 
         except Exception as e:
             return coldkey_wallet, [], "Error: {}".format(e)
-        finally:
-            if "subtensor" in locals():
-                subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
 
         return coldkey_wallet, result, None
 
