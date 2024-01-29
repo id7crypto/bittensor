@@ -172,7 +172,7 @@ class StakeCommand:
             final_amounts.append(stake_amount_tao)
             final_hotkeys.append(hotkey)  # add both the name and the ss58 address.
 
-        if len(final_hotkeys) == 0:
+        if not len(final_hotkeys):
             # No hotkeys to stake to.
             bittensor.__console__.print(
                 "Not enough balance to stake to any hotkeys or max_stake is less than current stake."

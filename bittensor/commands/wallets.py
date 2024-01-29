@@ -81,11 +81,9 @@ class RegenColdkeyCommand:
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
-        if (
-            config.mnemonic == None
-            and config.get("seed", d=None) == None
-            and config.get("json", d=None) == None
-        ):
+
+        if not any([config.mnemonic, config.get("seed"), config.get("json")]):
+
             prompt_answer = Prompt.ask("Enter mnemonic, seed, or json file location")
             if prompt_answer.startswith("0x"):
                 config.seed = prompt_answer
@@ -148,7 +146,7 @@ class RegenColdkeyCommand:
             help="""Overwrite the old coldkey with the newly generated coldkey""",
         )
         bittensor.wallet.add_args(regen_coldkey_parser)
-        bittensor.subtensor.add_args(regen_coldkey_parser)
+        bittensor.Subtensor.add_args(regen_coldkey_parser)
 
 
 class RegenColdkeypubCommand:
@@ -234,7 +232,7 @@ class RegenColdkeypubCommand:
             help="""Overwrite the old coldkeypub file with the newly generated coldkeypub""",
         )
         bittensor.wallet.add_args(regen_coldkeypub_parser)
-        bittensor.subtensor.add_args(regen_coldkeypub_parser)
+        bittensor.Subtensor.add_args(regen_coldkeypub_parser)
 
 
 class RegenHotkeyCommand:
@@ -364,7 +362,7 @@ class RegenHotkeyCommand:
             help="""Overwrite the old hotkey with the newly generated hotkey""",
         )
         bittensor.wallet.add_args(regen_hotkey_parser)
-        bittensor.subtensor.add_args(regen_hotkey_parser)
+        bittensor.Subtensor.add_args(regen_hotkey_parser)
 
 
 class NewHotkeyCommand:
@@ -441,7 +439,7 @@ class NewHotkeyCommand:
             help="""Overwrite the old hotkey with the newly generated hotkey""",
         )
         bittensor.wallet.add_args(new_hotkey_parser)
-        bittensor.subtensor.add_args(new_hotkey_parser)
+        bittensor.Subtensor.add_args(new_hotkey_parser)
 
 
 class NewColdkeyCommand:
@@ -514,7 +512,7 @@ class NewColdkeyCommand:
             help="""Overwrite the old coldkey with the newly generated coldkey""",
         )
         bittensor.wallet.add_args(new_coldkey_parser)
-        bittensor.subtensor.add_args(new_coldkey_parser)
+        bittensor.Subtensor.add_args(new_coldkey_parser)
 
 
 class WalletCreateCommand:
@@ -602,7 +600,7 @@ class WalletCreateCommand:
             help="""Overwrite the old hotkey with the newly generated hotkey""",
         )
         bittensor.wallet.add_args(new_coldkey_parser)
-        bittensor.subtensor.add_args(new_coldkey_parser)
+        bittensor.Subtensor.add_args(new_coldkey_parser)
 
 
 def _get_coldkey_wallets_for_path(path: str) -> List["bittensor.wallet"]:
@@ -641,7 +639,7 @@ class UpdateWalletCommand:
     def run(cli):
         """Check if any of the wallets needs an update."""
         config = cli.config.copy()
-        if config.get("all", d=False) == True:
+        if config.get("all", d=False):
             wallets = _get_coldkey_wallets_for_path(config.wallet.path)
         else:
             wallets = [bittensor.wallet(config=config)]
@@ -665,11 +663,11 @@ class UpdateWalletCommand:
             default=False,
         )
         bittensor.wallet.add_args(update_wallet_parser)
-        bittensor.subtensor.add_args(update_wallet_parser)
+        bittensor.Subtensor.add_args(update_wallet_parser)
 
     @staticmethod
     def check_config(config: "bittensor.Config"):
-        if config.get("all", d=False) == False:
+        if not config.get("all", d=False):
             if not config.no_prompt:
                 if Confirm.ask("Do you want to update all legacy wallets?"):
                     config["all"] = True
@@ -733,7 +731,7 @@ class WalletBalanceCommand:
     def run(cli: "bittensor.cli"):
         """Check the balance of the wallet."""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             WalletBalanceCommand._run(cli, subtensor)
@@ -743,7 +741,7 @@ class WalletBalanceCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         """Check the balance of the wallet."""
         wallet_names = os.listdir(os.path.expanduser(cli.config.wallet.path))
         coldkeys = _get_coldkey_ss58_addresses_for_path(cli.config.wallet.path)
@@ -822,7 +820,7 @@ class WalletBalanceCommand:
             "balance", help="""Checks the balance of the wallet."""
         )
         bittensor.wallet.add_args(balance_parser)
-        bittensor.subtensor.add_args(balance_parser)
+        bittensor.Subtensor.add_args(balance_parser)
 
     @staticmethod
     def check_config(config: "bittensor.config"):
@@ -840,7 +838,7 @@ class WalletBalanceCommand:
             (
                 _,
                 config.subtensor.chain_endpoint,
-            ) = bittensor.subtensor.determine_chain_endpoint_and_network(str(network))
+            ) = bittensor.Subtensor.determine_chain_endpoint_and_network(str(network))
 
 
 API_URL = "https://api.subquery.network/sq/TaoStats/bittensor-indexer"
@@ -907,7 +905,7 @@ class GetWalletHistoryCommand:
             help="""Fetch transfer history associated with the provided wallet""",
         )
         bittensor.wallet.add_args(history_parser)
-        bittensor.subtensor.add_args(history_parser)
+        bittensor.Subtensor.add_args(history_parser)
 
     @staticmethod
     def check_config(config: "bittensor.config"):

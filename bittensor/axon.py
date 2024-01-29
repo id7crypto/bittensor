@@ -170,7 +170,7 @@ class FastAPIThreadedServer(uvicorn.Server):
             self.should_exit = True
 
 
-class axon:
+class Axon:
     """
     The `axon` class in Bittensor is a fundamental component that serves as the server-side
     interface for a neuron within the Bittensor network. This class is responsible for managing
@@ -281,7 +281,7 @@ class axon:
         max_workers (int, optional): Number of active threads for request handling.
 
     Returns:
-        bittensor.axon: An instance of the axon class configured as per the provided arguments.
+        bittensor.axon: An instance of theAxon class configured as per the provided arguments.
 
     Note:
         This class is a core part of Bittensor's decentralized network for machine intelligence,
@@ -351,7 +351,7 @@ class axon:
         """
         # Build and check config.
         if config is None:
-            config = axon.config()
+            config =Axon.config()
         config = copy.deepcopy(config)
         config.axon.ip = ip or config.axon.get("ip", bittensor.defaults.axon.ip)
         config.axon.port = port or config.axon.get("port", bittensor.defaults.axon.port)
@@ -370,7 +370,7 @@ class axon:
         # Get wallet or use default.
         self.wallet = wallet or bittensor.wallet()
 
-        # Build axon objects.
+        # BuildAxon objects.
         self.uuid = str(uuid.uuid1())
         self.ip = self.config.axon.ip
         self.port = self.config.axon.port
@@ -882,8 +882,8 @@ class axon:
             The 'serve' method is crucial for integrating the Axon into the Bittensor network, allowing it
             to start receiving and processing requests from other neurons.
         """
-        if subtensor == None:
-            subtensor = bittensor.subtensor()
+        if not subtensor:
+            subtensor = bittensor.Subtensor()
         subtensor.serve_axon(netuid=netuid, axon=self)
         return self
 

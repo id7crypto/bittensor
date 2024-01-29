@@ -35,7 +35,7 @@ from ..chain_data import (
     AxonInfo,
 )
 from ..errors import *
-from ..subtensor import subtensor
+from ..subtensor import Subtensor
 from ..utils import RAOPERTAO, U16_NORMALIZED_FLOAT
 from ..utils.balance import Balance
 from ..utils.registration import POWSolution
