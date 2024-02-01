@@ -24,7 +24,7 @@ import sys
 from typing import Optional, List, Any
 
 import torch
-from pydantic import BaseModel, Field, validator, root_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 import bittensor
 
@@ -226,12 +226,8 @@ class TerminalInfo(BaseModel):
         frozen=False
     )
 
-    @classmethod
-    @validator('status_code', 'process_time', 'port', 'version', 'nonce', pre=True)
-    def cast_to_type(cls, v, field):
-        """
-        Validator to cast the input value to the appropriate type based on the field.
-        """
+    @field_validator('status_code', 'process_time', 'port', 'version', 'nonce')
+    def cast_to_type(cls, v, values, config, field):
         if v is not None:
             return field.type_(v)
         return v
@@ -392,7 +388,7 @@ class Synapse(BaseModel):
         """
         return self
 
-    @root_validator(pre=True)
+    @model_validator(mode="wrap")
     def set_name_and_cast_types(cls, values):
         """
         Root validator to set the name field and cast other fields to appropriate types.

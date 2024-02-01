@@ -18,12 +18,13 @@
 
 import base64
 import json
+import zlib
 from typing import Dict, Optional, Tuple, Union, List, Callable
 
 import msgpack
 import msgpack_numpy
 import numpy as np
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, validator, field_validator, model_validator
 import torch
 
 
@@ -41,6 +42,52 @@ TORCH_DTYPES = {
     torch.complex64:"torch.complex64",
     torch.complex128: "torch.complex128",
 }
+
+
+def serialize_and_compress_tensor(tensor):
+    # Serialize tensor shape and data separately
+    shape_bytes = np.array(tensor.shape).tobytes()
+    data_bytes = tensor.tobytes()
+
+    # Combine shape and data bytes
+    serialized_tensor = shape_bytes + b'|' + data_bytes  # Use a delimiter to separate shape from data
+
+    # Compress the serialized tensor
+    return zlib.compress(serialized_tensor)
+
+
+def decompress_and_deserialize_tensor(compressed_tensor):
+    # Decompress the tensor
+    # Split the serialized tensor back into shape and data
+    shape_bytes, data_bytes = zlib.decompress(compressed_tensor).split(b'|')
+
+    # Reconstruct the shape and data
+    shape = np.frombuffer(shape_bytes, dtype=np.int64)
+    return np.frombuffer(data_bytes, dtype=np.float64).reshape(shape)
+
+
+def estimate_entropy(tensor):
+    """Estimate the entropy of a PyTorch tensor."""
+    # Flatten the tensor and convert to numpy for analysis
+    data = tensor.flatten().numpy()
+
+    # Calculate the frequency of each value
+    _, counts = np.unique(data, return_counts=True)
+    probabilities = counts / counts.sum()
+
+    # Calculate the entropy
+    return -np.sum(probabilities * np.log2(probabilities))
+
+
+def compress_tensor(tensor):
+    # Convert tensor to bytes
+    data_bytes = tensor.numpy().tobytes()
+
+    # Compress data
+    compressed_data = zlib.compress(data_bytes)
+
+    # Calculate compression ratio
+    return len(compressed_data) / len(data_bytes)
 
 
 def cast_dtype(raw: Union[None, torch.dtype, str]) -> Union[str, None]:
@@ -158,7 +205,7 @@ class Tensor(BaseModel):
         default=None,
         title="scaler",
         description="Tensor data of type scaler.",
-        examples="1",
+        examples=[1],
         frozen=True,
         repr=True,
     )
@@ -166,7 +213,7 @@ class Tensor(BaseModel):
         default=None,
         title="vector",
         description="Tensor data of type vector.",
-        examples="[1,1,1,1,1]",
+        examples=[1,1,1,1,1],
         frozen=True,
         repr=True,
     )
@@ -174,7 +221,7 @@ class Tensor(BaseModel):
         default=None,
         title="vector",
         description="Tensor data of type matrix.",
-        examples="[[1,1,1],[2,2,2],[3,3,3]]",
+        examples=[[1,1,1],[2,2,2],[3,3,3]],
         frozen=True,
         repr=True,
     )
@@ -182,7 +229,7 @@ class Tensor(BaseModel):
         default=None,
         title="vector",
         description="Tensor data of type matrix.",
-        examples="[[1,1,1],[2,2,2],[3,3,3]]",
+        examples=[[1,1,1],[2,2,2],[3,3,3]],
         frozen=True,
         repr=True,
     )
@@ -190,7 +237,7 @@ class Tensor(BaseModel):
         default=None,
         title="buffer",
         description="Tensor buffer data. This field stores the serialized representation of the tensor data.",
-        examples="0x321e13edqwds231231231232131",
+        examples=["0x321e13edqwds231231231232131"],
         frozen=True,
         repr=False,
     )
@@ -199,7 +246,7 @@ class Tensor(BaseModel):
         default="torch.float32",  # Default value or make it mandatory
         title="dtype",
         description="Tensor data type. This field specifies the data type of the tensor.",
-        examples="torch.float32",
+        examples=["torch.float32"],
         frozen=True,
         repr=True,
     )
@@ -208,29 +255,28 @@ class Tensor(BaseModel):
         default_factory=list,
         title="shape",
         description="Tensor shape. This field defines the dimensions of the tensor.",
-        examples="[10,10]",
+        examples=[10,10],
         frozen=True,
         repr=True,
     )
 
-    @validator('tensor')
+    @field_validator('tensor')
     def validate_tensor_shape(cls, v):
         if not isinstance(v, np.ndarray):
             raise TypeError('Tensor must be a numpy array')
         return v
 
-    @classmethod
-    @validator('matrix')
+    @field_validator('matrix')
     def must_be_rectangular(cls, v):
         if not all(len(row) == len(v[0]) for row in v):
             raise ValueError('Matrix must be rectangular')
         return v
 
-    @validator('dtype', pre=True)
+    @field_validator('dtype')
     def validate_dtype(self, value):
         return cast_dtype(value)
 
-    @validator('shape', pre=True)
+    @field_validator('shape')
     def validate_shape(self, value):
         return self.cast_shape(value)
 
@@ -337,11 +383,12 @@ class Tensor(BaseModel):
         Raises:
             Exception: If the serialization process encounters an error.
         """
+
         dtype = str(tensor.dtype)
         shape = list(tensor.shape)
         if len(shape) == 0:
             shape = [0]
-        torch_numpy = tensor.cpu().detach().numpy().copy()
+        torch_numpy = tensor.cpu().detach().numpy()  # .copy() removed unnecessary memcopy
         data_buffer = base64.b64encode(
             msgpack.packb(torch_numpy, default=msgpack_numpy.encode)
         ).decode("utf-8")
