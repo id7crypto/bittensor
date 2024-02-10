@@ -1271,6 +1271,7 @@ class subtensor:
         call_params: AxonServeCallParams,
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
+        period: int = 10,
     ) -> Tuple[bool, Optional[str]]:
         """
         Internal method to submit a serve axon transaction to the Bittensor blockchain. This method
@@ -1281,6 +1282,7 @@ class subtensor:
             call_params (AxonServeCallParams): Parameters required for the serve axon call.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
             wait_for_finalization (bool, optional): Waits for the transaction to be finalized on the blockchain.
+            period (int, optional): How many blocks the txn should live in the mempool. (If not specified, txns are immortal.)
 
         Returns:
             Tuple[bool, Optional[str]]: A tuple containing a success flag and an optional error message.
@@ -1298,7 +1300,10 @@ class subtensor:
                     call_params=call_params,
                 )
                 extrinsic = substrate.create_signed_extrinsic(
-                    call=call, keypair=wallet.hotkey
+                    call=call,
+                    keypair=wallet.hotkey,
+                    era={"period": period},
+                    nonce=self.substrate.get_account_nonce(wallet.hotkey.ss58_address),
                 )
                 response = substrate.submit_extrinsic(
                     extrinsic,
