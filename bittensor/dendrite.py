@@ -317,7 +317,6 @@ class Dendrite(torch.nn.Module):
         """
         result = None
 
-
         try:
             loop = asyncio.get_event_loop()
             result = loop.run_until_complete(self.forward(*args, **kwargs))
@@ -334,14 +333,20 @@ class Dendrite(torch.nn.Module):
     import bittensor
 
     async def forward(
-            self,
-            axons: Union[List[Union[bittensor.AxonInfo, bittensor.axon]], bittensor.AxonInfo, bittensor.axon],
-            synapse: bittensor.Synapse = bittensor.Synapse(),
-            timeout: float = 12.0,
-            deserialize: bool = True,
-            run_async: bool = True,
-            streaming: bool = False,
-    ) -> List[Union[AsyncGenerator[Any, None], bittensor.Synapse, bittensor.StreamingSynapse]]:
+        self,
+        axons: Union[
+            List[Union[bittensor.AxonInfo, bittensor.axon]],
+            bittensor.AxonInfo,
+            bittensor.axon,
+        ],
+        synapse: bittensor.Synapse = bittensor.Synapse(),
+        timeout: float = 12.0,
+        deserialize: bool = True,
+        run_async: bool = True,
+        streaming: bool = False,
+    ) -> List[
+        Union[AsyncGenerator[Any, None], bittensor.Synapse, bittensor.StreamingSynapse]
+    ]:
         """
         Asynchronously sends requests to one or multiple Axons and collates their responses.
 
@@ -371,7 +376,9 @@ class Dendrite(torch.nn.Module):
         # Proceed with sending requests based on the updated parameters
         # Placeholder for the logic to send requests and handle responses...
 
-        return []  # Placeholder return, replace with actual logic to send requests and handle responses
+        return (
+            []
+        )  # Placeholder return, replace with actual logic to send requests and handle responses
 
     async def single_axon_response(
         self,
@@ -380,7 +387,9 @@ class Dendrite(torch.nn.Module):
         synapse,
         timeout: int,
         deserialize: bool,
-    ) -> Union[AsyncGenerator[Any, None], bittensor.Synapse, bittensor.StreamingSynapse]:
+    ) -> Union[
+        AsyncGenerator[Any, None], bittensor.Synapse, bittensor.StreamingSynapse
+    ]:
         """
         Manages the request and response process for a single axon, supporting both streaming and
         non-streaming modes.
@@ -433,19 +442,22 @@ class Dendrite(torch.nn.Module):
         Returns:
             A list of responses or a single response, depending on the number of axons.
         """
+
         async def get_response(target_axon):
             return await self.single_axon_response(
                 target_axon,
                 is_stream=is_stream,
                 synapse=synapse,
                 timeout=timeout,
-                deserialize=deserialize
+                deserialize=deserialize,
             )
 
         if not run_async:
             responses = [await get_response(target_axon) for target_axon in axons]
         else:
-            responses = await asyncio.gather(*(get_response(target_axon) for target_axon in axons))
+            responses = await asyncio.gather(
+                *(get_response(target_axon) for target_axon in axons)
+            )
 
         return responses if len(responses) > 1 else responses[0]
 

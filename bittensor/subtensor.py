@@ -26,7 +26,12 @@ from retry import retry
 import scalecodec
 from scalecodec.base import RuntimeConfiguration
 from scalecodec.type_registry import load_type_registry_preset
-from scalecodec.base import ScaleDecoder, ScaleBytes, RuntimeConfigurationObject, ScaleType
+from scalecodec.base import (
+    ScaleDecoder,
+    ScaleBytes,
+    RuntimeConfigurationObject,
+    ScaleType,
+)
 from substrateinterface.base import QueryMapResult, SubstrateInterface
 import torch
 
@@ -204,7 +209,9 @@ class Subtensor:
             pass
 
     @staticmethod
-    def determine_chain_endpoint_and_network(network: str) -> Tuple[Optional[str], Optional[str]]:
+    def determine_chain_endpoint_and_network(
+        network: str,
+    ) -> Tuple[Optional[str], Optional[str]]:
         """Determines the chain endpoint and network from the passed network or chain_endpoint.
 
         Args:
@@ -221,19 +228,23 @@ class Subtensor:
             "finney": bittensor.__finney_entrypoint__,
             "local": bittensor.__local_entrypoint__,
             "test": bittensor.__finney_test_entrypoint__,
-            "archive": bittensor.__archive_entrypoint__
+            "archive": bittensor.__archive_entrypoint__,
         }
         entrypoint_mappings = {
             bittensor.__finney_entrypoint__: "finney",
             bittensor.__finney_test_entrypoint__: "test",
-            bittensor.__archive_entrypoint__: "archive"
+            bittensor.__archive_entrypoint__: "archive",
         }
 
         if network in network_mappings:
             return network, network_mappings[network]
         elif network in entrypoint_mappings:
             return entrypoint_mappings[network], network
-        elif "entrypoint-finney.opentensor.ai" in network or "test.finney.opentensor.ai" in network or "archive.chain.opentensor.ai" in network:
+        elif (
+            "entrypoint-finney.opentensor.ai" in network
+            or "test.finney.opentensor.ai" in network
+            or "archive.chain.opentensor.ai" in network
+        ):
             for key, value in entrypoint_mappings.items():
                 if key in network:
                     return value, key
@@ -255,22 +266,34 @@ class Subtensor:
         """
         network_settings = [
             network,
-            config.subtensor.chain_endpoint if config.get("__is_set", {}).get("subtensor.chain_endpoint") else None,
-            config.subtensor.network if config.get("__is_set", {}).get("subtensor.network") else None,
+            config.subtensor.chain_endpoint
+            if config.get("__is_set", {}).get("subtensor.chain_endpoint")
+            else None,
+            config.subtensor.network
+            if config.get("__is_set", {}).get("subtensor.network")
+            else None,
             config.subtensor.chain_endpoint,
             config.subtensor.network,
-            bittensor.defaults.subtensor.network
+            bittensor.defaults.subtensor.network,
         ]
 
         for setting in network_settings:
             if setting:
-                evaluated_network, evaluated_endpoint = Subtensor.determine_chain_endpoint_and_network(setting)
+                (
+                    evaluated_network,
+                    evaluated_endpoint,
+                ) = Subtensor.determine_chain_endpoint_and_network(setting)
                 if evaluated_network:
                     break
         else:
             evaluated_network, evaluated_endpoint = None, None
 
-        return bittensor.utils.networking.get_formatted_ws_endpoint_url(evaluated_endpoint), evaluated_network
+        return (
+            bittensor.utils.networking.get_formatted_ws_endpoint_url(
+                evaluated_endpoint
+            ),
+            evaluated_network,
+        )
 
     def __init__(
         self,
@@ -357,9 +380,7 @@ class Subtensor:
             bittensor.logging.info(
                 f"You can check if you have connectivity by runing this command: nc -vz localhost {self.chain_endpoint.split(':')[2]}"
             )
-            bittensor.logging.info(
-                "Existing."
-            )
+            bittensor.logging.info("Existing.")
             exit(1)
             # TODO (edu/phil): Advise to run local subtensor and point to dev docs.
 
@@ -374,11 +395,11 @@ class Subtensor:
             )
 
     def __new__(
-            cls: Type[Any],
-            network: Optional[str] = None,
-            config: Optional[bittensor.config] = None,
-            _mock: Optional[bool] = False,
-            log_verbose: bool = True
+        cls: Type[Any],
+        network: Optional[str] = None,
+        config: Optional[bittensor.config] = None,
+        _mock: Optional[bool] = False,
+        log_verbose: bool = True,
     ) -> Any:
         """Creates a new instance of Subtensor, potentially returning a mock object if specified.
 
@@ -392,8 +413,12 @@ class Subtensor:
         Returns:
             Any: An instance of Subtensor or a mock object.
         """
-        config = config or bittensor.config()  # Assuming bittensor.config() returns a default config object
-        config.subtensor._mock = _mock or config.subtensor.get("_mock", bittensor.defaults.subtensor._mock)
+        config = (
+            config or bittensor.config()
+        )  # Assuming bittensor.config() returns a default config object
+        config.subtensor._mock = _mock or config.subtensor.get(
+            "_mock", bittensor.defaults.subtensor._mock
+        )
         if config.subtensor._mock:
             return bittensor.subtensor_mock.MockSubtensor()
         return super().__new__(cls)
@@ -983,7 +1008,7 @@ class Subtensor:
     from typing import Union
 
     def get_transfer_fee(
-            self, wallet: "bittensor.wallet", dest: str, value: Union[Balance, float, int]
+        self, wallet: "bittensor.wallet", dest: str, value: Union[Balance, float, int]
     ) -> Balance:
         """
         Calculates the transaction fee for transferring tokens from a wallet to a specified destination address.
@@ -2103,7 +2128,9 @@ class Subtensor:
         """
         params = {} if not params else params
         call_params = bittensor.utils.wallet_utils.create_identity_dict(**params)
-        call_params["identified"] = wallet.coldkey.ss58_address if not identified else identified
+        call_params["identified"] = (
+            wallet.coldkey.ss58_address if not identified else identified
+        )
 
         @retry(delay=2, tries=3, backoff=2, max_delay=4)
         def make_substrate_call_with_retry():

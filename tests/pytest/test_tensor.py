@@ -169,30 +169,31 @@ def test_cast_shape_complex_valid(complex_input):
 
 
 def test_tensor_scalar_initialization():
-    tensor = Tensor(scalar=5, dtype='int32', shape=[1])
+    tensor = Tensor(scalar=5, dtype="int32", shape=[1])
     assert tensor.scalar == 5
-    assert tensor.dtype == 'int32'
+    assert tensor.dtype == "int32"
     assert tensor.shape == [1]
 
 
 def test_tensor_vector_initialization():
-    tensor = Tensor(vector=[1, 2, 3], dtype='int32', shape=[3])
+    tensor = Tensor(vector=[1, 2, 3], dtype="int32", shape=[3])
     assert tensor.vector == [1, 2, 3]
-    assert tensor.dtype == 'int32'
+    assert tensor.dtype == "int32"
     assert tensor.shape == [3]
 
 
 def test_tensor_matrix_initialization():
-    tensor = Tensor(matrix=[[1, 2], [3, 4]], dtype='float32', shape=[2, 2])
+    tensor = Tensor(matrix=[[1, 2], [3, 4]], dtype="float32", shape=[2, 2])
     assert tensor.matrix == [[1, 2], [3, 4]]
-    assert tensor.dtype == 'float32'
+    assert tensor.dtype == "float32"
     assert tensor.shape == [2, 2]
+
 
 def test_tensor_tensor_initialization():
     np_array = np.array([[[1, 2], [3, 4]]], dtype=np.float32)
-    tensor = Tensor(tensor=np_array, dtype='float32', shape=[1, 2, 2])
+    tensor = Tensor(tensor=np_array, dtype="float32", shape=[1, 2, 2])
     assert np.array_equal(tensor.tensor, np_array)
-    assert tensor.dtype == 'float32'
+    assert tensor.dtype == "float32"
     assert tensor.shape == [1, 2, 2]
 
 
@@ -205,16 +206,16 @@ def test_tensor_serialization_deserialization():
 
 def test_tensor_shape_validation():
     with pytest.raises(ValueError):
-        Tensor(matrix=[[1], [2, 3]], dtype='int32', shape=[2])
+        Tensor(matrix=[[1], [2, 3]], dtype="int32", shape=[2])
 
 
 def test_tensor_dtype_validation():
     with pytest.raises(ValueError):
-        Tensor(vector=[1, 2, 3], dtype='unsupported_dtype', shape=[3])
+        Tensor(vector=[1, 2, 3], dtype="unsupported_dtype", shape=[3])
 
 
 def test_tensor_deserialization_error():
-    broken_tensor = Tensor(buffer="invalid", dtype='float32', shape=[3])
+    broken_tensor = Tensor(buffer="invalid", dtype="float32", shape=[3])
     with pytest.raises(ValueError):
         broken_tensor.deserialize()
 
@@ -281,4 +282,3 @@ def test_create_with_high_dimension_torch_tensor():
     assert isinstance(tensor, Tensor)
     deserialized_tensor = tensor.deserialize()
     assert torch.equal(deserialized_tensor, tensor_data)
-

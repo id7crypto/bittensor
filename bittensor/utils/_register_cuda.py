@@ -50,13 +50,15 @@ def solve_cuda(
 
     def _hex_bytes_to_u8_list(hex_bytes: bytes) -> List[int]:
         """Convert hex bytes to a list of unsigned 8-bit integers."""
-        return [int(hex_bytes[i: i + 2], 16) for i in range(0, len(hex_bytes), 2)]
+        return [int(hex_bytes[i : i + 2], 16) for i in range(0, len(hex_bytes), 2)]
 
     def _create_seal_hash(block_hotkey_hash_hex: bytes, nonce: np.int64) -> bytes:
         """Create a seal hash."""
         nonce_bytes = binascii.hexlify(int(nonce).to_bytes(8, "little"))
         pre_seal = nonce_bytes + block_hotkey_hash_hex
-        seal_sha256 = hashlib.sha256(bytearray(_hex_bytes_to_u8_list(pre_seal))).digest()
+        seal_sha256 = hashlib.sha256(
+            bytearray(_hex_bytes_to_u8_list(pre_seal))
+        ).digest()
         kec = keccak.new(digest_bits=256)
         created_seal = kec.update(seal_sha256).digest()
         return created_seal
@@ -68,7 +70,9 @@ def solve_cuda(
         check_limit = int(math.pow(2, 256)) - 1
         return product < check_limit
 
-    block_and_hotkey_hash_hex: bytes = binascii.hexlify(block_and_hotkey_hash_bytes)[:64]
+    block_and_hotkey_hash_hex: bytes = binascii.hexlify(block_and_hotkey_hash_bytes)[
+        :64
+    ]
 
     solution: np.int64 = cubit.solve_cuda(
         tpb,
