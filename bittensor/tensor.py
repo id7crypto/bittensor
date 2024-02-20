@@ -175,7 +175,7 @@ class Tensor(pydantic.BaseModel):
     buffer: Optional[str] = pydantic.Field(
         title="buffer",
         description="Tensor buffer data. This field stores the serialized representation of the tensor data.",
-        examples="0x321e13edqwds231231231232131",
+        example="0x321e13edqwds231231231232131",
         allow_mutation=False,
         repr=False,
     )  # Represents the tensor buffer data.
@@ -183,17 +183,17 @@ class Tensor(pydantic.BaseModel):
     dtype: str = pydantic.Field(
         title="dtype",
         description="Tensor data type. This field specifies the data type of the tensor, such as torch.float32 or torch.int64.",
-        examples="torch.float32",
+        example="torch.float32",
         allow_mutation=False,
         repr=True,
     )  # Represents the data type of the tensor.
-    _extract_dtype = pydantic.validator("dtype", pre=True, allow_reuse=True)(cast_dtype)
+    _extract_dtype = pydantic.field_validator("dtype")(cast_dtype)
 
     shape: List[int] = pydantic.Field(
         title="shape",
         description="Tensor shape. This field defines the dimensions of the tensor as a list of integers, such as [10, 10] for a 2D tensor with shape (10, 10).",
-        examples="[10,10]",
+        example="[10,10]",
         allow_mutation=False,
         repr=True,
     )  # Represents the shape of the tensor.
-    _extract_shape = pydantic.validator("shape", pre=True, allow_reuse=True)(cast_shape)
+    _extract_shape = pydantic.field_validator("shape")(cast_shape)
