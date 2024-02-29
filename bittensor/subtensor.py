@@ -1094,52 +1094,32 @@ class subtensor:
             prompt=prompt,
         )
 
-    def get_transfer_fee(
-        self, wallet: "bittensor.wallet", dest: str, value: Union[Balance, float, int]
-    ) -> Balance:
+    def get_transfer_fee(self, wallet: "bittensor.wallet", dest: str, value: Union[Balance, float, int]) -> Balance:
         """
-        Calculates the transaction fee for transferring tokens from a wallet to a specified destination address.
-        This function simulates the transfer to estimate the associated cost, taking into account the current
-        network conditions and transaction complexity.
+        Estimates the transaction fee for transferring tokens from a wallet to a destination address.
 
         Args:
-            wallet (bittensor.wallet): The wallet from which the transfer is initiated.
-            dest (str): The ``SS58`` address of the destination account.
-            value (Union[Balance, float, int]): The amount of tokens to be transferred, specified as a Balance object, or in Tao (float) or Rao (int) units.
+            wallet (Wallet): The wallet initiating the transfer.
+            dest (str): The destination account's SS58 address.
+            value (Union[Balance, float, int]): Amount to transfer, as a Balance object or in Tao (float) or Rao (int).
 
         Returns:
-            Balance: The estimated transaction fee for the transfer, represented as a Balance object.
-
-        Estimating the transfer fee is essential for planning and executing token transactions, ensuring that the
-        wallet has sufficient funds to cover both the transfer amount and the associated costs. This function
-        provides a crucial tool for managing financial operations within the Bittensor network.
+            Balance: Estimated transaction fee as a Balance object.
         """
-        if isinstance(value, float):
-            transfer_balance = Balance.from_tao(value)
-        elif isinstance(value, int):
-            transfer_balance = Balance.from_rao(value)
+        transfer_balance = Balance.from_tao(value) if isinstance(value, float) else Balance.from_rao(
+            value) if isinstance(value, int) else value
 
         with self.substrate as substrate:
-            call = substrate.compose_call(
-                call_module="Balances",
-                call_function="transfer",
-                call_params={"dest": dest, "value": transfer_balance.rao},
-            )
-
+            call = substrate.compose_call(call_module="Balances", call_function="transfer",
+                                          call_params={"dest": dest, "value": transfer_balance.rao})
             try:
-                payment_info = substrate.get_payment_info(
-                    call=call, keypair=wallet.coldkeypub
-                )
+                payment_info = substrate.get_payment_info(call=call, keypair=wallet.coldkeypub)
             except Exception as e:
                 bittensor.__console__.print(
-                    ":cross_mark: [red]Failed to get payment info[/red]:[bold white]\n  {}[/bold white]".format(
-                        e
-                    )
-                )
-                payment_info = {"partialFee": 2e7}  # assume  0.02 Tao
+                    f":cross_mark: [red]Failed to get payment info[/red]:[bold white]\n  {e}[/bold white]")
+                payment_info = {"partialFee": 2e7}  # Default fee: 0.02 Tao if query fails
 
-        fee = Balance.from_rao(payment_info["partialFee"])
-        return fee
+        return Balance.from_rao(payment_info["partialFee"])
 
     def _do_transfer(
         self,
