@@ -331,8 +331,11 @@ class subtensor:
         instructions on how to run a local subtensor node in the documentation in a subsequent release.
 
         Args:
-            network (str, optional): The network name to connect to (e.g., ``finney``, ``local``). This can also be the chain endpoint (e.g., ``wss://entrypoint-finney.opentensor.ai:443``) and will be correctly parsed into the network and chain endpoint. If not specified, defaults to the main Bittensor network.
-            config (bittensor.config, optional): Configuration object for the subtensor. If not provided, a default configuration is used.
+            network (str, optional): The network name to connect to (e.g., ``finney``, ``local``). This can also be
+            the chain endpoint (e.g., ``wss://entrypoint-finney.opentensor.ai:443``) and will be correctly parsed into
+             the network and chain endpoint. If not specified, defaults to the main Bittensor network.
+            config (bittensor.config, optional): Configuration object for the subtensor. If not provided, a default
+             configuration is used.
             _mock (bool, optional): If set to ``True``, uses a mocked connection for testing purposes.
 
         This initialization sets up the connection to the specified Bittensor network, allowing for various
