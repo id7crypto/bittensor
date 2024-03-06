@@ -301,15 +301,23 @@ class subtensor:
             evaluated_network,
         )
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, _mock: bool = False, *args, **kwargs):
+        """
+        Create a new subtensor instance or mock a subtensor configuration based on the given _mock flag.
+
+        :param _mock: Flag indicating whether to use a mock subtensor. If None, falls back to default configuration.
+        :return: Instance of the subtensor or mock subtensor.
+        """
         config = subtensor.config()
         config.subtensor._mock = (
             kwargs.get("_mock")
             if kwargs.get("_mock") is not None
             else config.subtensor.get("_mock", bittensor.defaults.subtensor._mock)
         )
+        # if _mock, return instance of MockSubtensor()
         if config.subtensor._mock:
             return bittensor.subtensor_mock.MockSubtensor()
+        # else return instance of subtensor()
         return cls()
 
     def __init__(
