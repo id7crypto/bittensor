@@ -303,7 +303,7 @@ class subtensor:
 
     def __new__(cls, _mock: bool = False, *args, **kwargs):
         """
-        Create a new subtensor instance or mock a subtensor configuration based on the given _mock flag.
+        Create a new subtensor instance or mock a subtensor instance based on the given _mock flag.
 
         :param _mock: Flag indicating whether to use a mock subtensor. If None, falls back to default configuration.
         :return: Instance of the subtensor or mock subtensor.
