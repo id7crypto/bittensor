@@ -302,15 +302,15 @@ class subtensor:
         )
 
     def __new__(cls, *args, **kwargs):
-        # Returns a mocked connection with a background chain connection.
-        self.config.subtensor._mock = (
-            _mock
-            if _mock is not None
-            else self.config.subtensor.get("_mock", bittensor.defaults.subtensor._mock)
+        config = subtensor.config()
+        config.subtensor._mock = (
+            kwargs.get("_mock")
+            if kwargs.get("_mock") is not None
+            else config.subtensor.get("_mock", bittensor.defaults.subtensor._mock)
         )
-        if self.config.subtensor._mock:
-            config.subtensor._mock = True
+        if config.subtensor._mock:
             return bittensor.subtensor_mock.MockSubtensor()
+        return cls()
 
     def __init__(
         self,
@@ -380,8 +380,6 @@ class subtensor:
                 "In a future release, local subtensor will become the default endpoint. "
                 "To get ahead of this change, please run a local subtensor node and point to it."
             )
-
-
 
         # Attempt to connect to chosen endpoint. Fallback to finney if local unavailable.
         try:
