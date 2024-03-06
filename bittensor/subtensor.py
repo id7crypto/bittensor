@@ -301,6 +301,9 @@ class subtensor:
             evaluated_network,
         )
 
+    def __new__(cls, *args, **kwargs):
+
+
     def __init__(
         self,
         network: str = None,
@@ -334,7 +337,7 @@ class subtensor:
 
         # Check if network is a config object. (Single argument passed as first positional)
         if isinstance(network, bittensor.config):
-            if network.subtensor == None:
+            if network.subtensor is None:
                 bittensor.logging.warning(
                     "If passing a bittensor config object, it must not be empty. Using default subtensor config."
                 )
@@ -343,7 +346,7 @@ class subtensor:
                 config = network
             network = None
 
-        if config == None:
+        if config is None:
             config = subtensor.config()
         self.config = copy.deepcopy(config)
 
