@@ -302,7 +302,15 @@ class subtensor:
         )
 
     def __new__(cls, *args, **kwargs):
-
+        # Returns a mocked connection with a background chain connection.
+        self.config.subtensor._mock = (
+            _mock
+            if _mock is not None
+            else self.config.subtensor.get("_mock", bittensor.defaults.subtensor._mock)
+        )
+        if self.config.subtensor._mock:
+            config.subtensor._mock = True
+            return bittensor.subtensor_mock.MockSubtensor()
 
     def __init__(
         self,
@@ -332,7 +340,8 @@ class subtensor:
 
         """
         # Determine config.subtensor.chain_endpoint and config.subtensor.network config.
-        # If chain_endpoint is set, we override the network flag, otherwise, the chain_endpoint is assigned by the network.
+        # If chain_endpoint is set, we override the network flag, otherwise, the chain_endpoint is
+        # assigned by the network.
         # Argument importance: network > chain_endpoint > config.subtensor.chain_endpoint > config.subtensor.network
 
         # Check if network is a config object. (Single argument passed as first positional)
@@ -369,15 +378,7 @@ class subtensor:
                 "To get ahead of this change, please run a local subtensor node and point to it."
             )
 
-        # Returns a mocked connection with a background chain connection.
-        self.config.subtensor._mock = (
-            _mock
-            if _mock != None
-            else self.config.subtensor.get("_mock", bittensor.defaults.subtensor._mock)
-        )
-        if self.config.subtensor._mock:
-            config.subtensor._mock = True
-            return bittensor.subtensor_mock.MockSubtensor()
+
 
         # Attempt to connect to chosen endpoint. Fallback to finney if local unavailable.
         try:
