@@ -36,7 +36,7 @@ class InvalidConfigFile(Exception):
     pass
 
 
-class config(DefaultMunch):
+class Config(DefaultMunch):
     """
     Implementation of the config class, which manages the configuration of different Bittensor modules.
     """
