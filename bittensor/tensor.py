@@ -96,7 +96,7 @@ def cast_shape(raw: Union[None, List[int], str]) -> str:
         )
 
 
-class tensor:
+class TensorFactory:
     def __new__(cls, tensor: Union[list, numpy.ndarray, torch.Tensor]):
         if isinstance(tensor, list):
             tensor = torch.tensor(tensor)

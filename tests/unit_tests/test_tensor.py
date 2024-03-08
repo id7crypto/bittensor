@@ -27,7 +27,7 @@ def example_tensor():
     data = torch.tensor([1, 2, 3, 4])
 
     # Serialize the tensor into a Tensor instance and return it
-    return bittensor.tensor(data)
+    return bittensor.TensorFactory(data)
 
 
 def test_deserialize(example_tensor):
@@ -101,37 +101,37 @@ def test_shape_field():
 
 
 def test_serialize_all_types():
-    bittensor.tensor(torch.tensor([1], dtype=torch.float16))
-    bittensor.tensor(torch.tensor([1], dtype=torch.float32))
-    bittensor.tensor(torch.tensor([1], dtype=torch.float64))
-    bittensor.tensor(torch.tensor([1], dtype=torch.uint8))
-    bittensor.tensor(torch.tensor([1], dtype=torch.int32))
-    bittensor.tensor(torch.tensor([1], dtype=torch.int64))
-    bittensor.tensor(torch.tensor([1], dtype=torch.bool))
+    bittensor.TensorFactory(torch.tensor([1], dtype=torch.float16))
+    bittensor.TensorFactory(torch.tensor([1], dtype=torch.float32))
+    bittensor.TensorFactory(torch.tensor([1], dtype=torch.float64))
+    bittensor.TensorFactory(torch.tensor([1], dtype=torch.uint8))
+    bittensor.TensorFactory(torch.tensor([1], dtype=torch.int32))
+    bittensor.TensorFactory(torch.tensor([1], dtype=torch.int64))
+    bittensor.TensorFactory(torch.tensor([1], dtype=torch.bool))
 
 
 def test_serialize_all_types_equality():
     torchtensor = torch.randn([100], dtype=torch.float16)
-    assert torch.all(bittensor.tensor(torchtensor).tensor() == torchtensor)
+    assert torch.all(bittensor.TensorFactory(torchtensor).tensor() == torchtensor)
 
     torchtensor = torch.randn([100], dtype=torch.float32)
-    assert torch.all(bittensor.tensor(torchtensor).tensor() == torchtensor)
+    assert torch.all(bittensor.TensorFactory(torchtensor).tensor() == torchtensor)
 
     torchtensor = torch.randn([100], dtype=torch.float64)
-    assert torch.all(bittensor.tensor(torchtensor).tensor() == torchtensor)
+    assert torch.all(bittensor.TensorFactory(torchtensor).tensor() == torchtensor)
 
     torchtensor = torch.randint(255, 256, (1000,), dtype=torch.uint8)
-    assert torch.all(bittensor.tensor(torchtensor).tensor() == torchtensor)
+    assert torch.all(bittensor.TensorFactory(torchtensor).tensor() == torchtensor)
 
     torchtensor = torch.randint(
         2_147_483_646, 2_147_483_647, (1000,), dtype=torch.int32
     )
-    assert torch.all(bittensor.tensor(torchtensor).tensor() == torchtensor)
+    assert torch.all(bittensor.TensorFactory(torchtensor).tensor() == torchtensor)
 
     torchtensor = torch.randint(
         9_223_372_036_854_775_806, 9_223_372_036_854_775_807, (1000,), dtype=torch.int64
     )
-    assert torch.all(bittensor.tensor(torchtensor).tensor() == torchtensor)
+    assert torch.all(bittensor.TensorFactory(torchtensor).tensor() == torchtensor)
 
     torchtensor = torch.randn([100], dtype=torch.float32) < 0.5
-    assert torch.all(bittensor.tensor(torchtensor).tensor() == torchtensor)
+    assert torch.all(bittensor.TensorFactory(torchtensor).tensor() == torchtensor)
