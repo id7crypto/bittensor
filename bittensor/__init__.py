@@ -219,7 +219,7 @@ from .chain_data import *
 from .subtensor import Subtensor
 from .cli import Cli, COMMANDS as ALL_COMMANDS
 from .btlogging import logging as logging
-from .metagraph import metagraph as metagraph
+from .metagraph import Metagraph
 from .threadpool import PriorityThreadPoolExecutor as PriorityThreadPoolExecutor
 
 from .synapse import *

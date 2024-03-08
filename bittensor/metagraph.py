@@ -400,7 +400,7 @@ class Metagraph(torch.nn.Module):
 
                 Metagraph = Metagraph(netuid=123, network="finney", lite=True, sync=True)
         """
-        super(metagraph, self).__init__()
+        super(Metagraph, self).__init__()
         self.netuid = netuid
         self.network = network
         self.version = torch.nn.Parameter(
@@ -774,7 +774,7 @@ class Metagraph(torch.nn.Module):
             )
         return tensor_param
 
-    def save(self) -> "metagraph":
+    def save(self) ->  "Metagraph":
         """
         Saves the current state of the Metagraph to a file on disk. This function is crucial for persisting the current state of the network's Metagraph, which can later be reloaded or analyzed. The save operation includes all neuron attributes and parameters, ensuring a complete snapshot of the Metagraph's state.
 
@@ -830,7 +830,7 @@ class Metagraph(torch.nn.Module):
         """
         self.load_from_path(get_save_dir(self.network, self.netuid))
 
-    def load_from_path(self, dir_path: str) -> "metagraph":
+    def load_from_path(self, dir_path: str) ->  "Metagraph":
         """
         Loads the state of the Metagraph from a specified directory path. This method is crucial for restoring the Metagraph to a specific state based on saved data. It locates the latest block file in the given
         directory and loads all Metagraph parameters from it. This is particularly useful for analyses that require historical states of the network or for restoring previous states of the Metagraph in different
