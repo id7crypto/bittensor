@@ -57,7 +57,7 @@ class SenateCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
@@ -196,7 +196,7 @@ class ProposalsCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
@@ -319,7 +319,7 @@ class ShowVotesCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
@@ -423,7 +423,7 @@ class SenateRegisterCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
@@ -505,7 +505,7 @@ class SenateLeaveCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Cli"):
@@ -579,7 +579,7 @@ class VoteCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):

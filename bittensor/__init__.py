@@ -66,11 +66,11 @@ turn_console_off()
 
 # Logging helpers.
 def trace(on: bool = True):
-    logging.set_trace(on)
+    Logging.set_trace(on)
 
 
 def debug(on: bool = True):
-    logging.set_debug(on)
+    Logging.set_debug(on)
 
 
 # Substrate chain block time (seconds).
@@ -218,7 +218,7 @@ from .utils.balance import Balance as Balance
 from .chain_data import *
 from .subtensor import Subtensor
 from .cli import Cli, COMMANDS as ALL_COMMANDS
-from .btlogging import logging as logging
+from .btlogging import Logging as logging
 from .metagraph import Metagraph
 from .threadpool import PriorityThreadPoolExecutor as PriorityThreadPoolExecutor
 
@@ -239,6 +239,6 @@ configs = [
     Subtensor.config(),
     PriorityThreadPoolExecutor.config(),
     Wallet.config(),
-    logging.config(),
+    Logging.config(),
 ]
 defaults = Config.merge_all(configs)

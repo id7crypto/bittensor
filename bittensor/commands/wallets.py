@@ -710,7 +710,7 @@ def _get_coldkey_ss58_addresses_for_path(path: str) -> tuple[list[str], list[str
                 coldkey_files.append(coldkey_path)
                 wallet_names.append(potential_wallet_name)
             else:
-                bittensor.logging.warning(
+                bittensor.Logging.warning(
                     f"{coldkey_path} does not exist. Excluding..."
                 )
         return coldkey_files, wallet_names
@@ -772,7 +772,7 @@ class WalletBalanceCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):

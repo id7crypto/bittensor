@@ -88,7 +88,7 @@ class OverviewCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Prints an overview for the wallet's colkey."""
@@ -156,7 +156,7 @@ class OverviewCommand:
         netuids = filter_netuids_by_registered_hotkeys(
             cli, subtensor, netuids, all_hotkeys
         )
-        bittensor.logging.debug(f"Netuids to check: {netuids}")
+        bittensor.Logging.debug(f"Netuids to check: {netuids}")
 
         for netuid in netuids:
             neurons[str(netuid)] = []
@@ -598,7 +598,7 @@ class OverviewCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
         return netuid, result, None
 
@@ -647,7 +647,7 @@ class OverviewCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
         return coldkey_wallet, result, None
 

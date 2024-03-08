@@ -29,7 +29,7 @@ You can test your installation by running:
 python3 -c "import bittensor; print(bittensor.__version__)"
 ```
 ## Logging
-Make good use of the `bittensor.logging` module. It can be your friend and will help you find things that are otherwise difficult to get visibility on.
+Make good use of the `bittensor.Logging` module. It can be your friend and will help you find things that are otherwise difficult to get visibility on.
 
 You can enable debug or trace modes by running:
 ```
@@ -44,14 +44,14 @@ You can also write your own in the code simply:
 # Bittensor's wallet maintenance class.
 wallet = bittensor.Wallet()
 
-bittensor.logging.debug( f"wallet keypair: {wallet.hotkey}" )
+bittensor.Logging.debug( f"wallet keypair: {wallet.hotkey}" )
 
 ...
 
 # Bittensor's chain state object.
 metagraph = bittensor.Metagraph(netuid=1)
 
-bittensor.logging.trace( f"metagraph created! netuid {metagraph.netuid}" )
+bittensor.Logging.trace( f"metagraph created! netuid {metagraph.netuid}" )
 ```
 
 

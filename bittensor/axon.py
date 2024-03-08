@@ -368,7 +368,7 @@ class Axon:
 
         # Instantiate FastAPI
         self.app = FastAPI()
-        log_level = "trace" if bittensor.logging.__trace_on__ else "critical"
+        log_level = "trace" if bittensor.Logging.__trace_on__ else "critical"
         self.fast_config = uvicorn.Config(
             self.app, host="0.0.0.0", port=self.config.Axon.port, log_level=log_level
         )
@@ -956,7 +956,7 @@ def log_and_handle_error(
     start_time: float,
 ):
     # Display the traceback for user clarity.
-    bittensor.logging.trace(f"Forward exception: {traceback.format_exc()}")
+    bittensor.Logging.trace(f"Forward exception: {traceback.format_exc()}")
 
     # Set the status code of the synapse to the given status code.
     error_type = exception.__class__.__name__
@@ -964,7 +964,7 @@ def log_and_handle_error(
     detailed_error_message = f"{error_type}: {error_message}"
 
     # Log the detailed error message for internal use
-    bittensor.logging.error(detailed_error_message)
+    bittensor.Logging.error(detailed_error_message)
 
     if synapse.Axon is None:
         raise SynapseParsingError(detailed_error_message)
@@ -1047,11 +1047,11 @@ class AxonMiddleware(BaseHTTPMiddleware):
 
             # Logs the start of the request processing
             if synapse.dendrite is not None:
-                bittensor.logging.trace(
+                bittensor.Logging.trace(
                     f"Axon     | <-- | {request.headers.get('content-length', -1)} B | {synapse.name} | {synapse.dendrite.hotkey} | {synapse.dendrite.ip}:{synapse.dendrite.port} | 200 | Success "
                 )
             else:
-                bittensor.logging.trace(
+                bittensor.Logging.trace(
                     f"Axon     | <-- | {request.headers.get('content-length', -1)} B | {synapse.name} | None | None | 200 | Success "
                 )
 
@@ -1124,15 +1124,15 @@ class AxonMiddleware(BaseHTTPMiddleware):
             # Log the details of the processed synapse, including total size, name, hotkey, IP, port,
             # status code, and status message, using the debug level of the logger.
             if synapse.dendrite is not None and synapse.Axon is not None:
-                bittensor.logging.trace(
+                bittensor.Logging.trace(
                     f"Axon     | --> | {response.headers.get('content-length', -1)} B | {synapse.name} | {synapse.dendrite.hotkey} | {synapse.dendrite.ip}:{synapse.dendrite.port}  | {synapse.Axon.status_code} | {synapse.Axon.status_message}"
                 )
             elif synapse.Axon is not None:
-                bittensor.logging.trace(
+                bittensor.Logging.trace(
                     f"Axon     | --> | {response.headers.get('content-length', -1)} B | {synapse.name} | None | None | {synapse.Axon.status_code} | {synapse.Axon.status_message}"
                 )
             else:
-                bittensor.logging.trace(
+                bittensor.Logging.trace(
                     f"Axon     | --> | {response.headers.get('content-length', -1)} B | {synapse.name} | None | None | 200 | Success "
                 )
 
@@ -1249,7 +1249,7 @@ class AxonMiddleware(BaseHTTPMiddleware):
             except Exception as e:
                 # If there was an exception during the verification process, we log that
                 # there was a verification exception.
-                bittensor.logging.trace(f"Verify exception {str(e)}")
+                bittensor.Logging.trace(f"Verify exception {str(e)}")
 
                 # Check if the synapse.Axon object exists
                 if synapse.Axon is not None:
@@ -1304,7 +1304,7 @@ class AxonMiddleware(BaseHTTPMiddleware):
             )
             if blacklisted:
                 # We log that the key or identifier is blacklisted.
-                bittensor.logging.trace(f"Blacklisted: {blacklisted}, {reason}")
+                bittensor.Logging.trace(f"Blacklisted: {blacklisted}, {reason}")
 
                 # Check if the synapse.Axon object exists
                 if synapse.Axon is not None:
@@ -1371,7 +1371,7 @@ class AxonMiddleware(BaseHTTPMiddleware):
             except TimeoutError as e:
                 # If the execution of the priority function exceeds the timeout,
                 # it raises an exception to handle the timeout error.
-                bittensor.logging.trace(f"TimeoutError: {str(e)}")
+                bittensor.Logging.trace(f"TimeoutError: {str(e)}")
 
                 # Set the status code of the synapse to 408 which indicates a timeout error.
                 if synapse.Axon is not None:
@@ -1412,7 +1412,7 @@ class AxonMiddleware(BaseHTTPMiddleware):
             # it is caught and handled here.
 
             # Log the exception for debugging purposes.
-            bittensor.logging.trace(f"Run exception: {str(e)}")
+            bittensor.Logging.trace(f"Run exception: {str(e)}")
 
             # Set the status code of the synapse to "500" which indicates an internal server error.
             if synapse.Axon is not None:

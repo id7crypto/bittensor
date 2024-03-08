@@ -179,7 +179,7 @@ def filter_netuids_by_registered_hotkeys(
     netuids_with_registered_hotkeys = []
     for wallet in all_hotkeys:
         netuids_list = subtensor.get_netuids_for_hotkey(wallet.hotkey.ss58_address)
-        bittensor.logging.debug(
+        bittensor.Logging.debug(
             f"Hotkey {wallet.hotkey.ss58_address} registered in netuids: {netuids_list}"
         )
         netuids_with_registered_hotkeys.extend(netuids_list)

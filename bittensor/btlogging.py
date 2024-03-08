@@ -42,7 +42,7 @@ def _remove_loguru_ansi_directive(text: str) -> str:
     return re.sub(pattern, "", text)
 
 
-class logging:
+class Logging:
     """Standardized logging for Bittensor."""
 
     __has_been_inited__: bool = False
@@ -109,7 +109,7 @@ class logging:
 
         Args:
             config (bittensor.Config, optional):
-                bittensor.logging.config()
+                bittensor.Logging.config()
             debug (bool, optional):
                 Turn on debug.
             trace (bool, optional):
@@ -123,7 +123,7 @@ class logging:
         cls.__has_been_inited__ = True
 
         if config == None:
-            config = logging.config()
+            config = Logging.config()
         config = copy.deepcopy(config)
         config.logging.debug = debug if debug != None else config.logging.debug
         config.logging.trace = trace if trace != None else config.logging.trace
@@ -183,7 +183,7 @@ class logging:
             bittensor.Config object
         """
         parser = argparse.ArgumentParser()
-        logging.add_args(parser)
+        Logging.add_args(parser)
         return bittensor.Config(parser, args=[])
 
     @classmethod

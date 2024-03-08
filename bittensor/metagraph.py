@@ -507,7 +507,7 @@ class Metagraph(torch.nn.Module):
 
         cur_block = subtensor.get_current_block()  # type: ignore
         if block and block > (cur_block - 300):
-            bittensor.logging.error(
+            bittensor.Logging.error(
                 "Block number is greater than 300. Please use the 'archive' network for subtensor and retry."
             )
             raise ValueError(
@@ -721,7 +721,7 @@ class Metagraph(torch.nn.Module):
             else torch.nn.Parameter()
         )
         if len(data_array) == 0:
-            bittensor.logging.warning(
+            bittensor.Logging.warning(
                 f"Empty {attribute}_array on Metagraph.sync(). The '{attribute}' tensor is empty."
             )
         return tensor_param
@@ -769,7 +769,7 @@ class Metagraph(torch.nn.Module):
             else torch.nn.Parameter()
         )
         if len(data_array) == 0:
-            bittensor.logging.warning(
+            bittensor.Logging.warning(
                 f"Empty {attribute}_array on Metagraph.sync(). The '{attribute}' tensor is empty."
             )
         return tensor_param

@@ -61,7 +61,7 @@ def unbiased_topk(values, k, dim=0, sorted=True, largest=True):
 
 def version_checking(timeout: int = 15):
     try:
-        bittensor.logging.debug(
+        bittensor.Logging.debug(
             f"Checking latest Bittensor version at: {bittensor.__pipaddress__}"
         )
         response = requests.get(bittensor.__pipaddress__, timeout=timeout)
@@ -82,9 +82,9 @@ def version_checking(timeout: int = 15):
             )
 
     except requests.exceptions.Timeout:
-        bittensor.logging.error("Version check failed due to timeout")
+        bittensor.Logging.error("Version check failed due to timeout")
     except requests.exceptions.RequestException as e:
-        bittensor.logging.error(f"Version check failed due to request failure: {e}")
+        bittensor.Logging.error(f"Version check failed due to request failure: {e}")
 
 
 def strtobool_with_default(

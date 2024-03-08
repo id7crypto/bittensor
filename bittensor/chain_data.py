@@ -234,7 +234,7 @@ class AxonInfo:
         try:
             return json.dumps(asdict(self))
         except (TypeError, ValueError) as e:
-            bittensor.logging.error(f"Error converting AxonInfo to string: {e}")
+            bittensor.Logging.error(f"Error converting AxonInfo to string: {e}")
             return AxonInfo(0, "", 0, 0, "", "").to_string()
 
     @classmethod
@@ -244,11 +244,11 @@ class AxonInfo:
             data = json.loads(s)
             return cls(**data)
         except json.JSONDecodeError as e:
-            bittensor.logging.error(f"Error decoding JSON: {e}")
+            bittensor.Logging.error(f"Error decoding JSON: {e}")
         except TypeError as e:
-            bittensor.logging.error(f"Type error: {e}")
+            bittensor.Logging.error(f"Type error: {e}")
         except ValueError as e:
-            bittensor.logging.error(f"Value error: {e}")
+            bittensor.Logging.error(f"Value error: {e}")
         return AxonInfo(0, "", 0, 0, "", "")
 
     @classmethod

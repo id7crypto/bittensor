@@ -195,7 +195,7 @@ def set_root_weights_extrinsic(
                 bittensor.__console__.print(
                     ":white_heavy_check_mark: [green]Finalized[/green]"
                 )
-                bittensor.logging.success(
+                bittensor.Logging.success(
                     prefix="Set weights",
                     sufix="<green>Finalized: </green>" + str(success),
                 )
@@ -204,7 +204,7 @@ def set_root_weights_extrinsic(
                 bittensor.__console__.print(
                     ":cross_mark: [red]Failed[/red]: error:{}".format(error_message)
                 )
-                bittensor.logging.warning(
+                bittensor.Logging.warning(
                     prefix="Set weights",
                     sufix="<red>Failed: </red>" + str(error_message),
                 )
@@ -215,7 +215,7 @@ def set_root_weights_extrinsic(
             bittensor.__console__.print(
                 ":cross_mark: [red]Failed[/red]: error:{}".format(e)
             )
-            bittensor.logging.warning(
+            bittensor.Logging.warning(
                 prefix="Set weights", sufix="<red>Failed: </red>" + str(e)
             )
             return False

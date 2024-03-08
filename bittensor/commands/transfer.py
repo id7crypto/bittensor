@@ -60,7 +60,7 @@ class TransferCommand:
         finally:
             if "subtensor" in locals():
                 subtensor.close()
-                bittensor.logging.debug("closing subtensor connection")
+                bittensor.Logging.debug("closing subtensor connection")
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):

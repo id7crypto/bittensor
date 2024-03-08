@@ -340,7 +340,7 @@ class Subtensor:
         # Check if network is a config object. (Single argument passed as first positional)
         if isinstance(network, bittensor.Config):
             if network.subtensor is None:
-                bittensor.logging.warning(
+                bittensor.Logging.warning(
                     "If passing a bittensor config object, it must not be empty. Using default subtensor config."
                 )
                 config = None
@@ -359,14 +359,14 @@ class Subtensor:
             self.network == "finney"
             or self.chain_endpoint == bittensor.__finney_entrypoint__
         ) and log_verbose:
-            bittensor.logging.info(
+            bittensor.Logging.info(
                 f"You are connecting to {self.network} network with endpoint {self.chain_endpoint}."
             )
-            bittensor.logging.warning(
+            bittensor.Logging.warning(
                 "We strongly encourage running a local subtensor node whenever possible. "
                 "This increases decentralization and resilience of the network."
             )
-            bittensor.logging.warning(
+            bittensor.Logging.warning(
                 "In a future release, local subtensor will become the default endpoint. "
                 "To get ahead of this change, please run a local subtensor node and point to it."
             )
@@ -393,10 +393,10 @@ class Subtensor:
                 type_registry=bittensor.__type_registry__,
             )
         except ConnectionRefusedError as e:
-            bittensor.logging.error(
+            bittensor.Logging.error(
                 f"Could not connect to {self.network} network with {self.chain_endpoint} chain endpoint. Exiting..."
             )
-            bittensor.logging.info(
+            bittensor.Logging.info(
                 f"You can check if you have connectivity by runing this command: nc -vz localhost {self.chain_endpoint.split(':')[2]}"
             )
             exit(1)
@@ -405,10 +405,10 @@ class Subtensor:
         try:
             self.substrate.websocket.settimeout(600)
         except:
-            bittensor.logging.warning("Could not set websocket timeout.")
+            bittensor.Logging.warning("Could not set websocket timeout.")
 
         if log_verbose:
-            bittensor.logging.info(
+            bittensor.Logging.info(
                 f"Connected to {self.network} network and {self.chain_endpoint}."
             )
 
@@ -630,14 +630,14 @@ class Subtensor:
             except SubstrateRequestException as e:
                 if "Priority is too low" in e.args[0]["message"]:
                     wait = min(wait_time * attempt, max_wait)
-                    bittensor.logging.warning(
+                    bittensor.Logging.warning(
                         f"Priority is too low, retrying with new nonce: {nonce} in {wait} seconds."
                     )
                     nonce = nonce + 1
                     time.sleep(wait)
                     continue
                 else:
-                    bittensor.logging.error(f"Error sending extrinsic: {e}")
+                    bittensor.Logging.error(f"Error sending extrinsic: {e}")
                     response = None
 
         return response
@@ -703,7 +703,7 @@ class Subtensor:
                     prompt=prompt,
                 )
             except Exception as e:
-                bittensor.logging.error(f"Error setting weights: {e}")
+                bittensor.Logging.error(f"Error setting weights: {e}")
             finally:
                 retries += 1
 
@@ -4354,7 +4354,7 @@ class Subtensor:
 
             result = make_substrate_call_with_retry()
         except scalecodec.exceptions.RemainingScaleBytesNotEmptyException:
-            bittensor.logging.error(
+            bittensor.Logging.error(
                 "Your wallet it legacy formatted, you need to run btcli stake --ammount 0 to reformat it."
             )
             return Balance(1000)

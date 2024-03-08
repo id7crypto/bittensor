@@ -68,7 +68,7 @@ class SubnetsAPI(ABC):
             Any: The result of the process_responses_fn.
         """
         synapse = self.prepare_synapse(**kwargs)
-        bt.logging.debug(f"Quering valdidator axons with synapse {synapse.name}...")
+        bt.Logging.debug(f"Quering valdidator axons with synapse {synapse.name}...")
         responses = await self.dendrite(
             axons=axons,
             synapse=synapse,

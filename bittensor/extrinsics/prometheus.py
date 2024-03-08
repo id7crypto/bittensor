@@ -62,7 +62,7 @@ def prometheus_extrinsic(
                     external_ip
                 )
             )
-            bittensor.logging.success(
+            bittensor.Logging.success(
                 prefix="External IP", sufix="<blue>{}</blue>".format(external_ip)
             )
         except Exception as E:

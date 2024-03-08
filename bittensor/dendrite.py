@@ -269,7 +269,7 @@ class Dendrite(torch.nn.Module):
         Args:
             synapse: The synapse object representing the request being sent.
         """
-        bittensor.logging.trace(
+        bittensor.Logging.trace(
             f"dendrite | --> | {synapse.get_total_size()} B | {synapse.name} | {synapse.axon.hotkey} | {synapse.axon.ip}:{str(synapse.axon.port)} | 0 | Success"
         )
 
@@ -284,7 +284,7 @@ class Dendrite(torch.nn.Module):
         Args:
             synapse: The synapse object representing the received response.
         """
-        bittensor.logging.trace(
+        bittensor.Logging.trace(
             f"dendrite | <-- | {synapse.get_total_size()} B | {synapse.name} | {synapse.axon.hotkey} | {synapse.axon.ip}:{str(synapse.axon.port)} | {synapse.dendrite.status_code} | {synapse.dendrite.status_message}"
         )
 
@@ -391,7 +391,7 @@ class Dendrite(torch.nn.Module):
             synapse.__class__, bittensor.StreamingSynapse
         )
         if streaming != is_streaming_subclass:
-            bittensor.logging.warning(
+            bittensor.Logging.warning(
                 f"Argument streaming is {streaming} while issubclass(synapse, StreamingSynapse) is {synapse.__class__.__name__}. This may cause unexpected behavior."
             )
         streaming = is_streaming_subclass or streaming

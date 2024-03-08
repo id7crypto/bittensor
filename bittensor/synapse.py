@@ -745,7 +745,7 @@ class Synapse(pydantic.BaseModel):
                     new_key = key.split("bt_header_axon_")[1]
                     inputs_dict["axon"][new_key] = value
                 except Exception as e:
-                    bittensor.logging.error(
+                    bittensor.Logging.error(
                         f"Error while parsing 'axon' header {key}: {e}"
                     )
                     continue
@@ -755,7 +755,7 @@ class Synapse(pydantic.BaseModel):
                     new_key = key.split("bt_header_dendrite_")[1]
                     inputs_dict["dendrite"][new_key] = value
                 except Exception as e:
-                    bittensor.logging.error(
+                    bittensor.Logging.error(
                         f"Error while parsing 'dendrite' header {key}: {e}"
                     )
                     continue
@@ -771,12 +771,12 @@ class Synapse(pydantic.BaseModel):
                         base64.b64decode(value.encode()).decode("utf-8")
                     )
                 except json.JSONDecodeError as e:
-                    bittensor.logging.error(
+                    bittensor.Logging.error(
                         f"Error while json decoding 'input_obj' header {key}: {e}"
                     )
                     continue
                 except Exception as e:
-                    bittensor.logging.error(
+                    bittensor.Logging.error(
                         f"Error while parsing 'input_obj' header {key}: {e}"
                     )
                     continue
