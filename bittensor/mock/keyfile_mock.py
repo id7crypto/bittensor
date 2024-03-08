@@ -18,11 +18,11 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-from bittensor import serialized_keypair_to_keyfile_data, keyfile, Keypair
+from bittensor import serialized_keypair_to_keyfile_data, Keyfile, Keypair
 
 
-class MockKeyfile(keyfile):
-    """Defines an interface to a mocked keyfile object (nothing is created on device) keypair is treated as non encrypted and the data is just the string version."""
+class MockKeyfile(Keyfile):
+    """Defines an interface to a mocked Keyfile object (nothing is created on device) keypair is treated as non encrypted and the data is just the string version."""
 
     def __init__(self, path: str):
         super().__init__(path)
@@ -30,7 +30,7 @@ class MockKeyfile(keyfile):
         self._mock_keypair = Keypair.create_from_mnemonic(
             mnemonic="arrive produce someone view end scout bargain coil slight festival excess struggle"
         )
-        self._mock_data = serialized_keypair_to_keyfile_data(self._mock_keypair)
+        self._mock_data = serialized_keypair_to_Keyfile_data(self._mock_keypair)
 
     def __str__(self):
         if not self.exists_on_device():
@@ -52,7 +52,7 @@ class MockKeyfile(keyfile):
         return bytes(self._mock_data)
 
     @property
-    def keyfile_data(self) -> bytes:
+    def Keyfile_data(self) -> bytes:
         return bytes(self._mock_data)
 
     def set_keypair(
@@ -63,7 +63,7 @@ class MockKeyfile(keyfile):
         password: str = None,
     ):
         self._mock_keypair = keypair
-        self._mock_data = serialized_keypair_to_keyfile_data(self._mock_keypair)
+        self._mock_data = serialized_keypair_to_Keyfile_data(self._mock_keypair)
 
     def get_keypair(self, password: str = None) -> "Keypair":
         return self._mock_keypair
@@ -84,7 +84,7 @@ class MockKeyfile(keyfile):
         return False
 
     def encrypt(self, password: str = None):
-        raise ValueError("Cannot encrypt a mock keyfile")
+        raise ValueError("Cannot encrypt a mock Keyfile")
 
     def decrypt(self, password: str = None):
         return

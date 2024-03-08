@@ -351,7 +351,7 @@ def decrypt_keyfile_data(
     return decrypted_keyfile_data
 
 
-class keyfile:
+class Keyfile:
     """Defines an interface for a substrate interface keypair stored on device."""
 
     def __init__(self, path: str):

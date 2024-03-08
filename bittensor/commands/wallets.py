@@ -717,7 +717,7 @@ def _get_coldkey_ss58_addresses_for_path(path: str) -> tuple[list[str], list[str
 
     coldkey_files, wallet_names = list_coldkeypub_files(path)
     addresses = [
-        bittensor.keyfile(coldkey_path).keypair.ss58_address
+        bittensor.Keyfile(coldkey_path).keypair.ss58_address
         for coldkey_path in coldkey_files
     ]
     return addresses, wallet_names

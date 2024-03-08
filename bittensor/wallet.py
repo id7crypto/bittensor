@@ -286,47 +286,47 @@ class wallet:
         return self
 
     @property
-    def hotkey_file(self) -> "bittensor.keyfile":
+    def hotkey_file(self) -> "bittensor.Keyfile":
         """
         Property that returns the hotkey file.
 
         Returns:
-            bittensor.keyfile: The hotkey file.
+            bittensor.Keyfile: The hotkey file.
         """
         wallet_path = os.path.expanduser(os.path.join(self.path, self.name))
         hotkey_path = os.path.join(wallet_path, "hotkeys", self.hotkey_str)
-        return bittensor.keyfile(path=hotkey_path)
+        return bittensor.Keyfile(path=hotkey_path)
 
     @property
-    def coldkey_file(self) -> "bittensor.keyfile":
+    def coldkey_file(self) -> "bittensor.Keyfile":
         """
         Property that returns the coldkey file.
 
         Returns:
-            bittensor.keyfile: The coldkey file.
+            bittensor.Keyfile: The coldkey file.
         """
         wallet_path = os.path.expanduser(os.path.join(self.path, self.name))
         coldkey_path = os.path.join(wallet_path, "coldkey")
-        return bittensor.keyfile(path=coldkey_path)
+        return bittensor.Keyfile(path=coldkey_path)
 
     @property
-    def coldkeypub_file(self) -> "bittensor.keyfile":
+    def coldkeypub_file(self) -> "bittensor.Keyfile":
         """
         Property that returns the coldkeypub file.
 
         Returns:
-            bittensor.keyfile: The coldkeypub file.
+            bittensor.Keyfile: The coldkeypub file.
         """
         wallet_path = os.path.expanduser(os.path.join(self.path, self.name))
         coldkeypub_path = os.path.join(wallet_path, "coldkeypub.txt")
-        return bittensor.keyfile(path=coldkeypub_path)
+        return bittensor.Keyfile(path=coldkeypub_path)
 
     def set_hotkey(
         self,
         keypair: "bittensor.Keypair",
         encrypt: bool = False,
         overwrite: bool = False,
-    ) -> "bittensor.keyfile":
+    ) -> "bittensor.Keyfile":
         """
         Sets the hotkey for the wallet.
 
@@ -336,7 +336,7 @@ class wallet:
             overwrite (bool, optional): Whether to overwrite an existing hotkey. Defaults to ``False``.
 
         Returns:
-            bittensor.keyfile: The hotkey file.
+            bittensor.Keyfile: The hotkey file.
         """
         self._hotkey = keypair
         self.hotkey_file.set_keypair(keypair, encrypt=encrypt, overwrite=overwrite)
@@ -346,7 +346,7 @@ class wallet:
         keypair: "bittensor.Keypair",
         encrypt: bool = False,
         overwrite: bool = False,
-    ) -> "bittensor.keyfile":
+    ) -> "bittensor.Keyfile":
         """
         Sets the coldkeypub for the wallet.
 
@@ -356,7 +356,7 @@ class wallet:
             overwrite (bool, optional): Whether to overwrite an existing coldkeypub. Defaults to ``False``.
 
         Returns:
-            bittensor.keyfile: The coldkeypub file.
+            bittensor.Keyfile: The coldkeypub file.
         """
         self._coldkeypub = bittensor.Keypair(ss58_address=keypair.ss58_address)
         self.coldkeypub_file.set_keypair(
@@ -368,7 +368,7 @@ class wallet:
         keypair: "bittensor.Keypair",
         encrypt: bool = True,
         overwrite: bool = False,
-    ) -> "bittensor.keyfile":
+    ) -> "bittensor.Keyfile":
         """
         Sets the coldkey for the wallet.
 
@@ -378,7 +378,7 @@ class wallet:
             overwrite (bool, optional): Whether to overwrite an existing coldkey. Defaults to ``False``.
 
         Returns:
-            bittensor.keyfile: The coldkey file.
+            bittensor.Keyfile: The coldkey file.
         """
         self._coldkey = keypair
         self.coldkey_file.set_keypair(

@@ -336,9 +336,9 @@ def create_keyfile(root_path):
         root_path (str): The root path for the keyfile.
 
     Returns:
-        bittensor.keyfile: The created keyfile object.
+        bittensor.Keyfile: The created keyfile object.
     """
-    keyfile = bittensor.keyfile(path=os.path.join(root_path, "keyfile"))
+    keyfile = bittensor.Keyfile(path=os.path.join(root_path, "keyfile"))
 
     mnemonic = bittensor.Keypair.generate_mnemonic(12)
     alice = bittensor.Keypair.create_from_mnemonic(mnemonic)
@@ -371,7 +371,7 @@ def test_create(keyfile_setup_teardown):
     Test case for creating a keyfile and performing various operations on it.
     """
     root_path = keyfile_setup_teardown
-    keyfile = bittensor.keyfile(path=os.path.join(root_path, "keyfile"))
+    keyfile = bittensor.Keyfile(path=os.path.join(root_path, "keyfile"))
 
     mnemonic = bittensor.Keypair.generate_mnemonic(12)
     alice = bittensor.Keypair.create_from_mnemonic(mnemonic)
@@ -424,7 +424,7 @@ def test_legacy_coldkey(keyfile_setup_teardown):
     """
     root_path = keyfile_setup_teardown
     legacy_filename = os.path.join(root_path, "coldlegacy_keyfile")
-    keyfile = bittensor.keyfile(path=legacy_filename)
+    keyfile = bittensor.Keyfile(path=legacy_filename)
     keyfile.make_dirs()
     keyfile_data = b"0x32939b6abc4d81f02dff04d2b8d1d01cc8e71c5e4c7492e4fa6a238cdca3512f"
     with open(legacy_filename, "wb") as keyfile_obj:
@@ -448,10 +448,10 @@ def test_validate_password():
     """
     Test case for the validate_password function.
 
-    This function tests the behavior of the validate_password function from the bittensor.keyfile module.
+    This function tests the behavior of the validate_password function from the bittensor.Keyfile module.
     It checks various scenarios to ensure that the function correctly validates passwords.
     """
-    from bittensor.keyfile import validate_password
+    from bittensor.Keyfile import validate_password
 
     assert validate_password(None) == False
     assert validate_password("passw0rd") == False
@@ -480,7 +480,7 @@ def test_decrypt_keyfile_data_legacy():
     from cryptography.hazmat.primitives import hashes
     from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-    from bittensor.keyfile import decrypt_keyfile_data
+    from bittensor.Keyfile import decrypt_keyfile_data
 
     __SALT = b"Iguesscyborgslikemyselfhaveatendencytobeparanoidaboutourorigins"
 
@@ -509,11 +509,11 @@ def test_user_interface():
     """
     Test the user interface for asking password to encrypt.
 
-    This test case uses the `ask_password_to_encrypt` function from the `bittensor.keyfile` module.
+    This test case uses the `ask_password_to_encrypt` function from the `bittensor.Keyfile` module.
     It mocks the `getpass.getpass` function to simulate user input of passwords.
     The expected result is that the `ask_password_to_encrypt` function returns the correct password.
     """
-    from bittensor.keyfile import ask_password_to_encrypt
+    from bittensor.Keyfile import ask_password_to_encrypt
 
     with mock.patch(
         "getpass.getpass",
@@ -527,7 +527,7 @@ def test_overwriting(keyfile_setup_teardown):
     Test case for overwriting a keypair in the keyfile.
     """
     root_path = keyfile_setup_teardown
-    keyfile = bittensor.keyfile(path=os.path.join(root_path, "keyfile"))
+    keyfile = bittensor.Keyfile(path=os.path.join(root_path, "keyfile"))
     alice = bittensor.Keypair.create_from_uri("/Alice")
     keyfile.set_keypair(
         alice, encrypt=True, overwrite=True, password="thisisafakepassword"
@@ -549,10 +549,10 @@ def test_serialized_keypair_to_keyfile_data(keyfile_setup_teardown):
     serializes a keypair to keyfile data. It then deserializes the keyfile data and asserts
     that the deserialized keypair matches the original keypair.
     """
-    from bittensor.keyfile import serialized_keypair_to_keyfile_data
+    from bittensor.Keyfile import serialized_keypair_to_keyfile_data
 
     root_path = keyfile_setup_teardown
-    keyfile = bittensor.keyfile(path=os.path.join(root_path, "keyfile"))
+    keyfile = bittensor.Keyfile(path=os.path.join(root_path, "keyfile"))
 
     mnemonic = bittensor.Keypair.generate_mnemonic(12)
     keypair = bittensor.Keypair.create_from_mnemonic(mnemonic)
@@ -578,11 +578,11 @@ def test_deserialize_keypair_from_keyfile_data(keyfile_setup_teardown):
     then deserializes the keyfile data to a keypair. It then asserts that the deserialized keypair
     matches the original keypair.
     """
-    from bittensor.keyfile import serialized_keypair_to_keyfile_data
-    from bittensor.keyfile import deserialize_keypair_from_keyfile_data
+    from bittensor.Keyfile import serialized_keypair_to_keyfile_data
+    from bittensor.Keyfile import deserialize_keypair_from_keyfile_data
 
     root_path = keyfile_setup_teardown
-    keyfile = bittensor.keyfile(path=os.path.join(root_path, "keyfile"))
+    keyfile = bittensor.Keyfile(path=os.path.join(root_path, "keyfile"))
 
     mnemonic = bittensor.Keypair.generate_mnemonic(12)
     keypair = bittensor.Keypair.create_from_mnemonic(mnemonic)
