@@ -168,14 +168,14 @@ class Cli:
 
     def __init__(
         self,
-        config: Optional["bittensor.config"] = None,
+        config: Optional["bittensor.Config"] = None,
         args: Optional[List[str]] = None,
     ):
         """
         Initializes a bittensor.CLI object.
 
         Args:
-            config (bittensor.config, optional): The configuration settings for the CLI.
+            config (bittensor.Config, optional): The configuration settings for the CLI.
             args (List[str], optional): List of command line arguments.
         """
         # Turns on console for cli.
@@ -249,7 +249,7 @@ class Cli:
         return parser
 
     @staticmethod
-    def create_config(args: List[str]) -> "bittensor.config":
+    def create_config(args: List[str]) -> "bittensor.Config":
         """
         From the argument parser, add config to bittensor.executor and local config
 
@@ -257,7 +257,7 @@ class Cli:
             args (List[str]): List of command line arguments.
 
         Returns:
-            bittensor.config: The configuration object for Bittensor CLI.
+            bittensor.Config: The configuration object for Bittensor CLI.
         """
         parser = Cli.__create_parser__()
 
@@ -266,15 +266,15 @@ class Cli:
             parser.print_help()
             sys.exit()
 
-        return bittensor.config(parser, args=args)
+        return bittensor.Config(parser, args=args)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         """
         Checks if the essential configuration exists under different command
 
         Args:
-            config (bittensor.config): The configuration settings for the CLI.
+            config (bittensor.Config): The configuration settings for the CLI.
         """
         # Check if command exists, if so, run the corresponding check_config.
         # If command doesn't exist, inform user and exit the program.

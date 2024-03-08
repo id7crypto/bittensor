@@ -127,7 +127,7 @@ class RegisterCommand:
         bittensor.Subtensor.add_args(register_parser)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if (
             not config.is_set("subtensor.network")
             and not config.is_set("subtensor.chain_endpoint")
@@ -324,7 +324,7 @@ class PowRegisterCommand:
         bittensor.Subtensor.add_args(register_parser)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if (
             not config.is_set("subtensor.network")
             and not config.is_set("subtensor.chain_endpoint")
@@ -507,7 +507,7 @@ class RunFaucetCommand:
         bittensor.Subtensor.add_args(run_faucet_parser)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
@@ -565,7 +565,7 @@ class SwapHotkeyCommand:
         bittensor.Subtensor.add_args(swap_hotkey_parser)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if (
             not config.is_set("subtensor.network")
             and not config.is_set("subtensor.chain_endpoint")

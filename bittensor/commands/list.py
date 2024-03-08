@@ -103,7 +103,7 @@ class ListCommand:
         print(root)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         pass
 
     @staticmethod

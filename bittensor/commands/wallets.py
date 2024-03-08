@@ -79,7 +79,7 @@ class RegenColdkeyCommand:
         )
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
@@ -186,7 +186,7 @@ class RegenColdkeypubCommand:
         )
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
@@ -293,7 +293,7 @@ class RegenHotkeyCommand:
         )
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
@@ -406,7 +406,7 @@ class NewHotkeyCommand:
         )
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
@@ -485,7 +485,7 @@ class NewColdkeyCommand:
         )
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
@@ -566,7 +566,7 @@ class WalletCreateCommand:
         )
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
@@ -909,7 +909,7 @@ class WalletBalanceCommand:
         bittensor.Subtensor.add_args(balance_parser)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if (
             not config.is_set("wallet.path")
             and not config.no_prompt
@@ -1009,7 +1009,7 @@ class GetWalletHistoryCommand:
         bittensor.Subtensor.add_args(history_parser)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)

@@ -57,7 +57,7 @@ class UpdateCommand:
             os.system("pip install -e ~/.bittensor/bittensor/")
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.no_prompt:
             answer = Prompt.ask(
                 "This will update the local bittensor package",

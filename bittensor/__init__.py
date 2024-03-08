@@ -241,4 +241,4 @@ configs = [
     Wallet.config(),
     logging.config(),
 ]
-defaults = config.merge_all(configs)
+defaults = Config.merge_all(configs)

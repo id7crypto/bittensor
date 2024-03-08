@@ -106,7 +106,7 @@ class SenateCommand:
         console.print(table)
 
     @classmethod
-    def check_config(cls, config: "bittensor.config"):
+    def check_config(cls, config: "bittensor.Config"):
         None
 
     @classmethod
@@ -268,7 +268,7 @@ class ProposalsCommand:
         console.print(table)
 
     @classmethod
-    def check_config(cls, config: "bittensor.config"):
+    def check_config(cls, config: "bittensor.Config"):
         None
 
     @classmethod
@@ -370,7 +370,7 @@ class ShowVotesCommand:
         console.print(table)
 
     @classmethod
-    def check_config(cls, config: "bittensor.config"):
+    def check_config(cls, config: "bittensor.Config"):
         if config.proposal_hash == "" and not config.no_prompt:
             proposal_hash = Prompt.ask("Enter proposal hash")
             config.proposal_hash = str(proposal_hash)
@@ -454,7 +454,7 @@ class SenateRegisterCommand:
         subtensor.register_senate(wallet=wallet, prompt=not cli.config.no_prompt)
 
     @classmethod
-    def check_config(cls, config: "bittensor.config"):
+    def check_config(cls, config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
@@ -527,7 +527,7 @@ class SenateLeaveCommand:
         subtensor.leave_senate(wallet=wallet, prompt=not cli.config.no_prompt)
 
     @classmethod
-    def check_config(cls, config: "bittensor.config"):
+    def check_config(cls, config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
@@ -620,7 +620,7 @@ class VoteCommand:
         )
 
     @classmethod
-    def check_config(cls, config: "bittensor.config"):
+    def check_config(cls, config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)

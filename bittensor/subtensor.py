@@ -153,10 +153,10 @@ class Subtensor:
     """
 
     @staticmethod
-    def config() -> "bittensor.config":
+    def config() -> "bittensor.Config":
         parser = argparse.ArgumentParser()
         Subtensor.add_args(parser)
-        return bittensor.config(parser, args=[])
+        return bittensor.Config(parser, args=[])
 
     @classmethod
     def help(cls):
@@ -252,7 +252,7 @@ class Subtensor:
                 return "unknown", network
 
     @staticmethod
-    def setup_config(network: str, config: bittensor.config):
+    def setup_config(network: str, config: bittensor.Config):
         if network != None:
             (
                 evaluated_network,
@@ -309,7 +309,7 @@ class Subtensor:
     def __init__(
         self,
         network: Optional[str] = None,
-        config: Optional[bittensor.config] = None,
+        config: Optional[bittensor.Config] = None,
         _mock: bool = False,
         log_verbose: bool = True,
     ) -> None:
@@ -326,7 +326,7 @@ class Subtensor:
 
         Args:
             network (str, optional): The network name to connect to (e.g., ``finney``, ``local``). This can also be the chain endpoint (e.g., ``wss://entrypoint-finney.opentensor.ai:443``) and will be correctly parsed into the network and chain endpoint. If not specified, defaults to the main Bittensor network.
-            config (bittensor.config, optional): Configuration object for the Subtensor. If not provided, a default configuration is used.
+            config (bittensor.Config, optional): Configuration object for the Subtensor. If not provided, a default configuration is used.
             _mock (bool, optional): If set to ``True``, uses a mocked connection for testing purposes.
 
         This initialization sets up the connection to the specified Bittensor network, allowing for various
@@ -338,7 +338,7 @@ class Subtensor:
         # Argument importance: network > chain_endpoint > config.subtensor.chain_endpoint > config.subtensor.network
 
         # Check if network is a config object. (Single argument passed as first positional)
-        if isinstance(network, bittensor.config):
+        if isinstance(network, bittensor.Config):
             if network.subtensor is None:
                 bittensor.logging.warning(
                     "If passing a bittensor config object, it must not be empty. Using default subtensor config."

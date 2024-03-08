@@ -81,7 +81,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
     @staticmethod
     def construct_config():
         parser = bittensor.Cli.__create_parser__()
-        defaults = bittensor.config(parser=parser, args=[])
+        defaults = bittensor.Config(parser=parser, args=[])
         # Parse commands and subcommands
         for command in bittensor.ALL_COMMANDS:
             if (
@@ -90,10 +90,10 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ):
                 for subcommand in bittensor.ALL_COMMANDS[command]["commands"]:
                     defaults.merge(
-                        bittensor.config(parser=parser, args=[command, subcommand])
+                        bittensor.Config(parser=parser, args=[command, subcommand])
                     )
             else:
-                defaults.merge(bittensor.config(parser=parser, args=[command]))
+                defaults.merge(bittensor.Config(parser=parser, args=[command]))
 
         defaults.netuid = 1
         # Always use mock subtensor.

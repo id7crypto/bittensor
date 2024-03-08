@@ -244,7 +244,7 @@ class MetagraphCommand:
         console.print(table)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         check_netuid_set(
             config, subtensor=bittensor.Subtensor(config=config, log_verbose=False)
         )

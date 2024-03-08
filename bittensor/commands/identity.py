@@ -142,7 +142,7 @@ class SetIdentityCommand:
         console.print(table)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("wallet.name") and not config.no_prompt:
             config.wallet.name = Prompt.ask(
                 "Enter wallet name", default=bittensor.defaults.wallet.name
@@ -301,7 +301,7 @@ class GetIdentityCommand:
         console.print(table)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if not config.is_set("key") and not config.no_prompt:
             config.key = Prompt.ask(
                 "Enter coldkey or hotkey ss58 address", default=None

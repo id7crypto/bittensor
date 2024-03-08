@@ -99,7 +99,7 @@ class logging:
 
     def __new__(
         cls,
-        config: "bittensor.config" = None,
+        config: "bittensor.Config" = None,
         debug: bool = None,
         trace: bool = None,
         record_log: bool = None,
@@ -108,7 +108,7 @@ class logging:
         r"""Instantiate Bittensor logging system backend.
 
         Args:
-            config (bittensor.config, optional):
+            config (bittensor.Config, optional):
                 bittensor.logging.config()
             debug (bool, optional):
                 Turn on debug.
@@ -180,11 +180,11 @@ class logging:
         """Get config from the argument parser.
 
         Return:
-            bittensor.config object
+            bittensor.Config object
         """
         parser = argparse.ArgumentParser()
         logging.add_args(parser)
-        return bittensor.config(parser, args=[])
+        return bittensor.Config(parser, args=[])
 
     @classmethod
     def help(cls):
@@ -234,7 +234,7 @@ class logging:
             pass
 
     @classmethod
-    def check_config(cls, config: "bittensor.config"):
+    def check_config(cls, config: "bittensor.Config"):
         """Check config"""
         assert config.logging
 

@@ -44,7 +44,7 @@ class IntListPrompt(PromptBase):
 
 
 def check_netuid_set(
-    config: "bittensor.config",
+    config: "bittensor.Config",
     subtensor: "bittensor.Subtensor",
     allow_none: bool = False,
 ):
@@ -76,7 +76,7 @@ def check_netuid_set(
                 raise ValueError('netuid must be an integer or "None" (if applicable)')
 
 
-def check_for_cuda_reg_config(config: "bittensor.config") -> None:
+def check_for_cuda_reg_config(config: "bittensor.Config") -> None:
     """Checks, when CUDA is available, if the user would like to register with their CUDA device."""
     if torch.cuda.is_available():
         if not config.no_prompt:

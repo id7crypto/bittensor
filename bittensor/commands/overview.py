@@ -723,7 +723,7 @@ class OverviewCommand:
         bittensor.Subtensor.add_args(overview_parser)
 
     @staticmethod
-    def check_config(config: "bittensor.config"):
+    def check_config(config: "bittensor.Config"):
         if (
             not config.is_set("wallet.name")
             and not config.no_prompt

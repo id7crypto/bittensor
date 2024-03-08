@@ -109,16 +109,16 @@ class Wallet:
     """
 
     @classmethod
-    def config(cls) -> "bittensor.config":
+    def config(cls) -> "bittensor.Config":
         """
         Get config from the argument parser.
 
         Returns:
-            bittensor.config: Config object.
+            bittensor.Config: Config object.
         """
         parser = argparse.ArgumentParser()
         cls.add_args(parser)
-        return bittensor.config(parser, args=[])
+        return bittensor.Config(parser, args=[])
 
     @classmethod
     def help(cls):
@@ -178,7 +178,7 @@ class Wallet:
         name: str = None,
         hotkey: str = None,
         path: str = None,
-        config: "bittensor.config" = None,
+        config: "bittensor.Config" = None,
     ):
         r"""
         Initialize the bittensor wallet object containing a hot and coldkey.
@@ -187,7 +187,7 @@ class Wallet:
             name (str, optional): The name of the wallet to unlock for running bittensor. Defaults to ``default``.
             hotkey (str, optional): The name of hotkey used to running the miner. Defaults to ``default``.
             path (str, optional): The path to your bittensor wallets. Defaults to ``~/.bittensor/wallets/``.
-            config (bittensor.config, optional): bittensor.Wallet.config(). Defaults to ``None``.
+            config (bittensor.Config, optional): bittensor.Wallet.config(). Defaults to ``None``.
         """
         # Fill config from passed args using command line defaults.
         if config is None:

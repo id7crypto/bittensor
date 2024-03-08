@@ -253,7 +253,7 @@ class Axon:
 
     Args:
         wallet (bittensor.Wallet, optional): Wallet with hotkey and coldkeypub.
-        config (bittensor.config, optional): Configuration parameters for the Axon.
+        config (bittensor.Config, optional): Configuration parameters for the Axon.
         port (int, optional): Port for server binding.
         ip (str, optional): Binding IP address.
         external_ip (str, optional): External IP address to broadcast.
@@ -290,7 +290,7 @@ class Axon:
     def __init__(
         self,
         wallet: Optional["bittensor.Wallet"] = None,
-        config: Optional["bittensor.config"] = None,
+        config: Optional["bittensor.Config"] = None,
         port: Optional[int] = None,
         ip: Optional[str] = None,
         external_ip: Optional[str] = None,
@@ -299,7 +299,7 @@ class Axon:
     ):
         r"""Creates a new bittensor.Axon object from passed arguments.
         Args:
-            config (:obj:`Optional[bittensor.config]`, `optional`):
+            config (:obj:`Optional[bittensor.Config]`, `optional`):
                 bittensor.Axon.config()
             wallet (:obj:`Optional[bittensor.Wallet]`, `optional`):
                 bittensor wallet with hotkey and coldkeypub.
@@ -575,16 +575,16 @@ class Axon:
         return self
 
     @classmethod
-    def config(cls) -> "bittensor.config":
+    def config(cls) -> "bittensor.Config":
         """
         Parses the command-line arguments to form a Bittensor configuration object.
 
         Returns:
-            bittensor.config: Configuration object with settings from command-line arguments.
+            bittensor.Config: Configuration object with settings from command-line arguments.
         """
         parser = argparse.ArgumentParser()
         Axon.add_args(parser)  # Add specific Axon-related arguments
-        return bittensor.config(parser, args=[])
+        return bittensor.Config(parser, args=[])
 
     @classmethod
     def help(cls):
@@ -717,12 +717,12 @@ class Axon:
         return body_dict
 
     @classmethod
-    def check_config(cls, config: "bittensor.config"):
+    def check_config(cls, config: "bittensor.Config"):
         """
         This method checks the configuration for the Axon's port and wallet.
 
         Args:
-            config (bittensor.config): The config object holding Axon settings.
+            config (bittensor.Config): The config object holding Axon settings.
 
         Raises:
             AssertionError: If the Axon or external ports are not in range [1024, 65535]
