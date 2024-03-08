@@ -81,7 +81,7 @@ class dendrite(torch.nn.Module):
         >>>     print(d)
         >>>     d( <axon> ) # ping axon
         >>>     d( [<axons>] ) # ping multiple
-        >>>     d( bittensor.axon(), bittensor.Synapse )
+        >>>     d( bittensor.Axon(), bittensor.Synapse )
 
     However, you are able to safely call :func:`dendrite.query()` without a context manager in a synchronous setting.
 
@@ -91,7 +91,7 @@ class dendrite(torch.nn.Module):
         >>> print(d)
         >>> d( <axon> ) # ping axon
         >>> d( [<axons>] ) # ping multiple
-        >>> d( bittensor.axon(), bittensor.Synapse )
+        >>> d( bittensor.Axon(), bittensor.Synapse )
     """
 
     def __init__(
@@ -258,7 +258,7 @@ class dendrite(torch.nn.Module):
         Logs information about outgoing requests for debugging purposes.
 
         This internal method logs key details about each outgoing request, including the size of the
-        request, the name of the synapse, the axon's details, and a success indicator. This information
+        request, the name of the synapse, the Axon's details, and a success indicator. This information
         is crucial for monitoring and debugging network activity within the Bittensor network.
 
         To turn on debug messages, set the environment variable BITTENSOR_DEBUG to ``1``, or call the bittensor debug method like so::
@@ -278,7 +278,7 @@ class dendrite(torch.nn.Module):
         Logs information about incoming responses for debugging and monitoring.
 
         Similar to :func:`_log_outgoing_request`, this method logs essential details of the incoming responses,
-        including the size of the response, synapse name, axon details, status code, and status message.
+        including the size of the response, synapse name, Axon details, status code, and status message.
         This logging is vital for troubleshooting and understanding the network interactions in Bittensor.
 
         Args:
@@ -299,13 +299,13 @@ class dendrite(torch.nn.Module):
         Cleanup is automatically handled and sessions are closed upon completed requests.
 
         Args:
-            axons (Union[List[Union['bittensor.AxonInfo', 'bittensor.axon']], Union['bittensor.AxonInfo', 'bittensor.axon']]):
+            axons (Union[List[Union['bittensor.AxonInfo', 'bittensor.Axon']], Union['bittensor.AxonInfo', 'bittensor.Axon']]):
                 The list of target Axon information.
             synapse (bittensor.Synapse, optional): The Synapse object. Defaults to :func:`bittensor.Synapse()`.
             timeout (float, optional): The request timeout duration in seconds.
                 Defaults to ``12.0`` seconds.
         Returns:
-            Union[bittensor.Synapse, List[bittensor.Synapse]]: If a single target axon is provided, returns the response from that axon. If multiple target axons are provided, returns a list of responses from all target axons.
+            Union[bittensor.Synapse, List[bittensor.Synapse]]: If a single target Axon is provided, returns the response from that Axon. If multiple target axons are provided, returns a list of responses from all target axons.
         """
         result = None
         try:
@@ -323,8 +323,8 @@ class dendrite(torch.nn.Module):
     async def forward(
         self,
         axons: Union[
-            List[Union[bittensor.AxonInfo, bittensor.axon]],
-            Union[bittensor.AxonInfo, bittensor.axon],
+            List[Union[bittensor.AxonInfo, bittensor.Axon]],
+            Union[bittensor.AxonInfo, bittensor.Axon],
         ],
         synapse: bittensor.Synapse = bittensor.Synapse(),
         timeout: float = 12,
@@ -368,7 +368,7 @@ class dendrite(torch.nn.Module):
             >>>     print(chunk)
 
         Args:
-            axons (Union[List[Union['bittensor.AxonInfo', 'bittensor.axon']], Union['bittensor.AxonInfo', 'bittensor.axon']]):
+            axons (Union[List[Union['bittensor.AxonInfo', 'bittensor.Axon']], Union['bittensor.AxonInfo', 'bittensor.Axon']]):
                 The target Axons to send requests to. Can be a single Axon or a list of Axons.
             synapse (bittensor.Synapse, optional): The Synapse object encapsulating the data. Defaults to a new :func:`bittensor.Synapse` instance.
             timeout (float, optional): Maximum duration to wait for a response from an Axon in seconds. Defaults to ``12.0``.
@@ -474,7 +474,7 @@ class dendrite(torch.nn.Module):
 
     async def call(
         self,
-        target_axon: Union[bittensor.AxonInfo, bittensor.axon],
+        target_axon: Union[bittensor.AxonInfo, bittensor.Axon],
         synapse: bittensor.Synapse = bittensor.Synapse(),
         timeout: float = 12.0,
         deserialize: bool = True,
@@ -487,7 +487,7 @@ class dendrite(torch.nn.Module):
         returns the updated Synapse object.
 
         Args:
-            target_axon (Union['bittensor.AxonInfo', 'bittensor.axon']): The target Axon to send the request to.
+            target_axon (Union['bittensor.AxonInfo', 'bittensor.Axon']): The target Axon to send the request to.
             synapse (bittensor.Synapse, optional): The Synapse object encapsulating the data. Defaults to a new :func:`bittensor.Synapse` instance.
             timeout (float, optional): Maximum duration to wait for a response from the Axon in seconds. Defaults to ``12.0``.
             deserialize (bool, optional): Determines if the received response should be deserialized. Defaults to ``True``.
@@ -500,7 +500,7 @@ class dendrite(torch.nn.Module):
         start_time = time.time()
         target_axon = (
             target_axon.info()
-            if isinstance(target_axon, bittensor.axon)
+            if isinstance(target_axon, bittensor.Axon)
             else target_axon
         )
 
@@ -549,7 +549,7 @@ class dendrite(torch.nn.Module):
 
     async def call_stream(
         self,
-        target_axon: Union[bittensor.AxonInfo, bittensor.axon],
+        target_axon: Union[bittensor.AxonInfo, bittensor.Axon],
         synapse: bittensor.StreamingSynapse = bittensor.Synapse(),  # type: ignore
         timeout: float = 12.0,
         deserialize: bool = True,
@@ -563,7 +563,7 @@ class dendrite(torch.nn.Module):
         data to be transmitted.
 
         Args:
-            target_axon (Union['bittensor.AxonInfo', 'bittensor.axon']): The target Axon to send the request to.
+            target_axon (Union['bittensor.AxonInfo', 'bittensor.Axon']): The target Axon to send the request to.
             synapse (bittensor.Synapse, optional): The Synapse object encapsulating the data. Defaults to a new :func:`bittensor.Synapse` instance.
             timeout (float, optional): Maximum duration to wait for a response (or a chunk of the response) from the Axon in seconds. Defaults to ``12.0``.
             deserialize (bool, optional): Determines if each received chunk should be deserialized. Defaults to ``True``.
@@ -577,7 +577,7 @@ class dendrite(torch.nn.Module):
         start_time = time.time()
         target_axon = (
             target_axon.info()
-            if isinstance(target_axon, bittensor.axon)
+            if isinstance(target_axon, bittensor.Axon)
             else target_axon
         )
 

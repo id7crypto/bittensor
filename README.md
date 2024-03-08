@@ -284,7 +284,7 @@ def topk( synapse: Topk ) -> Topk:
     return synapse
 
 # Attach the forward function to the axon and start.
-axon = bittensor.axon().attach( topk ).start()
+axon = bittensor.Axon().attach( topk ).start()
 ```
 
 Axon: Serves Synapse protocols with custom blacklist, priority and verify functions.
@@ -318,7 +318,7 @@ def prioritize_my_synape( synapse: MySynapse ) -> float:
     return 1.0 
 
 # Initialize Axon object with a custom configuration
-my_axon = bittensor.axon(config=my_config, wallet=my_wallet, port=9090, ip="192.0.2.0", external_ip="203.0.113.0", external_port=7070)
+my_axon = bittensor.Axon(config=my_config, wallet=my_wallet, port=9090, ip="192.0.2.0", external_ip="203.0.113.0", external_port=7070)
 
 # Attach the endpoint with the specified verification and forwarding functions  
 my_axon.attach(
@@ -340,7 +340,7 @@ await d( <axon> )
 # ping multiple axon endpoints
 await d( [<axons>] ) 
 # Send custom synapse request to axon.
-await d( bittensor.axon(), bittensor.Synapse() ) 
+await d( bittensor.Axon(), bittensor.Synapse() ) 
 # Query all metagraph objects.
 await d( meta.axons, bittensor.Synapse() ) 
 ```

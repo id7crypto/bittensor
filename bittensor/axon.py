@@ -151,15 +151,15 @@ class FastAPIThreadedServer(uvicorn.Server):
             self.should_exit = True
 
 
-class axon:
+class Axon:
     """
-    The ``axon`` class in Bittensor is a fundamental component that serves as the server-side interface for a neuron within the Bittensor network.
+    The ``Axon`` class in Bittensor is a fundamental component that serves as the server-side interface for a neuron within the Bittensor network.
 
     This class is responsible for managing
     incoming requests from other neurons and implements various mechanisms to ensure efficient
     and secure network interactions.
 
-    An axon relies on a FastAPI router to create endpoints for different message types. These
+    An Axon relies on a FastAPI router to create endpoints for different message types. These
     endpoints are crucial for handling various request types that a neuron might receive. The
     class is designed to be flexible and customizable, allowing users to specify custom rules
     for forwarding, blacklisting, prioritizing, and verifying incoming requests. The class also
@@ -212,7 +212,7 @@ class axon:
             return 1.0
 
         # Initialize Axon object with a custom configuration
-        my_axon = bittensor.axon(
+        my_Axon = bittensor.Axon(
             config=my_config,
             wallet=my_wallet,
             port=9090,
@@ -222,21 +222,21 @@ class axon:
         )
 
         # Attach the endpoint with the specified verification and forward functions.
-        my_axon.attach(
+        my_Axon.attach(
             forward_fn = forward_my_synapse,
             verify_fn = verify_my_synapse,
             blacklist_fn = blacklist_my_synapse,
             priority_fn = prioritize_my_synape
         )
 
-        # Serve and start your axon.
-        my_axon.serve(
+        # Serve and start your Axon.
+        my_Axon.serve(
             netuid = ...
             subtensor = ...
         ).start()
 
         # If you have multiple forwarding functions, you can chain attach them.
-        my_axon.attach(
+        my_Axon.attach(
             forward_fn = forward_my_synapse,
             verify_fn = verify_my_synapse,
             blacklist_fn = blacklist_my_synapse,
@@ -253,7 +253,7 @@ class axon:
 
     Args:
         wallet (bittensor.wallet, optional): Wallet with hotkey and coldkeypub.
-        config (bittensor.config, optional): Configuration parameters for the axon.
+        config (bittensor.config, optional): Configuration parameters for the Axon.
         port (int, optional): Port for server binding.
         ip (str, optional): Binding IP address.
         external_ip (str, optional): External IP address to broadcast.
@@ -261,7 +261,7 @@ class axon:
         max_workers (int, optional): Number of active threads for request handling.
 
     Returns:
-        bittensor.axon: An instance of the axon class configured as per the provided arguments.
+        bittensor.Axon: An instance of the Axon class configured as per the provided arguments.
 
     Note:
         This class is a core part of Bittensor's decentralized network for machine intelligence,
@@ -300,7 +300,7 @@ class axon:
         r"""Creates a new bittensor.Axon object from passed arguments.
         Args:
             config (:obj:`Optional[bittensor.config]`, `optional`):
-                bittensor.axon.config()
+                bittensor.Axon.config()
             wallet (:obj:`Optional[bittensor.wallet]`, `optional`):
                 bittensor wallet with hotkey and coldkeypub.
             port (:type:`Optional[int]`, `optional`):
@@ -316,45 +316,45 @@ class axon:
         """
         # Build and check config.
         if config is None:
-            config = axon.config()
+            config = Axon.config()
         config = copy.deepcopy(config)
-        config.axon.ip = ip or config.axon.get("ip", bittensor.defaults.axon.ip)
-        config.axon.port = port or config.axon.get("port", bittensor.defaults.axon.port)
-        config.axon.external_ip = external_ip or config.axon.get(
-            "external_ip", bittensor.defaults.axon.external_ip
+        config.Axon.ip = ip or config.Axon.get("ip", bittensor.defaults.Axon.ip)
+        config.Axon.port = port or config.Axon.get("port", bittensor.defaults.Axon.port)
+        config.Axon.external_ip = external_ip or config.Axon.get(
+            "external_ip", bittensor.defaults.Axon.external_ip
         )
-        config.axon.external_port = external_port or config.axon.get(
-            "external_port", bittensor.defaults.axon.external_port
+        config.Axon.external_port = external_port or config.Axon.get(
+            "external_port", bittensor.defaults.Axon.external_port
         )
-        config.axon.max_workers = max_workers or config.axon.get(
-            "max_workers", bittensor.defaults.axon.max_workers
+        config.Axon.max_workers = max_workers or config.Axon.get(
+            "max_workers", bittensor.defaults.Axon.max_workers
         )
-        axon.check_config(config)
+        Axon.check_config(config)
         self.config = config  # type: ignore [method-assign]
 
         # Get wallet or use default.
         self.wallet = wallet or bittensor.wallet()
 
-        # Build axon objects.
+        # Build Axon objects.
         self.uuid = str(uuid.uuid1())
-        self.ip = self.config.axon.ip
-        self.port = self.config.axon.port
+        self.ip = self.config.Axon.ip
+        self.port = self.config.Axon.port
         self.external_ip = (
-            self.config.axon.external_ip
-            if self.config.axon.external_ip != None
+            self.config.Axon.external_ip
+            if self.config.Axon.external_ip != None
             else bittensor.utils.networking.get_external_ip()
         )
         self.external_port = (
-            self.config.axon.external_port
-            if self.config.axon.external_port != None
-            else self.config.axon.port
+            self.config.Axon.external_port
+            if self.config.Axon.external_port != None
+            else self.config.Axon.port
         )
-        self.full_address = str(self.config.axon.ip) + ":" + str(self.config.axon.port)
+        self.full_address = str(self.config.Axon.ip) + ":" + str(self.config.Axon.port)
         self.started = False
 
         # Build middleware
         self.thread_pool = bittensor.PriorityThreadPoolExecutor(
-            max_workers=self.config.axon.max_workers
+            max_workers=self.config.Axon.max_workers
         )
         self.nonces: Dict[str, int] = {}
 
@@ -370,14 +370,14 @@ class axon:
         self.app = FastAPI()
         log_level = "trace" if bittensor.logging.__trace_on__ else "critical"
         self.fast_config = uvicorn.Config(
-            self.app, host="0.0.0.0", port=self.config.axon.port, log_level=log_level
+            self.app, host="0.0.0.0", port=self.config.Axon.port, log_level=log_level
         )
         self.fast_server = FastAPIThreadedServer(config=self.fast_config)
         self.router = APIRouter()
         self.app.include_router(self.router)
 
         # Build ourselves as the middleware.
-        self.app.add_middleware(AxonMiddleware, axon=self)
+        self.app.add_middleware(AxonMiddleware, Axon=self)
 
         # Attach default forward.
         def ping(r: bittensor.Synapse) -> bittensor.Synapse:
@@ -388,7 +388,7 @@ class axon:
         )
 
     def info(self) -> "bittensor.AxonInfo":
-        """Returns the axon info object associated with this axon."""
+        """Returns the Axon info object associated with this Axon."""
         return bittensor.AxonInfo(
             version=bittensor.__version_as_int__,
             ip=self.external_ip,
@@ -407,7 +407,7 @@ class axon:
         blacklist_fn: Optional[Callable] = None,
         priority_fn: Optional[Callable] = None,
         verify_fn: Optional[Callable] = None,
-    ) -> "bittensor.axon":
+    ) -> "bittensor.Axon":
         """
 
         Attaches custom functions to the Axon server for handling incoming requests. This method enables
@@ -417,7 +417,7 @@ class axon:
         Registers an API endpoint to the FastAPI application router.
         It uses the name of the first argument of the :func:`forward_fn` function as the endpoint name.
 
-        The attach method in the Bittensor framework's axon class is a crucial function for registering
+        The attach method in the Bittensor framework's Axon class is a crucial function for registering
         API endpoints to the Axon's FastAPI application router. This method allows the Axon server to
         define how it handles incoming requests by attaching functions for forwarding, verifying,
         blacklisting, and prioritizing requests. It's a key part of customizing the server's behavior
@@ -457,8 +457,8 @@ class axon:
                 # Custom logic for verifying the request
                 pass
 
-            my_axon = bittensor.axon(...)
-            my_axon.attach(forward_fn=forward_custom, verify_fn=verify_custom)
+            my_Axon = bittensor.Axon(...)
+            my_Axon.attach(forward_fn=forward_custom, verify_fn=verify_custom)
 
         Note:
             The :func:`attach` method is fundamental in setting up the Axon server's request handling capabilities,
@@ -583,7 +583,7 @@ class axon:
             bittensor.config: Configuration object with settings from command-line arguments.
         """
         parser = argparse.ArgumentParser()
-        axon.add_args(parser)  # Add specific axon-related arguments
+        Axon.add_args(parser)  # Add specific Axon-related arguments
         return bittensor.config(parser, args=[])
 
     @classmethod
@@ -592,7 +592,7 @@ class axon:
         Prints the help text (list of command-line arguments and their descriptions) to stdout.
         """
         parser = argparse.ArgumentParser()
-        axon.add_args(parser)  # Add specific axon-related arguments
+        Axon.add_args(parser)  # Add specific Axon-related arguments
         print(cls.__new__.__doc__)  # Print docstring of the class
         parser.print_help()  # Print parser's help text
 
@@ -611,45 +611,45 @@ class axon:
         prefix_str = "" if prefix is None else prefix + "."
         try:
             # Get default values from environment variables or use default values
-            default_axon_port = os.getenv("BT_AXON_PORT") or 8091
-            default_axon_ip = os.getenv("BT_AXON_IP") or "[::]"
-            default_axon_external_port = os.getenv("BT_AXON_EXTERNAL_PORT") or None
-            default_axon_external_ip = os.getenv("BT_AXON_EXTERNAL_IP") or None
-            default_axon_max_workers = os.getenv("BT_AXON_MAX_WORERS") or 10
+            default_Axon_port = os.getenv("BT_AXON_PORT") or 8091
+            default_Axon_ip = os.getenv("BT_AXON_IP") or "[::]"
+            default_Axon_external_port = os.getenv("BT_AXON_EXTERNAL_PORT") or None
+            default_Axon_external_ip = os.getenv("BT_AXON_EXTERNAL_IP") or None
+            default_Axon_max_workers = os.getenv("BT_AXON_MAX_WORERS") or 10
 
             # Add command-line arguments to the parser
             parser.add_argument(
-                "--" + prefix_str + "axon.port",
+                "--" + prefix_str + "Axon.port",
                 type=int,
-                help="The local port this axon endpoint is bound to. i.e. 8091",
-                default=default_axon_port,
+                help="The local port this Axon endpoint is bound to. i.e. 8091",
+                default=default_Axon_port,
             )
             parser.add_argument(
-                "--" + prefix_str + "axon.ip",
+                "--" + prefix_str + "Axon.ip",
                 type=str,
-                help="""The local ip this axon binds to. ie. [::]""",
-                default=default_axon_ip,
+                help="""The local ip this Axon binds to. ie. [::]""",
+                default=default_Axon_ip,
             )
             parser.add_argument(
-                "--" + prefix_str + "axon.external_port",
+                "--" + prefix_str + "Axon.external_port",
                 type=int,
                 required=False,
-                help="""The public port this axon broadcasts to the network. i.e. 8091""",
-                default=default_axon_external_port,
+                help="""The public port this Axon broadcasts to the network. i.e. 8091""",
+                default=default_Axon_external_port,
             )
             parser.add_argument(
-                "--" + prefix_str + "axon.external_ip",
+                "--" + prefix_str + "Axon.external_ip",
                 type=str,
                 required=False,
-                help="""The external ip this axon broadcasts to the network to. ie. [::]""",
-                default=default_axon_external_ip,
+                help="""The external ip this Axon broadcasts to the network to. ie. [::]""",
+                default=default_Axon_external_ip,
             )
             parser.add_argument(
-                "--" + prefix_str + "axon.max_workers",
+                "--" + prefix_str + "Axon.max_workers",
                 type=int,
                 help="""The maximum number connection handler threads working simultaneously on this endpoint.
                         The grpc server distributes new worker threads to service requests up to this number.""",
-                default=default_axon_max_workers,
+                default=default_Axon_max_workers,
             )
 
         except argparse.ArgumentError:
@@ -696,7 +696,7 @@ class axon:
         body = await request.body()
         request_body = body.decode() if isinstance(body, bytes) else body
 
-        # Gather the required field names from the axon's required_hash_fields dict
+        # Gather the required field names from the Axon's required_hash_fields dict
         request_name = request.url.path.split("/")[1]
         required_hash_fields = self.required_hash_fields[request_name]
 
@@ -719,20 +719,20 @@ class axon:
     @classmethod
     def check_config(cls, config: "bittensor.config"):
         """
-        This method checks the configuration for the axon's port and wallet.
+        This method checks the configuration for the Axon's port and wallet.
 
         Args:
-            config (bittensor.config): The config object holding axon settings.
+            config (bittensor.config): The config object holding Axon settings.
 
         Raises:
-            AssertionError: If the axon or external ports are not in range [1024, 65535]
+            AssertionError: If the Axon or external ports are not in range [1024, 65535]
         """
         assert (
-            config.axon.port > 1024 and config.axon.port < 65535
+            config.Axon.port > 1024 and config.Axon.port < 65535
         ), "Axon port must be in range [1024, 65535]"
 
-        assert config.axon.external_port is None or (
-            config.axon.external_port > 1024 and config.axon.external_port < 65535
+        assert config.Axon.external_port is None or (
+            config.Axon.external_port > 1024 and config.Axon.external_port < 65535
         ), "External port must be in range [1024, 65535]"
 
     def to_string(self):
@@ -767,7 +767,7 @@ class axon:
         """
         self.stop()
 
-    def start(self) -> "bittensor.axon":
+    def start(self) -> "bittensor.Axon":
         """
         Starts the Axon server and its underlying FastAPI server thread, transitioning the state of the
         Axon instance to ``started``. This method initiates the server's ability to accept and process
@@ -778,13 +778,13 @@ class axon:
         within the Bittensor network.
 
         Returns:
-            bittensor.axon: The Axon instance in the 'started' state.
+            bittensor.Axon: The Axon instance in the 'started' state.
 
         Example::
 
-            my_axon = bittensor.axon(...)
-            ... # setup axon, attach functions, etc.
-            my_axon.start()  # Starts the axon server
+            my_Axon = bittensor.Axon(...)
+            ... # setup Axon, attach functions, etc.
+            my_Axon.start()  # Starts the Axon server
 
         Note:
             After invoking this method, the Axon is ready to handle requests as per its configured endpoints and custom logic.
@@ -793,7 +793,7 @@ class axon:
         self.started = True
         return self
 
-    def stop(self) -> "bittensor.axon":
+    def stop(self) -> "bittensor.Axon":
         """
         Stops the Axon server and its underlying GRPC server thread, transitioning the state of the Axon
         instance to ``stopped``. This method ceases the server's ability to accept new network requests,
@@ -804,14 +804,14 @@ class axon:
         shut down or needs to temporarily go offline.
 
         Returns:
-            bittensor.axon: The Axon instance in the 'stopped' state.
+            bittensor.Axon: The Axon instance in the 'stopped' state.
 
         Example::
 
-            my_axon = bittensor.axon(...)
-            my_axon.start()
+            my_Axon = bittensor.Axon(...)
+            my_Axon.start()
             ...
-            my_axon.stop()  # Stops the axon server
+            my_Axon.stop()  # Stops the Axon server
 
 
         Note:
@@ -823,7 +823,7 @@ class axon:
 
     def serve(
         self, netuid: int, subtensor: Optional[bittensor.Subtensor] = None
-    ) -> "bittensor.axon":
+    ) -> "bittensor.Axon":
         """
         Serves the Axon on the specified subtensor connection using the configured wallet. This method
         registers the Axon with a specific subnet within the Bittensor network, identified by the ``netuid``.
@@ -835,20 +835,20 @@ class axon:
             subtensor (bittensor.Subtensor, optional): The subtensor connection to use for serving. If not provided, a new connection is established based on default configurations.
 
         Returns:
-            bittensor.axon: The Axon instance that is now actively serving on the specified subtensor.
+            bittensor.Axon: The Axon instance that is now actively serving on the specified subtensor.
 
         Example::
 
-            my_axon = bittensor.axon(...)
+            my_Axon = bittensor.Axon(...)
             subtensor = bt.subtensor(network="local") # Local by default
-            my_axon.serve(netuid=1, subtensor=subtensor)  # Serves the axon on subnet with netuid 1
+            my_Axon.serve(netuid=1, subtensor=subtensor)  # Serves the Axon on subnet with netuid 1
 
         Note:
             The ``serve`` method is crucial for integrating the Axon into the Bittensor network, allowing it
             to start receiving and processing requests from other neurons.
         """
-        if subtensor is not None and hasattr(subtensor, "serve_axon"):
-            subtensor.serve_axon(netuid=netuid, axon=self)
+        if subtensor is not None and hasattr(subtensor, "serve_Axon"):
+            subtensor.serve_Axon(netuid=netuid, Axon=self)
         return self
 
     async def default_verify(self, synapse: bittensor.Synapse):
@@ -935,7 +935,7 @@ class axon:
 
 
 def create_error_response(synapse: bittensor.Synapse):
-    if synapse.axon is None:
+    if synapse.Axon is None:
         return JSONResponse(
             status_code=400,
             headers=synapse.to_headers(),
@@ -943,9 +943,9 @@ def create_error_response(synapse: bittensor.Synapse):
         )
     else:
         return JSONResponse(
-            status_code=synapse.axon.status_code or 400,
+            status_code=synapse.Axon.status_code or 400,
             headers=synapse.to_headers(),
-            content={"message": synapse.axon.status_message},
+            content={"message": synapse.Axon.status_message},
         )
 
 
@@ -966,14 +966,14 @@ def log_and_handle_error(
     # Log the detailed error message for internal use
     bittensor.logging.error(detailed_error_message)
 
-    if synapse.axon is None:
+    if synapse.Axon is None:
         raise SynapseParsingError(detailed_error_message)
     # Set a user-friendly error message
-    synapse.axon.status_code = status_code
-    synapse.axon.status_message = error_message
+    synapse.Axon.status_code = status_code
+    synapse.Axon.status_message = error_message
 
     # Calculate the processing time by subtracting the start time from the current time.
-    synapse.axon.process_time = str(time.time() - start_time)  # type: ignore
+    synapse.Axon.process_time = str(time.time() - start_time)  # type: ignore
 
     return synapse
 
@@ -992,23 +992,23 @@ class AxonMiddleware(BaseHTTPMiddleware):
 
     Args:
         app (FastAPI): An instance of the FastAPI application to which this middleware is attached.
-        axon (bittensor.axon): The Axon instance that will process the requests.
+        Axon (bittensor.Axon): The Axon instance that will process the requests.
 
     The middleware operates by intercepting incoming requests, performing necessary preprocessing
     (like verification and priority assessment), executing the request through the Axon's endpoints, and
     then handling any postprocessing steps such as response header updating and logging.
     """
 
-    def __init__(self, app: "AxonMiddleware", axon: "bittensor.axon"):
+    def __init__(self, app: "AxonMiddleware", Axon: "bittensor.Axon"):
         """
         Initialize the AxonMiddleware class.
 
         Args:
         app (object): An instance of the application where the middleware processor is used.
-        axon (object): The axon instance used to process the requests.
+        Axon (object): The Axon instance used to process the requests.
         """
         super().__init__(app)
-        self.axon = axon
+        self.Axon = Axon
 
     async def dispatch(
         self, request: Request, call_next: RequestResponseEndpoint
@@ -1048,11 +1048,11 @@ class AxonMiddleware(BaseHTTPMiddleware):
             # Logs the start of the request processing
             if synapse.dendrite is not None:
                 bittensor.logging.trace(
-                    f"axon     | <-- | {request.headers.get('content-length', -1)} B | {synapse.name} | {synapse.dendrite.hotkey} | {synapse.dendrite.ip}:{synapse.dendrite.port} | 200 | Success "
+                    f"Axon     | <-- | {request.headers.get('content-length', -1)} B | {synapse.name} | {synapse.dendrite.hotkey} | {synapse.dendrite.ip}:{synapse.dendrite.port} | 200 | Success "
                 )
             else:
                 bittensor.logging.trace(
-                    f"axon     | <-- | {request.headers.get('content-length', -1)} B | {synapse.name} | None | None | 200 | Success "
+                    f"Axon     | <-- | {request.headers.get('content-length', -1)} B | {synapse.name} | None | None | 200 | Success "
                 )
 
             # Call the blacklist function
@@ -1123,17 +1123,17 @@ class AxonMiddleware(BaseHTTPMiddleware):
         finally:
             # Log the details of the processed synapse, including total size, name, hotkey, IP, port,
             # status code, and status message, using the debug level of the logger.
-            if synapse.dendrite is not None and synapse.axon is not None:
+            if synapse.dendrite is not None and synapse.Axon is not None:
                 bittensor.logging.trace(
-                    f"axon     | --> | {response.headers.get('content-length', -1)} B | {synapse.name} | {synapse.dendrite.hotkey} | {synapse.dendrite.ip}:{synapse.dendrite.port}  | {synapse.axon.status_code} | {synapse.axon.status_message}"
+                    f"Axon     | --> | {response.headers.get('content-length', -1)} B | {synapse.name} | {synapse.dendrite.hotkey} | {synapse.dendrite.ip}:{synapse.dendrite.port}  | {synapse.Axon.status_code} | {synapse.Axon.status_message}"
                 )
-            elif synapse.axon is not None:
+            elif synapse.Axon is not None:
                 bittensor.logging.trace(
-                    f"axon     | --> | {response.headers.get('content-length', -1)} B | {synapse.name} | None | None | {synapse.axon.status_code} | {synapse.axon.status_message}"
+                    f"Axon     | --> | {response.headers.get('content-length', -1)} B | {synapse.name} | None | None | {synapse.Axon.status_code} | {synapse.Axon.status_message}"
                 )
             else:
                 bittensor.logging.trace(
-                    f"axon     | --> | {response.headers.get('content-length', -1)} B | {synapse.name} | None | None | 200 | Success "
+                    f"Axon     | --> | {response.headers.get('content-length', -1)} B | {synapse.name} | None | None | 200 | Success "
                 )
 
             # Return the response to the requester.
@@ -1171,10 +1171,10 @@ class AxonMiddleware(BaseHTTPMiddleware):
 
         # Creates a synapse instance from the headers using the appropriate forward class type
         # based on the request name obtained from the URL path.
-        request_synapse = self.axon.forward_class_types.get(request_name)
+        request_synapse = self.Axon.forward_class_types.get(request_name)
         if request_synapse is None:
             raise UnknownSynapseError(
-                f"Synapse name '{request_name}' not found. Available synapses {list(self.axon.forward_class_types.keys())}"
+                f"Synapse name '{request_name}' not found. Available synapses {list(self.Axon.forward_class_types.keys())}"
             )
 
         try:
@@ -1185,11 +1185,11 @@ class AxonMiddleware(BaseHTTPMiddleware):
             )
         synapse.name = request_name
 
-        # Fills the local axon information into the synapse.
-        synapse.axon.__dict__.update(
+        # Fills the local Axon information into the synapse.
+        synapse.Axon.__dict__.update(
             {
                 "version": str(bittensor.__version_as_int__),
-                "uuid": str(self.axon.uuid),
+                "uuid": str(self.Axon.uuid),
                 "nonce": f"{time.monotonic_ns()}",
                 "status_message": "Success",
                 "status_code": "100",
@@ -1201,9 +1201,9 @@ class AxonMiddleware(BaseHTTPMiddleware):
             {"port": str(request.client.port), "ip": str(request.client.host)}  # type: ignore
         )
 
-        # Signs the synapse from the axon side using the wallet hotkey.
-        message = f"{synapse.axon.nonce}.{synapse.dendrite.hotkey}.{synapse.axon.hotkey}.{synapse.axon.uuid}"
-        synapse.axon.signature = f"0x{self.axon.wallet.hotkey.sign(message).hex()}"
+        # Signs the synapse from the Axon side using the wallet hotkey.
+        message = f"{synapse.Axon.nonce}.{synapse.dendrite.hotkey}.{synapse.Axon.hotkey}.{synapse.Axon.uuid}"
+        synapse.Axon.signature = f"0x{self.Axon.wallet.hotkey.sign(message).hex()}"
 
         # Return the setup synapse.
         return synapse
@@ -1232,7 +1232,7 @@ class AxonMiddleware(BaseHTTPMiddleware):
         # We get a specific verification function from 'verify_fns' dictionary that corresponds
         # to our request's name. Each request name (synapse name) has its unique verification function.
         verify_fn = (
-            self.axon.verify_fns.get(synapse.name) if synapse.name is not None else None
+            self.Axon.verify_fns.get(synapse.name) if synapse.name is not None else None
         )
 
         # If a verification function exists for the request's name
@@ -1251,13 +1251,13 @@ class AxonMiddleware(BaseHTTPMiddleware):
                 # there was a verification exception.
                 bittensor.logging.trace(f"Verify exception {str(e)}")
 
-                # Check if the synapse.axon object exists
-                if synapse.axon is not None:
+                # Check if the synapse.Axon object exists
+                if synapse.Axon is not None:
                     # We set the status code of the synapse to "401" which denotes an unauthorized access.
-                    synapse.axon.status_code = 401
+                    synapse.Axon.status_code = 401
                 else:
-                    # If the synapse.axon object doesn't exist, raise an exception.
-                    raise Exception("Synapse.axon object is None")
+                    # If the synapse.Axon object doesn't exist, raise an exception.
+                    raise Exception("Synapse.Axon object is None")
 
                 # We raise an exception to stop the process and return the error to the requester.
                 # The error message includes the original exception message.
@@ -1288,7 +1288,7 @@ class AxonMiddleware(BaseHTTPMiddleware):
         # We retrieve the blacklist checking function from the 'blacklist_fns' dictionary
         # that corresponds to the request's name (synapse name).
         blacklist_fn = (
-            self.axon.blacklist_fns.get(synapse.name)
+            self.Axon.blacklist_fns.get(synapse.name)
             if synapse.name is not None
             else None
         )
@@ -1306,13 +1306,13 @@ class AxonMiddleware(BaseHTTPMiddleware):
                 # We log that the key or identifier is blacklisted.
                 bittensor.logging.trace(f"Blacklisted: {blacklisted}, {reason}")
 
-                # Check if the synapse.axon object exists
-                if synapse.axon is not None:
+                # Check if the synapse.Axon object exists
+                if synapse.Axon is not None:
                     # We set the status code of the synapse to "403" which indicates a forbidden access.
-                    synapse.axon.status_code = 403
+                    synapse.Axon.status_code = 403
                 else:
-                    # If the synapse.axon object doesn't exist, raise an exception.
-                    raise Exception("Synapse.axon object is None")
+                    # If the synapse.Axon object doesn't exist, raise an exception.
+                    raise Exception("Synapse.Axon object is None")
 
                 # We raise an exception to halt the process and return the error message to the requester.
                 raise BlacklistedException(f"Forbidden. Key is blacklisted: {reason}.")
@@ -1333,7 +1333,7 @@ class AxonMiddleware(BaseHTTPMiddleware):
         """
         # Retrieve the priority function from the 'priority_fns' dictionary that corresponds
         # to the request's name (synapse name).
-        priority_fn = self.axon.priority_fns.get(str(synapse.name), None)
+        priority_fn = self.Axon.priority_fns.get(str(synapse.name), None)
 
         async def submit_task(
             executor: PriorityThreadPoolExecutor, priority: float
@@ -1366,7 +1366,7 @@ class AxonMiddleware(BaseHTTPMiddleware):
 
                 # Submit the task to the thread pool for execution with the given priority.
                 # The submit_task function will handle the execution and return the result.
-                _, result = await submit_task(self.axon.thread_pool, priority)
+                _, result = await submit_task(self.Axon.thread_pool, priority)
 
             except TimeoutError as e:
                 # If the execution of the priority function exceeds the timeout,
@@ -1374,8 +1374,8 @@ class AxonMiddleware(BaseHTTPMiddleware):
                 bittensor.logging.trace(f"TimeoutError: {str(e)}")
 
                 # Set the status code of the synapse to 408 which indicates a timeout error.
-                if synapse.axon is not None:
-                    synapse.axon.status_code = 408
+                if synapse.Axon is not None:
+                    synapse.Axon.status_code = 408
 
                 # Raise an exception to stop the process and return an appropriate error message to the requester.
                 raise PriorityException(f"Response timeout after: {synapse.timeout}s")
@@ -1415,8 +1415,8 @@ class AxonMiddleware(BaseHTTPMiddleware):
             bittensor.logging.trace(f"Run exception: {str(e)}")
 
             # Set the status code of the synapse to "500" which indicates an internal server error.
-            if synapse.axon is not None:
-                synapse.axon.status_code = 500
+            if synapse.Axon is not None:
+                synapse.Axon.status_code = 500
 
             # Raise an exception to stop the process and return an appropriate error message to the requester.
             raise RunException(f"Internal server error with error: {str(e)}")
@@ -1443,11 +1443,11 @@ class AxonMiddleware(BaseHTTPMiddleware):
         properly formatted and contains all necessary information.
         """
         # Set the status code of the synapse to "200" which indicates a successful response.
-        if synapse.axon is not None:
-            synapse.axon.status_code = 200
+        if synapse.Axon is not None:
+            synapse.Axon.status_code = 200
 
             # Set the status message of the synapse to "Success".
-            synapse.axon.status_message = "Success"
+            synapse.Axon.status_message = "Success"
 
         try:
             # Update the response headers with the headers from the synapse.
@@ -1460,6 +1460,6 @@ class AxonMiddleware(BaseHTTPMiddleware):
             )
 
         # Calculate the processing time by subtracting the start time from the current time.
-        synapse.axon.process_time = str(time.time() - start_time)  # type: ignore
+        synapse.Axon.process_time = str(time.time() - start_time)  # type: ignore
 
         return response

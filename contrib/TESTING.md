@@ -62,7 +62,7 @@ def test_axon_start(self):
             ss58_address="5CtstubuSoVLJGCXkiWRNKrrGg2DVBZ9qMs2qYTLsZR4q1Wg"
         ),
     )
-    axon = bittensor.axon(wallet=mock_wallet, metagraph=None)
+    axon = bittensor.Axon(wallet=mock_wallet, metagraph=None)
     axon.start()
     assert axon.server._state.stage == grpc._server._ServerStage.STARTED
 ```

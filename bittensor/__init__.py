@@ -225,7 +225,7 @@ from .threadpool import PriorityThreadPoolExecutor as PriorityThreadPoolExecutor
 from .synapse import *
 from .stream import *
 from .tensor import *
-from .axon import axon as axon
+from .axon import Axon
 from .dendrite import dendrite as dendrite
 
 from .mock.keyfile_mock import MockKeyfile as MockKeyfile

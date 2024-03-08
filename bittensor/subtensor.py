@@ -1366,7 +1366,7 @@ class Subtensor:
     def serve_axon(
         self,
         netuid: int,
-        axon: "bittensor.axon",
+        axon: "bittensor.Axon",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
         prompt: bool = False,
