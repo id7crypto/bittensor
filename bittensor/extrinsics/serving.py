@@ -23,7 +23,7 @@ from ..errors import MetadataError
 
 
 def serve_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     ip: str,
     port: int,
@@ -138,7 +138,7 @@ def serve_extrinsic(
 
 
 def serve_axon_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     netuid: int,
     axon: "bittensor.Axon",
     wait_for_inclusion: bool = False,
@@ -202,7 +202,7 @@ def serve_axon_extrinsic(
 
 
 def publish_metadata(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     netuid: int,
     type: str,
@@ -214,7 +214,7 @@ def publish_metadata(
     Publishes metadata on the Bittensor network using the specified wallet and network identifier.
 
     Args:
-        subtensor (bittensor.subtensor):
+        subtensor (bittensor.Subtensor):
             The subtensor instance representing the Bittensor blockchain connection.
         wallet (bittensor.wallet):
             The wallet object used for authentication in the transaction.

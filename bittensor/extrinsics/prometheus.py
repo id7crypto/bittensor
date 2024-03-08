@@ -22,7 +22,7 @@ import bittensor.utils.networking as net
 
 
 def prometheus_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     port: int,
     netuid: int,
@@ -33,7 +33,7 @@ def prometheus_extrinsic(
     r"""Subscribes an Bittensor endpoint to the substensor chain.
 
     Args:
-        subtensor (bittensor.subtensor):
+        subtensor (bittensor.Subtensor):
             Bittensor subtensor object.
         wallet (bittensor.wallet):
             Bittensor wallet object.

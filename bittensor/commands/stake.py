@@ -62,7 +62,7 @@ class StakeCommand:
         r"""Stake token of amount to hotkey(s)."""
         try:
             config = cli.config.copy()
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=config, log_verbose=False
             )
             StakeCommand._run(cli, subtensor)
@@ -72,7 +72,7 @@ class StakeCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""Stake token of amount to hotkey(s)."""
         config = cli.config.copy()
         wallet = bittensor.wallet(config=config)
@@ -288,7 +288,7 @@ class StakeCommand:
             help="""To specify all hotkeys. Specifying hotkeys will exclude them from this all.""",
         )
         bittensor.wallet.add_args(stake_parser)
-        bittensor.subtensor.add_args(stake_parser)
+        bittensor.Subtensor.add_args(stake_parser)
 
 
 ### Stake list.
@@ -374,7 +374,7 @@ class StakeShow:
     def run(cli: "bittensor.cli"):
         r"""Show all stake accounts."""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             StakeShow._run(cli, subtensor)
@@ -384,7 +384,7 @@ class StakeShow:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""Show all stake accounts."""
         if cli.config.get("all", d=False) == True:
             wallets = _get_coldkey_wallets_for_path(cli.config.wallet.path)
@@ -574,4 +574,4 @@ class StakeShow:
         )
 
         bittensor.wallet.add_args(list_parser)
-        bittensor.subtensor.add_args(list_parser)
+        bittensor.Subtensor.add_args(list_parser)

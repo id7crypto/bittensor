@@ -68,7 +68,7 @@ def return_mock_sub(*args, **kwargs):
     return MockSubtensor
 
 
-@patch("bittensor.subtensor", new_callable=return_mock_sub)
+@patch("bittensor.Subtensor", new_callable=return_mock_sub)
 class TestCLIWithNetworkAndConfig(unittest.TestCase):
     def setUp(self):
         self._config = TestCLIWithNetworkAndConfig.construct_config()
@@ -1934,7 +1934,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             mock_create_wallet.assert_called_once()
 
             # Verify that the wallet was registered
-            subtensor = bittensor.subtensor(config)
+            subtensor = bittensor.Subtensor(config)
             registered = subtensor.is_hotkey_registered_on_subnet(
                 hotkey_ss58=mock_wallet.hotkey.ss58_address, netuid=1
             )
@@ -1978,7 +1978,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.model = "core_server"
         config.hotkey = "hk0"
 
-        subtensor = bittensor.subtensor(config)
+        subtensor = bittensor.Subtensor(config)
 
         mock_wallet = generate_wallet(hotkey=_get_mock_keypair(100, self.id()))
 
@@ -2102,7 +2102,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         cli.run()
 
 
-@patch("bittensor.subtensor", new_callable=return_mock_sub)
+@patch("bittensor.Subtensor", new_callable=return_mock_sub)
 class TestCLIWithNetworkUsingArgs(unittest.TestCase):
     """
     Test the CLI by passing args directly to the bittensor.cli factory
@@ -2369,7 +2369,7 @@ def test_set_identity_command(
     mock_wallet.coldkey.ss58_address = "fake_coldkey_ss58_address"
     mock_wallet.coldkey = MagicMock()
 
-    with patch("bittensor.subtensor", return_value=mock_subtensor), patch(
+    with patch("bittensor.Subtensor", return_value=mock_subtensor), patch(
         "bittensor.wallet", return_value=mock_wallet
     ), patch("bittensor.__console__", MagicMock()), patch(
         "rich.prompt.Prompt.ask", side_effect=["y", "y"]

@@ -68,7 +68,7 @@ def return_mock_wallet_factory(*args, **kwargs):
 
 
 @patch(
-    "bittensor.subtensor",
+    "bittensor.Subtensor",
     new_callable=return_mock_sub_1,
 )
 @patch("bittensor.wallet", new_callable=return_mock_wallet_factory)
@@ -400,12 +400,12 @@ def return_mock_sub_2(*args, **kwargs):
             ),
             block=10_000,
         ),
-        add_args=bittensor.subtensor.add_args,
+        add_args=bittensor.Subtensor.add_args,
     )
 
 
 @patch("bittensor.wallet", new_callable=return_mock_wallet_factory)
-@patch("bittensor.subtensor", new_callable=return_mock_sub_2)
+@patch("bittensor.Subtensor", new_callable=return_mock_sub_2)
 class TestEmptyArgs(unittest.TestCase):
     """
     Test that the CLI doesn't crash when no args are passed
@@ -479,7 +479,7 @@ def return_mock_sub_3(*args, **kwargs):
     )
 
 
-@patch("bittensor.subtensor", new_callable=return_mock_sub_3)
+@patch("bittensor.Subtensor", new_callable=return_mock_sub_3)
 class TestCLIDefaultsNoNetwork(unittest.TestCase):
     def test_inspect_prompt_wallet_name(self, _):
         # Patch command to exit early
@@ -1099,7 +1099,7 @@ class TestCLIDefaultsNoNetwork(unittest.TestCase):
         delegate_ss58 = _get_mock_coldkey(0)
         with patch("bittensor.commands.delegates.show_delegates"):
             with patch(
-                "bittensor.subtensor.subtensor.get_delegates",
+                "bittensor.Subtensor.subtensor.get_delegates",
                 return_value=[
                     bittensor.DelegateInfo(
                         hotkey_ss58=delegate_ss58,  # return delegate with mock coldkey
@@ -1186,7 +1186,7 @@ class TestCLIDefaultsNoNetwork(unittest.TestCase):
         delegate_ss58 = _get_mock_coldkey(0)
         with patch("bittensor.commands.delegates.show_delegates"):
             with patch(
-                "bittensor.subtensor.subtensor.get_delegates",
+                "bittensor.Subtensor.subtensor.get_delegates",
                 return_value=[
                     bittensor.DelegateInfo(
                         hotkey_ss58=delegate_ss58,  # return delegate with mock coldkey
@@ -1271,9 +1271,9 @@ class TestCLIDefaultsNoNetwork(unittest.TestCase):
 
         mock_proposal_hash = "mock_proposal_hash"
 
-        with patch("bittensor.subtensor.subtensor.is_senate_member", return_value=True):
+        with patch("bittensor.Subtensor.subtensor.is_senate_member", return_value=True):
             with patch(
-                "bittensor.subtensor.subtensor.get_vote_data",
+                "bittensor.Subtensor.subtensor.get_vote_data",
                 return_value={"index": 1},
             ):
                 # Patch command to exit early

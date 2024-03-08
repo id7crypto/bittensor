@@ -50,7 +50,7 @@ class SenateCommand:
         r"""View Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=config, log_verbose=False
             )
             SenateCommand._run(cli, subtensor)
@@ -60,7 +60,7 @@ class SenateCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""View Bittensor's governance protocol proposals"""
         console = bittensor.__console__
         console.print(
@@ -116,7 +116,7 @@ class SenateCommand:
         )
 
         bittensor.wallet.add_args(senate_parser)
-        bittensor.subtensor.add_args(senate_parser)
+        bittensor.Subtensor.add_args(senate_parser)
 
 
 def format_call_data(call_data: "bittensor.ProposalCallData") -> str:
@@ -189,7 +189,7 @@ class ProposalsCommand:
         r"""View Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=config, log_verbose=False
             )
             ProposalsCommand._run(cli, subtensor)
@@ -199,7 +199,7 @@ class ProposalsCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""View Bittensor's governance protocol proposals"""
         console = bittensor.__console__
         console.print(
@@ -278,7 +278,7 @@ class ProposalsCommand:
         )
 
         bittensor.wallet.add_args(proposals_parser)
-        bittensor.subtensor.add_args(proposals_parser)
+        bittensor.Subtensor.add_args(proposals_parser)
 
 
 class ShowVotesCommand:
@@ -312,7 +312,7 @@ class ShowVotesCommand:
         r"""View Bittensor's governance protocol proposals active votes"""
         try:
             config = cli.config.copy()
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=config, log_verbose=False
             )
             ShowVotesCommand._run(cli, subtensor)
@@ -322,7 +322,7 @@ class ShowVotesCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""View Bittensor's governance protocol proposals active votes"""
         console.print(
             ":satellite: Syncing with chain: [white]{}[/white] ...".format(
@@ -389,7 +389,7 @@ class ShowVotesCommand:
             default="",
         )
         bittensor.wallet.add_args(show_votes_parser)
-        bittensor.subtensor.add_args(show_votes_parser)
+        bittensor.Subtensor.add_args(show_votes_parser)
 
 
 class SenateRegisterCommand:
@@ -416,7 +416,7 @@ class SenateRegisterCommand:
         r"""Register to participate in Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=config, log_verbose=False
             )
             SenateRegisterCommand._run(cli, subtensor)
@@ -426,7 +426,7 @@ class SenateRegisterCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""Register to participate in Bittensor's governance protocol proposals"""
         wallet = bittensor.wallet(config=cli.config)
 
@@ -471,7 +471,7 @@ class SenateRegisterCommand:
         )
 
         bittensor.wallet.add_args(senate_register_parser)
-        bittensor.subtensor.add_args(senate_register_parser)
+        bittensor.Subtensor.add_args(senate_register_parser)
 
 
 class SenateLeaveCommand:
@@ -498,7 +498,7 @@ class SenateLeaveCommand:
         r"""Discard membership in Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=config, log_verbose=False
             )
             SenateLeaveCommand._run(cli, subtensor)
@@ -544,7 +544,7 @@ class SenateLeaveCommand:
         )
 
         bittensor.wallet.add_args(senate_leave_parser)
-        bittensor.subtensor.add_args(senate_leave_parser)
+        bittensor.Subtensor.add_args(senate_leave_parser)
 
 
 class VoteCommand:
@@ -572,7 +572,7 @@ class VoteCommand:
         r"""Vote in Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=config, log_verbose=False
             )
             VoteCommand._run(cli, subtensor)
@@ -582,7 +582,7 @@ class VoteCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""Vote in Bittensor's governance protocol proposals"""
         wallet = bittensor.wallet(config=cli.config)
 
@@ -647,4 +647,4 @@ class VoteCommand:
             default="",
         )
         bittensor.wallet.add_args(vote_parser)
-        bittensor.subtensor.add_args(vote_parser)
+        bittensor.Subtensor.add_args(vote_parser)

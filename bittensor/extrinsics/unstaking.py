@@ -24,7 +24,7 @@ from bittensor.utils.balance import Balance
 
 
 def __do_remove_stake_single(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58: str,
     amount: "bittensor.Balance",
@@ -72,7 +72,7 @@ def __do_remove_stake_single(
 
 
 def unstake_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58: Optional[str] = None,
     amount: Optional[Union[Balance, float]] = None,
@@ -207,7 +207,7 @@ def unstake_extrinsic(
 
 
 def unstake_multiple_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58s: List[str],
     amounts: Optional[List[Union[Balance, float]]] = None,

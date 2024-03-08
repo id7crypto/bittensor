@@ -25,7 +25,7 @@ from ..utils import is_valid_bittensor_address_or_public_key
 
 
 def transfer_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     dest: str,
     amount: Union[Balance, float],

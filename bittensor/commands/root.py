@@ -57,7 +57,7 @@ class RootRegisterCommand:
     def run(cli: "bittensor.cli"):
         r"""Register to root network."""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             RootRegisterCommand._run(cli, subtensor)
@@ -67,7 +67,7 @@ class RootRegisterCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""Register to root network."""
         wallet = bittensor.wallet(config=cli.config)
 
@@ -80,7 +80,7 @@ class RootRegisterCommand:
         )
 
         bittensor.wallet.add_args(parser)
-        bittensor.subtensor.add_args(parser)
+        bittensor.Subtensor.add_args(parser)
 
     @staticmethod
     def check_config(config: "bittensor.config"):
@@ -127,7 +127,7 @@ class RootList:
     def run(cli: "bittensor.cli"):
         r"""List the root network"""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             RootList._run(cli, subtensor)
@@ -137,7 +137,7 @@ class RootList:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""List the root network"""
         console.print(
             ":satellite: Syncing with chain: [white]{}[/white] ...".format(
@@ -211,7 +211,7 @@ class RootList:
     @staticmethod
     def add_args(parser: argparse.ArgumentParser):
         parser = parser.add_parser("list", help="""List the root network""")
-        bittensor.subtensor.add_args(parser)
+        bittensor.Subtensor.add_args(parser)
 
     @staticmethod
     def check_config(config: "bittensor.config"):
@@ -270,7 +270,7 @@ class RootSetBoostCommand:
     def run(cli: "bittensor.cli"):
         r"""Set weights for root network."""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             RootSetBoostCommand._run(cli, subtensor)
@@ -280,7 +280,7 @@ class RootSetBoostCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""Set weights for root network."""
         wallet = bittensor.wallet(config=cli.config)
         subnets: List[bittensor.SubnetInfo] = subtensor.get_all_subnets_info()
@@ -323,7 +323,7 @@ class RootSetBoostCommand:
         parser.add_argument("--increase", dest="amount", type=float, required=False)
 
         bittensor.wallet.add_args(parser)
-        bittensor.subtensor.add_args(parser)
+        bittensor.Subtensor.add_args(parser)
 
     @staticmethod
     def check_config(config: "bittensor.config"):
@@ -389,7 +389,7 @@ class RootSetSlashCommand:
     def run(cli: "bittensor.cli"):
         """Set weights for root network with decreased values."""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             RootSetSlashCommand._run(cli, subtensor)
@@ -399,7 +399,7 @@ class RootSetSlashCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         wallet = bittensor.wallet(config=cli.config)
         subnets: List[bittensor.SubnetInfo] = subtensor.get_all_subnets_info()
 
@@ -440,7 +440,7 @@ class RootSetSlashCommand:
         parser.add_argument("--decrease", dest="amount", type=float, required=False)
 
         bittensor.wallet.add_args(parser)
-        bittensor.subtensor.add_args(parser)
+        bittensor.Subtensor.add_args(parser)
 
     @staticmethod
     def check_config(config: "bittensor.config"):
@@ -482,7 +482,7 @@ class RootSetWeightsCommand:
     def run(cli: "bittensor.cli"):
         r"""Set weights for root network."""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             RootSetWeightsCommand._run(cli, subtensor)
@@ -492,7 +492,7 @@ class RootSetWeightsCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""Set weights for root network."""
         wallet = bittensor.wallet(config=cli.config)
         subnets: List[bittensor.SubnetInfo] = subtensor.get_all_subnets_info()
@@ -546,7 +546,7 @@ class RootSetWeightsCommand:
         parser.add_argument("--weights", dest="weights", type=str, required=False)
 
         bittensor.wallet.add_args(parser)
-        bittensor.subtensor.add_args(parser)
+        bittensor.Subtensor.add_args(parser)
 
     @staticmethod
     def check_config(config: "bittensor.config"):
@@ -596,7 +596,7 @@ class RootGetWeightsCommand:
     def run(cli: "bittensor.cli"):
         r"""Get weights for root network."""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             RootGetWeightsCommand._run(cli, subtensor)
@@ -606,7 +606,7 @@ class RootGetWeightsCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""Get weights for root network."""
         weights = subtensor.weights(0)
 
@@ -677,7 +677,7 @@ class RootGetWeightsCommand:
         )
 
         bittensor.wallet.add_args(parser)
-        bittensor.subtensor.add_args(parser)
+        bittensor.Subtensor.add_args(parser)
 
     @staticmethod
     def check_config(config: "bittensor.config"):

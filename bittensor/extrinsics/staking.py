@@ -24,7 +24,7 @@ from bittensor.utils.balance import Balance
 
 
 def add_stake_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58: Optional[str] = None,
     amount: Optional[Union[Balance, float]] = None,
@@ -201,7 +201,7 @@ def add_stake_extrinsic(
 
 
 def add_stake_multiple_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58s: List[str],
     amounts: Optional[List[Union[Balance, float]]] = None,
@@ -426,7 +426,7 @@ def add_stake_multiple_extrinsic(
 
 
 def __do_add_stake_single(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58: str,
     amount: "bittensor.Balance",

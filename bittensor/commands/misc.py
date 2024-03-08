@@ -72,7 +72,7 @@ class UpdateCommand:
             "update", add_help=False, help="""Update bittensor """
         )
 
-        bittensor.subtensor.add_args(update_parser)
+        bittensor.Subtensor.add_args(update_parser)
 
 
 class AutocompleteCommand:

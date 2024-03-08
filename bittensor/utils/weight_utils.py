@@ -212,7 +212,7 @@ def process_weights_for_netuid(
     uids,
     weights: torch.Tensor,
     netuid: int,
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     metagraph: "bittensor.metagraph" = None,
     exclude_quantile: int = 0,
 ) -> torch.FloatTensor:

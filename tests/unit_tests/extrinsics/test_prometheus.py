@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock, patch
 import bittensor
-from bittensor.subtensor import subtensor as Subtensor
+from bittensor.Subtensor import subtensor as Subtensor
 from bittensor.wallet import wallet as Wallet
 from bittensor.extrinsics.prometheus import prometheus_extrinsic
 
@@ -9,7 +9,7 @@ from bittensor.extrinsics.prometheus import prometheus_extrinsic
 # Mocking the bittensor and networking modules
 @pytest.fixture
 def mock_bittensor():
-    with patch("bittensor.subtensor") as mock:
+    with patch("bittensor.Subtensor") as mock:
         yield mock
 
 

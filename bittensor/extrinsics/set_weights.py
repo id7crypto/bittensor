@@ -29,7 +29,7 @@ logger = logger.opt(colors=True)
 
 
 def set_weights_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     netuid: int,
     uids: Union[torch.LongTensor, list],
@@ -42,7 +42,7 @@ def set_weights_extrinsic(
     r"""Sets the given weights and values on chain for wallet hotkey account.
 
     Args:
-        subtensor_endpoint (bittensor.subtensor):
+        subtensor_endpoint (bittensor.Subtensor):
             Subtensor endpoint to use.
         wallet (bittensor.wallet):
             Bittensor wallet object.

@@ -81,7 +81,7 @@ class OverviewCommand:
     def run(cli: "bittensor.cli"):
         r"""Prints an overview for the wallet's colkey."""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             OverviewCommand._run(cli, subtensor)
@@ -90,7 +90,7 @@ class OverviewCommand:
                 subtensor.close()
                 bittensor.logging.debug("closing subtensor connection")
 
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         r"""Prints an overview for the wallet's colkey."""
         console = bittensor.__console__
         wallet = bittensor.wallet(config=cli.config)
@@ -581,7 +581,7 @@ class OverviewCommand:
         result: List["bittensor.NeuronInfoLite"] = []
 
         try:
-            subtensor = bittensor.subtensor(config=subtensor_config, log_verbose=False)
+            subtensor = bittensor.Subtensor(config=subtensor_config, log_verbose=False)
 
             all_neurons: List["bittensor.NeuronInfoLite"] = subtensor.neurons_lite(
                 netuid=netuid
@@ -614,7 +614,7 @@ class OverviewCommand:
         result: List[Tuple[str, "bittensor.Balance"]] = []
 
         try:
-            subtensor = bittensor.subtensor(config=subtensor_config, log_verbose=False)
+            subtensor = bittensor.Subtensor(config=subtensor_config, log_verbose=False)
 
             # Pull all stake for our coldkey
             all_stake_info_for_coldkey = subtensor.get_stake_info_for_coldkey(
@@ -720,7 +720,7 @@ class OverviewCommand:
             default=None,
         )
         bittensor.wallet.add_args(overview_parser)
-        bittensor.subtensor.add_args(overview_parser)
+        bittensor.Subtensor.add_args(overview_parser)
 
     @staticmethod
     def check_config(config: "bittensor.config"):

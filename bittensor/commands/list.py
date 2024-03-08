@@ -110,4 +110,4 @@ class ListCommand:
     def add_args(parser: argparse.ArgumentParser):
         list_parser = parser.add_parser("list", help="""List wallets""")
         bittensor.wallet.add_args(list_parser)
-        bittensor.subtensor.add_args(list_parser)
+        bittensor.Subtensor.add_args(list_parser)

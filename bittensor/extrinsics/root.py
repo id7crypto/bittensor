@@ -30,7 +30,7 @@ logger = logger.opt(colors=True)
 
 
 def root_register_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
@@ -99,7 +99,7 @@ def root_register_extrinsic(
 
 
 def set_root_weights_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     netuids: Union[torch.LongTensor, list],
     weights: Union[torch.FloatTensor, list],

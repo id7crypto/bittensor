@@ -216,7 +216,7 @@ from .wallet import *
 from .utils import *
 from .utils.balance import Balance as Balance
 from .chain_data import *
-from .subtensor import subtensor as subtensor
+from .subtensor import Subtensor
 from .cli import cli as cli, COMMANDS as ALL_COMMANDS
 from .btlogging import logging as logging
 from .metagraph import metagraph as metagraph

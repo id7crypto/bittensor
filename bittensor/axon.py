@@ -822,7 +822,7 @@ class axon:
         return self
 
     def serve(
-        self, netuid: int, subtensor: Optional[bittensor.subtensor] = None
+        self, netuid: int, subtensor: Optional[bittensor.Subtensor] = None
     ) -> "bittensor.axon":
         """
         Serves the Axon on the specified subtensor connection using the configured wallet. This method
@@ -832,7 +832,7 @@ class axon:
 
         Args:
             netuid (int): The unique identifier of the subnet to register on. This ID is essential for the Axon to correctly position itself within the Bittensor network topology.
-            subtensor (bittensor.subtensor, optional): The subtensor connection to use for serving. If not provided, a new connection is established based on default configurations.
+            subtensor (bittensor.Subtensor, optional): The subtensor connection to use for serving. If not provided, a new connection is established based on default configurations.
 
         Returns:
             bittensor.axon: The Axon instance that is now actively serving on the specified subtensor.

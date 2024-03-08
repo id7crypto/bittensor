@@ -56,7 +56,7 @@ class POWSolution:
     difficulty: int
     seal: bytes
 
-    def is_stale(self, subtensor: "bittensor.subtensor") -> bool:
+    def is_stale(self, subtensor: "bittensor.Subtensor") -> bool:
         """Returns True if the POW is stale.
         This means the block the POW is solved for is within 3 blocks of the current block.
         """
@@ -657,13 +657,13 @@ def _solve_for_difficulty_fast(
 
 @backoff.on_exception(backoff.constant, Exception, interval=1, max_tries=3)
 def _get_block_with_retry(
-    subtensor: "bittensor.subtensor", netuid: int
+    subtensor: "bittensor.Subtensor", netuid: int
 ) -> Tuple[int, int, bytes]:
     """
     Gets the current block number, difficulty, and block hash from the substrate node.
 
     Args:
-        subtensor (:obj:`bittensor.subtensor`, `required`):
+        subtensor (:obj:`bittensor.Subtensor`, `required`):
             The subtensor object to use to get the block number, difficulty, and block hash.
 
         netuid (:obj:`int`, `required`):
@@ -713,7 +713,7 @@ class _UsingSpawnStartMethod:
 
 
 def _check_for_newest_block_and_update(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     netuid: int,
     old_block_number: int,
     hotkey_bytes: bytes,
@@ -729,7 +729,7 @@ def _check_for_newest_block_and_update(
     Checks for a new block and updates the current block information if a new block is found.
 
     Args:
-        subtensor (:obj:`bittensor.subtensor`, `required`):
+        subtensor (:obj:`bittensor.Subtensor`, `required`):
             The subtensor object to use for getting the current block.
         netuid (:obj:`int`, `required`):
             The netuid to use for retrieving the difficulty.
@@ -788,7 +788,7 @@ def _check_for_newest_block_and_update(
 
 
 def _solve_for_difficulty_fast_cuda(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     netuid: int,
     output_in_place: bool = True,
@@ -802,7 +802,7 @@ def _solve_for_difficulty_fast_cuda(
     """
     Solves the registration fast using CUDA
     Args:
-        subtensor: bittensor.subtensor
+        subtensor: bittensor.Subtensor
             The subtensor node to grab blocks
         wallet: bittensor.wallet
             The wallet to register
@@ -1027,7 +1027,7 @@ def create_pow(
     """
     Creates a proof of work for the given subtensor and wallet.
     Args:
-        subtensor (:obj:`bittensor.subtensor.subtensor`, `required`):
+        subtensor (:obj:`bittensor.Subtensor.subtensor`, `required`):
             The subtensor to create a proof of work for.
         wallet (:obj:`bittensor.wallet.wallet`, `required`):
             The wallet to create a proof of work for.

@@ -28,7 +28,7 @@ def test_serve_axon_with_external_ip_set():
 
     mock_serve_axon = MagicMock(return_value=True)
 
-    mock_subtensor = MagicMock(spec=bittensor.subtensor, serve_axon=mock_serve_axon)
+    mock_subtensor = MagicMock(spec=bittensor.Subtensor, serve_axon=mock_serve_axon)
 
     mock_add_insecure_port = mock.MagicMock(return_value=None)
     mock_wallet = MagicMock(
@@ -75,7 +75,7 @@ def test_serve_axon_with_external_port_set():
     mock_serve_axon = MagicMock(return_value=True)
 
     mock_subtensor = MagicMock(
-        spec=bittensor.subtensor,
+        spec=bittensor.Subtensor,
         serve=mock_serve,
         serve_axon=mock_serve_axon,
     )
@@ -149,7 +149,7 @@ def test_stake_multiple():
     mock_do_stake = MagicMock(side_effect=ExitEarly)
 
     mock_subtensor = MagicMock(
-        spec=bittensor.subtensor,
+        spec=bittensor.Subtensor,
         network="mock_net",
         get_balance=MagicMock(
             return_value=bittensor.Balance.from_tao(mock_amount.tao + 20.0)
@@ -159,7 +159,7 @@ def test_stake_multiple():
     )
 
     with pytest.raises(ExitEarly):
-        bittensor.subtensor.add_stake_multiple(
+        bittensor.Subtensor.add_stake_multiple(
             mock_subtensor,
             wallet=mock_wallet,
             hotkey_ss58s=mock_hotkey_ss58s,

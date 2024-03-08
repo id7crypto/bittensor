@@ -24,7 +24,7 @@ from rich.prompt import Confirm
 
 
 def register_senate_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
@@ -101,7 +101,7 @@ def register_senate_extrinsic(
 
 
 def leave_senate_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
@@ -178,7 +178,7 @@ def leave_senate_extrinsic(
 
 
 def vote_senate_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     proposal_hash: str,
     proposal_idx: int,

@@ -466,7 +466,7 @@ class metagraph(torch.nn.Module):
         self,
         block: Optional[int] = None,
         lite: bool = True,
-        subtensor: Optional["bittensor.subtensor"] = None,
+        subtensor: Optional["bittensor.Subtensor"] = None,
     ):
         """
         Synchronizes the metagraph with the Bittensor network's current state. It updates the metagraph's attributes
@@ -477,7 +477,7 @@ class metagraph(torch.nn.Module):
                                     This allows for historical analysis or specific state examination of the network.
             lite (bool): If True, a lite version of the metagraph is used for quicker synchronization. This is beneficial
                         when full detail is not necessary, allowing for reduced computational and time overhead.
-            subtensor (Optional[bittensor.subtensor]): An instance of the subtensor class from Bittensor, providing an
+            subtensor (Optional[bittensor.Subtensor]): An instance of the subtensor class from Bittensor, providing an
                                                         interface to the underlying blockchain data. If provided, this
                                                         instance is used for data retrieval during synchronization.
 
@@ -499,7 +499,7 @@ class metagraph(torch.nn.Module):
 
             For example::
 
-                subtensor = bittensor.subtensor(network='archive')
+                subtensor = bittensor.Subtensor(network='archive')
         """
 
         # Initialize subtensor
@@ -545,7 +545,7 @@ class metagraph(torch.nn.Module):
         """
         if not subtensor:
             # TODO: Check and test the initialization of the new subtensor
-            subtensor = bittensor.subtensor(network=self.network)
+            subtensor = bittensor.Subtensor(network=self.network)
         return subtensor
 
     def _assign_neurons(self, block, lite, subtensor):
@@ -655,7 +655,7 @@ class metagraph(torch.nn.Module):
         # TODO: Check and test the creation of tensor
         return torch.nn.Parameter(torch.tensor(data, dtype=dtype), requires_grad=False)
 
-    def _set_weights_and_bonds(self, subtensor: Optional[bittensor.subtensor] = None):
+    def _set_weights_and_bonds(self, subtensor: Optional[bittensor.Subtensor] = None):
         """
         Computes and sets the weights and bonds for each neuron in the metagraph. This method is responsible for processing the raw weight and bond data obtained from the network and converting it into a structured format suitable for the metagraph model.
 
@@ -727,7 +727,7 @@ class metagraph(torch.nn.Module):
         return tensor_param
 
     def _process_root_weights(
-        self, data, attribute: str, subtensor: bittensor.subtensor
+        self, data, attribute: str, subtensor: bittensor.Subtensor
     ) -> torch.nn.Parameter:
         """
         Specifically processes the root weights data for the metagraph. This method is similar to :func:`_process_weights_or_bonds` but is tailored for processing root weights, which have a different structure and significance in the network.

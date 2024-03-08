@@ -114,7 +114,7 @@ class InspectCommand:
     def run(cli: "bittensor.cli"):
         r"""Inspect a cold, hot pair."""
         try:
-            subtensor: "bittensor.subtensor" = bittensor.subtensor(
+            subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=cli.config, log_verbose=False
             )
             InspectCommand._run(cli, subtensor)
@@ -124,7 +124,7 @@ class InspectCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.subtensor"):
+    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
         if cli.config.get("all", d=False) == True:
             wallets = _get_coldkey_wallets_for_path(cli.config.wallet.path)
             all_hotkeys = get_all_wallets_for_path(cli.config.wallet.path)
@@ -276,4 +276,4 @@ class InspectCommand:
         )
 
         bittensor.wallet.add_args(inspect_parser)
-        bittensor.subtensor.add_args(inspect_parser)
+        bittensor.Subtensor.add_args(inspect_parser)

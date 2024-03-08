@@ -97,7 +97,7 @@ class ParamWithTypes(TypedDict):
     type: str  # ScaleType string of the parameter.
 
 
-class subtensor:
+class Subtensor:
     """
     The Subtensor class in Bittensor serves as a crucial interface for interacting with the Bittensor blockchain, facilitating a range of operations essential for the decentralized machine learning network.
 
@@ -145,7 +145,7 @@ class subtensor:
         success = finney_subtensor.delegate(wallet=wallet, delegate_ss58=other_neuron_ss58, amount=bond_amount)
 
         # Get the metagraph for a specific subnet using given subtensor connection
-        metagraph = subtensor.metagraph(netuid=netuid)
+        metagraph = Subtensor.metagraph(netuid=netuid)
 
     By facilitating these operations, the Subtensor class is instrumental in maintaining the decentralized
     intelligence and dynamic learning environment of the Bittensor network, as envisioned in its foundational
@@ -155,7 +155,7 @@ class subtensor:
     @staticmethod
     def config() -> "bittensor.config":
         parser = argparse.ArgumentParser()
-        subtensor.add_args(parser)
+        Subtensor.add_args(parser)
         return bittensor.config(parser, args=[])
 
     @classmethod
@@ -184,7 +184,7 @@ class subtensor:
                                         -- test (test network)
                                         -- archive (archive network +300 blocks)
                                         -- local (local running network)
-                                    If this option is set it overloads subtensor.chain_endpoint with
+                                    If this option is set it overloads Subtensor.chain_endpoint with
                                     an entry point node from that network.
                                     """,
             )
@@ -257,13 +257,13 @@ class subtensor:
             (
                 evaluated_network,
                 evaluated_endpoint,
-            ) = subtensor.determine_chain_endpoint_and_network(network)
+            ) = Subtensor.determine_chain_endpoint_and_network(network)
         else:
             if config.get("__is_set", {}).get("subtensor.chain_endpoint"):
                 (
                     evaluated_network,
                     evaluated_endpoint,
-                ) = subtensor.determine_chain_endpoint_and_network(
+                ) = Subtensor.determine_chain_endpoint_and_network(
                     config.subtensor.chain_endpoint
                 )
 
@@ -271,7 +271,7 @@ class subtensor:
                 (
                     evaluated_network,
                     evaluated_endpoint,
-                ) = subtensor.determine_chain_endpoint_and_network(
+                ) = Subtensor.determine_chain_endpoint_and_network(
                     config.subtensor.network
                 )
 
@@ -279,7 +279,7 @@ class subtensor:
                 (
                     evaluated_network,
                     evaluated_endpoint,
-                ) = subtensor.determine_chain_endpoint_and_network(
+                ) = Subtensor.determine_chain_endpoint_and_network(
                     config.subtensor.chain_endpoint
                 )
 
@@ -287,7 +287,7 @@ class subtensor:
                 (
                     evaluated_network,
                     evaluated_endpoint,
-                ) = subtensor.determine_chain_endpoint_and_network(
+                ) = Subtensor.determine_chain_endpoint_and_network(
                     config.subtensor.network
                 )
 
@@ -295,7 +295,7 @@ class subtensor:
                 (
                     evaluated_network,
                     evaluated_endpoint,
-                ) = subtensor.determine_chain_endpoint_and_network(
+                ) = Subtensor.determine_chain_endpoint_and_network(
                     bittensor.defaults.subtensor.network
                 )
 
@@ -326,7 +326,7 @@ class subtensor:
 
         Args:
             network (str, optional): The network name to connect to (e.g., ``finney``, ``local``). This can also be the chain endpoint (e.g., ``wss://entrypoint-finney.opentensor.ai:443``) and will be correctly parsed into the network and chain endpoint. If not specified, defaults to the main Bittensor network.
-            config (bittensor.config, optional): Configuration object for the subtensor. If not provided, a default configuration is used.
+            config (bittensor.config, optional): Configuration object for the Subtensor. If not provided, a default configuration is used.
             _mock (bool, optional): If set to ``True``, uses a mocked connection for testing purposes.
 
         This initialization sets up the connection to the specified Bittensor network, allowing for various
@@ -349,11 +349,11 @@ class subtensor:
             network = None
 
         if config is None:
-            config = subtensor.config()
+            config = Subtensor.config()
         self.config = copy.deepcopy(config)  # type: ignore
 
         # Setup config.subtensor.network and config.subtensor.chain_endpoint
-        self.chain_endpoint, self.network = subtensor.setup_config(network, config)  # type: ignore
+        self.chain_endpoint, self.network = Subtensor.setup_config(network, config)  # type: ignore
 
         if (
             self.network == "finney"
