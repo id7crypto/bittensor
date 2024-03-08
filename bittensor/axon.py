@@ -1202,7 +1202,7 @@ class AxonMiddleware(BaseHTTPMiddleware):
         )
 
         # Signs the synapse from the Axon side using the wallet hotkey.
-        message = f"{synapse.Axon.nonce}.{synapse.dendrite.hotkey}.{synapse.Axon.hotkey}.{synapse.Axon.uuid}"
+        message = f"{synapse.axon.nonce}.{synapse.dendrite.hotkey}.{synapse.Axon.hotkey}.{synapse.Axon.uuid}"
         synapse.Axon.signature = f"0x{self.Axon.wallet.hotkey.sign(message).hex()}"
 
         # Return the setup synapse.

@@ -28,11 +28,11 @@ import bittensor
 from typing import Union, Optional, List, Union, AsyncGenerator, Any
 
 
-class dendrite(torch.nn.Module):
+class Dendrite(torch.nn.Module):
     """
     The Dendrite class, inheriting from PyTorch's Module class, represents the abstracted implementation of a network client module.
 
-    In the brain analogy, dendrites receive signals
+    In the brain analogy, Dendrites receive signals
     from other neurons (in this case, network servers or axons), and the Dendrite class here is designed
     to send requests to those endpoint to recieve inputs.
 
@@ -77,7 +77,7 @@ class dendrite(torch.nn.Module):
 
     Example with a context manager::
 
-        >>> aysnc with dendrite(wallet = bittensor.wallet()) as d:
+        >>> aysnc with Dendrite(wallet = bittensor.wallet()) as d:
         >>>     print(d)
         >>>     d( <axon> ) # ping axon
         >>>     d( [<axons>] ) # ping multiple
@@ -87,7 +87,7 @@ class dendrite(torch.nn.Module):
 
     Example without a context manager::
 
-        >>> d = dendrite(wallet = bittensor.wallet() )
+        >>> d = Dendrite(wallet = bittensor.wallet() )
         >>> print(d)
         >>> d( <axon> ) # ping axon
         >>> d( [<axons>] ) # ping multiple
@@ -105,7 +105,7 @@ class dendrite(torch.nn.Module):
                 The user's wallet or keypair used for signing messages. Defaults to ``None``, in which case a new :func:`bittensor.wallet().hotkey` is generated and used.
         """
         # Initialize the parent class
-        super(dendrite, self).__init__()
+        super(Dendrite, self).__init__()
 
         # Unique identifier for the instance
         self.uuid = str(uuid.uuid1())
@@ -131,21 +131,21 @@ class dendrite(torch.nn.Module):
         initializes the `aiohttp.ClientSession <https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientSession>`_ on its first use. The session is then reused for subsequent
         HTTP requests, offering performance benefits by reusing underlying connections.
 
-        This is used internally by the dendrite when querying axons, and should not be used directly
+        This is used internally by the Dendrite when querying axons, and should not be used directly
         unless absolutely necessary for your application.
 
         Returns:
             aiohttp.ClientSession: The active `aiohttp <https://github.com/aio-libs/aiohttp>`_ client session instance. If no session exists, a
             new one is created and returned. This session is used for asynchronous HTTP requests within
-            the dendrite, adhering to the async nature of the network interactions in the Bittensor framework.
+            the Dendrite, adhering to the async nature of the network interactions in the Bittensor framework.
 
         Example usage::
 
             import bittensor as bt                    # Import bittensor
             wallet = bt.wallet( ... )                 # Initialize a wallet
-            dendrite = bt.dendrite( wallet )          # Initialize a dendrite instance with the wallet
+            Dendrite = bt.dendrite( wallet )          # Initialize a Dendrite instance with the wallet
 
-            async with (await dendrite.session).post( # Use the session to make an HTTP POST request
+            async with (await Dendrite.session).post( # Use the session to make an HTTP POST request
                 url,                                  # URL to send the request to
                 headers={...},                        # Headers dict to be sent with the request
                 json={...},                           # JSON body data to be sent with the request
@@ -164,13 +164,13 @@ class dendrite(torch.nn.Module):
 
         This method ensures the proper closure and cleanup of the aiohttp client session, releasing any
         resources like open connections and internal buffers. It is crucial for preventing resource leakage
-        and should be called when the dendrite instance is no longer in use, especially in synchronous contexts.
+        and should be called when the Dendrite instance is no longer in use, especially in synchronous contexts.
 
         Note:
             This method utilizes asyncio's event loop to close the session asynchronously from a synchronous context. It is advisable to use this method only when asynchronous context management is not feasible.
 
         Usage:
-            When finished with dendrite in a synchronous context
+            When finished with Dendrite in a synchronous context
             :func:`dendrite_instance.close_session()`.
         """
         if self._session:
@@ -188,13 +188,13 @@ class dendrite(torch.nn.Module):
         which is essential for resource management in asynchronous applications.
 
         Usage:
-            When finished with dendrite in an asynchronous context
+            When finished with Dendrite in an asynchronous context
             await :func:`dendrite_instance.aclose_session()`.
 
         Example::
 
-            async with dendrite_instance:
-                # Operations using dendrite
+            async with Dendrite_instance:
+                # Operations using Dendrite
                 pass
             # The session will be closed automatically after the above block
         """
@@ -351,9 +351,9 @@ class dendrite(torch.nn.Module):
             >>> ...
             >>> wallet = bittensor.wallet()                   # Initialize a wallet
             >>> synapse = bittensor.Synapse(...)              # Create a synapse object that contains query data
-            >>> dendrte = bittensor.dendrite(wallet = wallet) # Initialize a dendrite instance
+            >>> dendrte = bittensor.Dendrite(wallet = wallet) # Initialize a Dendrite instance
             >>> axons = metagraph.axons                       # Create a list of axons to query
-            >>> responses = await dendrite(axons, synapse)    # Send the query to all axons and await the responses
+            >>> responses = await Dendrite(axons, synapse)    # Send the query to all axons and await the responses
 
         When querying an Axon that sends back data in chunks using the Dendrite, this function
         returns an AsyncGenerator that yields each chunk as it is received. The generator can be
@@ -362,8 +362,8 @@ class dendrite(torch.nn.Module):
         For example::
 
             >>> ...
-            >>> dendrte = bittensor.dendrite(wallet = wallet)
-            >>> async for chunk in dendrite.forward(axons, synapse, timeout, deserialize, run_async, streaming):
+            >>> dendrte = bittensor.Dendrite(wallet = wallet)
+            >>> async for chunk in Dendrite.forward(axons, synapse, timeout, deserialize, run_async, streaming):
             >>>     # Process each chunk here
             >>>     print(chunk)
 
@@ -670,7 +670,7 @@ class dendrite(torch.nn.Module):
             hotkey=target_axon_info.hotkey,
         )
 
-        # Sign the request using the dendrite, axon info, and the synapse body hash
+        # Sign the request using the Dendrite, axon info, and the synapse body hash
         message = f"{synapse.dendrite.nonce}.{synapse.dendrite.hotkey}.{synapse.axon.hotkey}.{synapse.dendrite.uuid}.{synapse.body_hash}"
         synapse.dendrite.signature = f"0x{self.keypair.sign(message).hex()}"
 
@@ -712,7 +712,7 @@ class dendrite(torch.nn.Module):
         # Extract server headers and overwrite None values in local synapse headers
         server_headers = bittensor.Synapse.from_headers(server_response.headers)  # type: ignore
 
-        # Merge dendrite headers
+        # Merge Dendrite headers
         local_synapse.dendrite.__dict__.update(
             {
                 **local_synapse.dendrite.dict(exclude_none=True),  # type: ignore
@@ -728,7 +728,7 @@ class dendrite(torch.nn.Module):
             }
         )
 
-        # Update the status code and status message of the dendrite to match the axon
+        # Update the status code and status message of the Dendrite to match the axon
         local_synapse.dendrite.status_code = local_synapse.axon.status_code  # type: ignore
         local_synapse.dendrite.status_message = local_synapse.axon.status_message  # type: ignore
 
@@ -762,8 +762,8 @@ class dendrite(torch.nn.Module):
 
         Usage::
 
-            async with Dendrite() as dendrite:
-                await dendrite.some_async_method()
+            async with Dendrite() as Dendrite:
+                await Dendrite.some_async_method()
         """
         return self
 
@@ -781,8 +781,8 @@ class dendrite(torch.nn.Module):
 
         Usage::
 
-            async with bt.dendrite( wallet ) as dendrite:
-                await dendrite.some_async_method()
+            async with bt.dendrite( wallet ) as Dendrite:
+                await Dendrite.some_async_method()
 
         Note:
             This automatically closes the session by calling :func:`__aexit__` after the context closes.
@@ -801,8 +801,8 @@ class dendrite(torch.nn.Module):
 
         Usage::
 
-            dendrite = Dendrite()
+            Dendrite = Dendrite()
             # ... some operations ...
-            del dendrite  # This will implicitly invoke the __del__ method and close the session.
+            del Dendrite  # This will implicitly invoke the __del__ method and close the session.
         """
         self.close_session()
