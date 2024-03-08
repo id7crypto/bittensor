@@ -90,7 +90,7 @@ class MetagraphCommand:
                 cli.config.subtensor.network
             )
         )
-        metagraph: bittensor.metagraph = subtensor.metagraph(netuid=cli.config.netuid)
+        metagraph: bittensor.Metagraph = subtensor.metagraph(netuid=cli.config.netuid)
         metagraph.save()
         difficulty = subtensor.difficulty(cli.config.netuid)
         subnet_emission = bittensor.Balance.from_tao(

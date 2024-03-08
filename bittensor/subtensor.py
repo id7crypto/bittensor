@@ -4042,7 +4042,7 @@ class Subtensor:
         netuid: int,
         lite: bool = True,
         block: Optional[int] = None,
-    ) -> "bittensor.metagraph":
+    ) -> "bittensor.Metagraph":
         """
         Returns a synced metagraph for a specified subnet within the Bittensor network. The metagraph
         represents the network's structure, including neuron connections and interactions.
@@ -4058,7 +4058,7 @@ class Subtensor:
         The metagraph is an essential tool for understanding the topology and dynamics of the Bittensor
         network's decentralized architecture, particularly in relation to neuron interconnectivity and consensus processes.
         """
-        metagraph_ = bittensor.metagraph(
+        metagraph_ = bittensor.Metagraph(
             network=self.network, netuid=netuid, lite=lite, sync=False
         )
         metagraph_.sync(block=block, lite=lite, subtensor=self)

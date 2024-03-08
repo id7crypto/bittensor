@@ -70,13 +70,13 @@ def latest_block_path(dir_path: str) -> str:
         return latest_file_full_path
 
 
-class metagraph(torch.nn.Module):
+class Metagraph(torch.nn.Module):
     """
-    The metagraph class is a core component of the Bittensor network, representing the neural graph that forms the backbone of the decentralized machine learning system.
+    The Metagraph class is a core component of the Bittensor network, representing the neural graph that forms the backbone of the decentralized machine learning system.
 
-    The metagraph is a dynamic representation of the network's state, capturing the interconnectedness and attributes of neurons (participants) in the Bittensor ecosystem. This class is not just a static structure but a live reflection of the network, constantly updated and synchronized with the state of the blockchain.
+    The Metagraph is a dynamic representation of the network's state, capturing the interconnectedness and attributes of neurons (participants) in the Bittensor ecosystem. This class is not just a static structure but a live reflection of the network, constantly updated and synchronized with the state of the blockchain.
 
-    In Bittensor, neurons are akin to nodes in a distributed system, each contributing computational resources and participating in the network's collective intelligence. The metagraph tracks various attributes of these neurons, such as stake, trust, and consensus, which are crucial for the network's incentive mechanisms and the Yuma Consensus algorithm as outlined in the `NeurIPS paper <https://bittensor.com/pdfs/academia/NeurIPS_DAO_Workshop_2022_3_3.pdf>`_. These attributes
+    In Bittensor, neurons are akin to nodes in a distributed system, each contributing computational resources and participating in the network's collective intelligence. The Metagraph tracks various attributes of these neurons, such as stake, trust, and consensus, which are crucial for the network's incentive mechanisms and the Yuma Consensus algorithm as outlined in the `NeurIPS paper <https://bittensor.com/pdfs/academia/NeurIPS_DAO_Workshop_2022_3_3.pdf>`_. These attributes
     govern how neurons interact, how they are incentivized, and their roles within the network's
     decision-making processes.
 
@@ -103,23 +103,23 @@ class metagraph(torch.nn.Module):
         uids: Unique identifiers for each neuron, essential for network operations.
         axons (List): Details about each neuron's axon, critical for facilitating network communication.
 
-    The metagraph plays a pivotal role in Bittensor's decentralized AI operations, influencing everything from data propagation to reward distribution. It embodies the principles of decentralized governance
+    The Metagraph plays a pivotal role in Bittensor's decentralized AI operations, influencing everything from data propagation to reward distribution. It embodies the principles of decentralized governance
     and collaborative intelligence, ensuring that the network remains adaptive, secure, and efficient.
 
     Example Usage:
-        Initializing the metagraph to represent the current state of the Bittensor network::
+        Initializing the Metagraph to represent the current state of the Bittensor network::
 
-            metagraph = bt.metagraph(netuid=config.netuid, network=subtensor.network, sync=False)
+            Metagraph = bt.metagraph(netuid=config.netuid, network=subtensor.network, sync=False)
 
-        Synchronizing the metagraph with the network to reflect the latest state and neuron data::
+        Synchronizing the Metagraph with the network to reflect the latest state and neuron data::
 
-            metagraph.sync(subtensor=subtensor)
+            Metagraph.sync(subtensor=subtensor)
 
-        Accessing metagraph properties to inform network interactions and decisions::
+        Accessing Metagraph properties to inform network interactions and decisions::
 
-            total_stake = metagraph.S
-            neuron_ranks = metagraph.R
-            neuron_incentives = metagraph.I
+            total_stake = Metagraph.S
+            neuron_ranks = Metagraph.R
+            neuron_incentives = Metagraph.I
             ...
 
         Maintaining a local copy of hotkeys for querying and interacting with network entities::
@@ -322,14 +322,14 @@ class metagraph(torch.nn.Module):
 
     def __str__(self) -> str:
         """
-        Provides a human-readable string representation of the metagraph object. This representation includes key identifiers and attributes of the metagraph, making it easier to quickly understand
-        the state and configuration of the metagraph in a simple format.
+        Provides a human-readable string representation of the Metagraph object. This representation includes key identifiers and attributes of the Metagraph, making it easier to quickly understand
+        the state and configuration of the Metagraph in a simple format.
 
         Returns:
-            str: A string that succinctly represents the metagraph, including its network UID, the total number of neurons (n), the current block number, and the network's name. This format is particularly useful for logging, debugging, and displaying the metagraph in a concise manner.
+            str: A string that succinctly represents the Metagraph, including its network UID, the total number of neurons (n), the current block number, and the network's name. This format is particularly useful for logging, debugging, and displaying the Metagraph in a concise manner.
 
         Example:
-            When printing the metagraph object or using it in a string context, this method is automatically invoked::
+            When printing the Metagraph object or using it in a string context, this method is automatically invoked::
 
                 print(metagraph)  # Output: "metagraph(netuid:1, n:100, block:500, network:finney)"
         """
@@ -339,29 +339,29 @@ class metagraph(torch.nn.Module):
 
     def __repr__(self) -> str:
         """
-        Provides a detailed string representation of the metagraph object, intended for unambiguous understanding and debugging purposes. This method simply calls the :func:`__str__` method, ensuring
-        consistency between the informal and formal string representations of the metagraph.
+        Provides a detailed string representation of the Metagraph object, intended for unambiguous understanding and debugging purposes. This method simply calls the :func:`__str__` method, ensuring
+        consistency between the informal and formal string representations of the Metagraph.
 
         Returns:
-            str: The same string representation as provided by the :func:`__str__` method, detailing the metagraph's key attributes including network UID, number of neurons, block number, and network name.
+            str: The same string representation as provided by the :func:`__str__` method, detailing the Metagraph's key attributes including network UID, number of neurons, block number, and network name.
 
         Example:
-            The :func:`__repr__` output can be used in debugging to get a clear and concise description of the metagraph::
+            The :func:`__repr__` output can be used in debugging to get a clear and concise description of the Metagraph::
 
-                metagraph_repr = repr(metagraph)
+                Metagraph_repr = repr(metagraph)
                 print(metagraph_repr)  # Output mirrors that of __str__
         """
         return self.__str__()
 
     def metadata(self) -> dict:
         """
-        Retrieves the metadata of the metagraph, providing key information about the current state of the
+        Retrieves the metadata of the Metagraph, providing key information about the current state of the
         Bittensor network. This metadata includes details such as the network's unique identifier (``netuid``),
         the total number of neurons (``n``), the current block number, the network's name, and the version of
         the Bittensor network.
 
         Returns:
-            dict: A dictionary containing essential metadata about the metagraph, including:
+            dict: A dictionary containing essential metadata about the Metagraph, including:
 
             - ``netuid``: The unique identifier for the network.
             - ``n``: The total number of neurons in the network.
@@ -384,21 +384,21 @@ class metagraph(torch.nn.Module):
         self, netuid: int, network: str = "finney", lite: bool = True, sync: bool = True
     ):
         """
-        Initializes a new instance of the metagraph object, setting up the basic structure and parameters based on the provided arguments.
+        Initializes a new instance of the Metagraph object, setting up the basic structure and parameters based on the provided arguments.
 
-        This method is the entry point for creating a metagraph object,
+        This method is the entry point for creating a Metagraph object,
         which is a central component in representing the state of the Bittensor network.
 
         Args:
-            netuid (int): The unique identifier for the network, distinguishing this instance of the metagraph within potentially multiple network configurations.
+            netuid (int): The unique identifier for the network, distinguishing this instance of the Metagraph within potentially multiple network configurations.
             network (str): The name of the network, which can indicate specific configurations or versions of the Bittensor network.
-            lite (bool): A flag indicating whether to use a lite version of the metagraph. The lite version may contain less detailed information but can be quicker to initialize and sync.
-            sync (bool): A flag indicating whether to synchronize the metagraph with the network upon initialization. Synchronization involves updating the metagraph's parameters to reflect the current state of the network.
+            lite (bool): A flag indicating whether to use a lite version of the Metagraph. The lite version may contain less detailed information but can be quicker to initialize and sync.
+            sync (bool): A flag indicating whether to synchronize the Metagraph with the network upon initialization. Synchronization involves updating the Metagraph's parameters to reflect the current state of the network.
 
         Example:
-            Initializing a metagraph object for the Bittensor network with a specific network UID::
+            Initializing a Metagraph object for the Bittensor network with a specific network UID::
 
-                metagraph = metagraph(netuid=123, network="finney", lite=True, sync=True)
+                Metagraph = Metagraph(netuid=123, network="finney", lite=True, sync=True)
         """
         super(metagraph, self).__init__()
         self.netuid = netuid
@@ -469,29 +469,29 @@ class metagraph(torch.nn.Module):
         subtensor: Optional["bittensor.Subtensor"] = None,
     ):
         """
-        Synchronizes the metagraph with the Bittensor network's current state. It updates the metagraph's attributes
-        to reflect the latest data from the network, ensuring the metagraph represents the most current state of the network.
+        Synchronizes the Metagraph with the Bittensor network's current state. It updates the Metagraph's attributes
+        to reflect the latest data from the network, ensuring the Metagraph represents the most current state of the network.
 
         Args:
-            block (Optional[int]): A specific block number to synchronize with. If None, the metagraph syncs with the latest block.
+            block (Optional[int]): A specific block number to synchronize with. If None, the Metagraph syncs with the latest block.
                                     This allows for historical analysis or specific state examination of the network.
-            lite (bool): If True, a lite version of the metagraph is used for quicker synchronization. This is beneficial
+            lite (bool): If True, a lite version of the Metagraph is used for quicker synchronization. This is beneficial
                         when full detail is not necessary, allowing for reduced computational and time overhead.
             subtensor (Optional[bittensor.Subtensor]): An instance of the subtensor class from Bittensor, providing an
                                                         interface to the underlying blockchain data. If provided, this
                                                         instance is used for data retrieval during synchronization.
 
         Returns:
-            metagraph: The metagraph instance, updated to the state of the specified block or the latest network state.
+            Metagraph: The Metagraph instance, updated to the state of the specified block or the latest network state.
 
         Example:
-            Sync the metagraph with the latest block from the subtensor, using the lite version for efficiency::
+            Sync the Metagraph with the latest block from the subtensor, using the lite version for efficiency::
 
-                metagraph.sync(subtensor=subtensor)
+                Metagraph.sync(subtensor=subtensor)
 
             Sync with a specific block number for detailed analysis::
 
-                metagraph.sync(block=12345, lite=False, subtensor=subtensor)
+                Metagraph.sync(block=12345, lite=False, subtensor=subtensor)
 
         NOTE:
             If attempting to access data beyond the previous 300 blocks, you **must** use the ``archive`` network for subtensor.
@@ -517,7 +517,7 @@ class metagraph(torch.nn.Module):
         # Assign neurons based on 'lite' flag
         self._assign_neurons(block, lite, subtensor)
 
-        # Set attributes for metagraph
+        # Set attributes for Metagraph
         self._set_metagraph_attributes(block, subtensor)
 
         # If not a 'lite' version, compute and set weights and bonds for each neuron
@@ -526,7 +526,7 @@ class metagraph(torch.nn.Module):
 
     def _initialize_subtensor(self, subtensor):
         """
-        Initializes the subtensor to be used for syncing the metagraph.
+        Initializes the subtensor to be used for syncing the Metagraph.
 
         This method ensures that a subtensor instance is available and properly set up for data retrieval during the synchronization process.
 
@@ -536,7 +536,7 @@ class metagraph(torch.nn.Module):
             subtensor: The subtensor instance provided for initialization. If ``None``, a new subtensor instance is created using the current network configuration.
 
         Returns:
-            subtensor: The initialized subtensor instance, ready to be used for syncing the metagraph.
+            subtensor: The initialized subtensor instance, ready to be used for syncing the Metagraph.
 
         Internal Usage:
             Used internally during the sync process to ensure a valid subtensor instance is available::
@@ -550,9 +550,9 @@ class metagraph(torch.nn.Module):
 
     def _assign_neurons(self, block, lite, subtensor):
         """
-        Assigns neurons to the metagraph based on the provided block number and the lite flag.
+        Assigns neurons to the Metagraph based on the provided block number and the lite flag.
 
-        This method is responsible for fetching and setting the neuron data in the metagraph, which includes neuron attributes like UID, stake, trust, and other relevant information.
+        This method is responsible for fetching and setting the neuron data in the Metagraph, which includes neuron attributes like UID, stake, trust, and other relevant information.
 
         Args:
             block: The block number for which the neuron data needs to be fetched. If ``None``, the latest block data is used.
@@ -573,16 +573,16 @@ class metagraph(torch.nn.Module):
 
     def _set_metagraph_attributes(self, block, subtensor):
         """
-        Sets various attributes of the metagraph based on the latest network data fetched from the subtensor.
+        Sets various attributes of the Metagraph based on the latest network data fetched from the subtensor.
 
         This method updates parameters like the number of neurons, block number, stakes, trusts, ranks, and other neuron-specific information.
 
         Args:
-            block: The block number for which the metagraph attributes need to be set. If ``None``, the latest block data is used.
+            block: The block number for which the Metagraph attributes need to be set. If ``None``, the latest block data is used.
             subtensor: The subtensor instance used for fetching the latest network data.
 
         Internal Usage:
-            Used internally during the sync process to update the metagraph's attributes::
+            Used internally during the sync process to update the Metagraph's attributes::
 
                 self._set_metagraph_attributes(block, subtensor)
         """
@@ -637,7 +637,7 @@ class metagraph(torch.nn.Module):
 
     def _create_tensor(self, data, dtype) -> torch.nn.Parameter:
         """
-        Creates a tensor parameter with the given data and data type. This method is a utility function used internally to encapsulate data into a PyTorch tensor, making it compatible with the metagraph's PyTorch
+        Creates a tensor parameter with the given data and data type. This method is a utility function used internally to encapsulate data into a PyTorch tensor, making it compatible with the Metagraph's PyTorch
         model structure.
 
         Args:
@@ -648,7 +648,7 @@ class metagraph(torch.nn.Module):
             A tensor parameter encapsulating the provided data.
 
         Internal Usage:
-            Used internally to create tensor parameters for various metagraph attributes::
+            Used internally to create tensor parameters for various Metagraph attributes::
 
                 self.stake = self._create_tensor(neuron_stakes, dtype=torch.float32)
         """
@@ -657,7 +657,7 @@ class metagraph(torch.nn.Module):
 
     def _set_weights_and_bonds(self, subtensor: Optional[bittensor.Subtensor] = None):
         """
-        Computes and sets the weights and bonds for each neuron in the metagraph. This method is responsible for processing the raw weight and bond data obtained from the network and converting it into a structured format suitable for the metagraph model.
+        Computes and sets the weights and bonds for each neuron in the Metagraph. This method is responsible for processing the raw weight and bond data obtained from the network and converting it into a structured format suitable for the Metagraph model.
 
         Args:
             subtensor: The subtensor instance used for fetching weights and bonds data. If ``None``, the weights and bonds are not updated.
@@ -682,7 +682,7 @@ class metagraph(torch.nn.Module):
 
     def _process_weights_or_bonds(self, data, attribute: str) -> torch.nn.Parameter:
         """
-        Processes the raw weights or bonds data and converts it into a structured tensor format. This method handles the transformation of neuron connection data (``weights`` or ``bonds``) from a list or other unstructured format into a tensor that can be utilized within the metagraph model.
+        Processes the raw weights or bonds data and converts it into a structured tensor format. This method handles the transformation of neuron connection data (``weights`` or ``bonds``) from a list or other unstructured format into a tensor that can be utilized within the Metagraph model.
 
         Args:
             data: The raw weights or bonds data to be processed. This data typically comes from the subtensor.
@@ -722,7 +722,7 @@ class metagraph(torch.nn.Module):
         )
         if len(data_array) == 0:
             bittensor.logging.warning(
-                f"Empty {attribute}_array on metagraph.sync(). The '{attribute}' tensor is empty."
+                f"Empty {attribute}_array on Metagraph.sync(). The '{attribute}' tensor is empty."
             )
         return tensor_param
 
@@ -730,7 +730,7 @@ class metagraph(torch.nn.Module):
         self, data, attribute: str, subtensor: bittensor.Subtensor
     ) -> torch.nn.Parameter:
         """
-        Specifically processes the root weights data for the metagraph. This method is similar to :func:`_process_weights_or_bonds` but is tailored for processing root weights, which have a different structure and significance in the network.
+        Specifically processes the root weights data for the Metagraph. This method is similar to :func:`_process_weights_or_bonds` but is tailored for processing root weights, which have a different structure and significance in the network.
 
         Args:
             data: The raw root weights data to be processed.
@@ -741,7 +741,7 @@ class metagraph(torch.nn.Module):
             A tensor parameter encapsulating the processed root weights data.
 
         Internal Usage:
-            Used internally to process and set root weights for the metagraph::
+            Used internally to process and set root weights for the Metagraph::
 
                 self.root_weights = self._process_root_weights(
                     raw_root_weights_data, "weights", subtensor
@@ -770,31 +770,31 @@ class metagraph(torch.nn.Module):
         )
         if len(data_array) == 0:
             bittensor.logging.warning(
-                f"Empty {attribute}_array on metagraph.sync(). The '{attribute}' tensor is empty."
+                f"Empty {attribute}_array on Metagraph.sync(). The '{attribute}' tensor is empty."
             )
         return tensor_param
 
     def save(self) -> "metagraph":
         """
-        Saves the current state of the metagraph to a file on disk. This function is crucial for persisting the current state of the network's metagraph, which can later be reloaded or analyzed. The save operation includes all neuron attributes and parameters, ensuring a complete snapshot of the metagraph's state.
+        Saves the current state of the Metagraph to a file on disk. This function is crucial for persisting the current state of the network's Metagraph, which can later be reloaded or analyzed. The save operation includes all neuron attributes and parameters, ensuring a complete snapshot of the Metagraph's state.
 
         Returns:
-            metagraph: The metagraph instance after saving its state.
+            Metagraph: The Metagraph instance after saving its state.
 
         Example:
-            Save the current state of the metagraph to the default directory::
+            Save the current state of the Metagraph to the default directory::
 
-                metagraph.save()
+                Metagraph.save()
 
-            The saved state can later be loaded to restore or analyze the metagraph's state at this point.
+            The saved state can later be loaded to restore or analyze the Metagraph's state at this point.
 
             If using the default save path::
 
-                metagraph.load()
+                Metagraph.load()
 
             If using a custom save path::
 
-                metagraph.load_from_path(dir_path)
+                Metagraph.load_from_path(dir_path)
         """
         save_directory = get_save_dir(self.network, self.netuid)
         os.makedirs(save_directory, exist_ok=True)
@@ -807,55 +807,55 @@ class metagraph(torch.nn.Module):
 
     def load(self):
         """
-        Loads the state of the metagraph from the default save directory. This method is instrumental for restoring the metagraph to its last saved state. It automatically identifies the save directory based on the ``network`` and ``netuid`` properties of the metagraph, locates the latest block file in that directory, and loads all metagraph parameters from it.
+        Loads the state of the Metagraph from the default save directory. This method is instrumental for restoring the Metagraph to its last saved state. It automatically identifies the save directory based on the ``network`` and ``netuid`` properties of the Metagraph, locates the latest block file in that directory, and loads all Metagraph parameters from it.
 
-        This functionality is particularly beneficial when continuity in the state of the metagraph is necessary
-        across different runtime sessions, or after a restart of the system. It ensures that the metagraph reflects
+        This functionality is particularly beneficial when continuity in the state of the Metagraph is necessary
+        across different runtime sessions, or after a restart of the system. It ensures that the Metagraph reflects
         the exact state it was in at the last save point, maintaining consistency in the network's representation.
 
-        The method delegates to ``load_from_path``, supplying it with the directory path constructed from the metagraph's current ``network`` and ``netuid`` properties. This abstraction simplifies the process of loading the metagraph's state for the user, requiring no direct path specifications.
+        The method delegates to ``load_from_path``, supplying it with the directory path constructed from the Metagraph's current ``network`` and ``netuid`` properties. This abstraction simplifies the process of loading the Metagraph's state for the user, requiring no direct path specifications.
 
         Returns:
-            metagraph: The metagraph instance after loading its state from the default directory.
+            Metagraph: The Metagraph instance after loading its state from the default directory.
 
         Example:
-            Load the metagraph state from the last saved snapshot in the default directory::
+            Load the Metagraph state from the last saved snapshot in the default directory::
 
-                metagraph.load()
+                Metagraph.load()
 
-            After this operation, the metagraph's parameters and neuron data are restored to their state at the time of the last save in the default directory.
+            After this operation, the Metagraph's parameters and neuron data are restored to their state at the time of the last save in the default directory.
 
         Note:
-            The default save directory is determined based on the metagraph's ``network`` and ``netuid`` attributes. It is important to ensure that these attributes are set correctly and that the default save directory contains the appropriate state files for the metagraph.
+            The default save directory is determined based on the Metagraph's ``network`` and ``netuid`` attributes. It is important to ensure that these attributes are set correctly and that the default save directory contains the appropriate state files for the Metagraph.
         """
         self.load_from_path(get_save_dir(self.network, self.netuid))
 
     def load_from_path(self, dir_path: str) -> "metagraph":
         """
-        Loads the state of the metagraph from a specified directory path. This method is crucial for restoring the metagraph to a specific state based on saved data. It locates the latest block file in the given
-        directory and loads all metagraph parameters from it. This is particularly useful for analyses that require historical states of the network or for restoring previous states of the metagraph in different
+        Loads the state of the Metagraph from a specified directory path. This method is crucial for restoring the Metagraph to a specific state based on saved data. It locates the latest block file in the given
+        directory and loads all Metagraph parameters from it. This is particularly useful for analyses that require historical states of the network or for restoring previous states of the Metagraph in different
         execution environments.
 
-        The method first identifies the latest block file in the specified directory, then loads the metagraph state including neuron attributes and parameters from this file. This ensures that the metagraph is accurately reconstituted to reflect the network state at the time of the saved block.
+        The method first identifies the latest block file in the specified directory, then loads the Metagraph state including neuron attributes and parameters from this file. This ensures that the Metagraph is accurately reconstituted to reflect the network state at the time of the saved block.
 
         Args:
-            dir_path (str): The directory path where the metagraph's state files are stored. This path should contain one or more saved state files, typically named in a format that includes the block number.
+            dir_path (str): The directory path where the Metagraph's state files are stored. This path should contain one or more saved state files, typically named in a format that includes the block number.
 
         Returns:
-            metagraph: The metagraph instance after loading its state from the specified directory path.
+            Metagraph: The Metagraph instance after loading its state from the specified directory path.
 
         Example:
-            Load the metagraph state from a specific directory::
+            Load the Metagraph state from a specific directory::
 
                 dir_path = "/path/to/saved/metagraph/states"
-                metagraph.load_from_path(dir_path)
+                Metagraph.load_from_path(dir_path)
 
-            The metagraph is now restored to the state it was in at the time of the latest saved block in the specified directory.
+            The Metagraph is now restored to the state it was in at the time of the latest saved block in the specified directory.
 
         Note:
             This method assumes that the state files in the specified directory are correctly formatted and
-            contain valid data for the metagraph. It is essential to ensure that the directory path and the
-            state files within it are accurate and consistent with the expected metagraph structure.
+            contain valid data for the Metagraph. It is essential to ensure that the directory path and the
+            state files within it are accurate and consistent with the expected Metagraph structure.
         """
         graph_file = latest_block_path(dir_path)
         state_dict = torch.load(graph_file)

@@ -252,7 +252,7 @@ Metagraph: Encapsulates the chain state of a particular subnetwork at a specific
 ```python
 import bittensor
 # Bittensor's chain state object.
-metagraph = bittensor.metagraph( netuid = 1 ) 
+metagraph = bittensor.Metagraph( netuid = 1 ) 
 # Resync the graph with the most recent chain state
 metagraph.sync()
 # Get the list of stake values

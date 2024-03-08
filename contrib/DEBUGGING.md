@@ -49,7 +49,7 @@ bittensor.logging.debug( f"wallet keypair: {wallet.hotkey}" )
 ...
 
 # Bittensor's chain state object.
-metagraph = bittensor.metagraph(netuid=1)
+metagraph = bittensor.Metagraph(netuid=1)
 
 bittensor.logging.trace( f"metagraph created! netuid {metagraph.netuid}" )
 ```
@@ -109,7 +109,7 @@ wallet = bittensor.Wallet()
 subtensor = bittensor.Subtensor()
 
 # Bittensor's chain state object.
-metagraph = bittensor.metagraph(netuid=1)
+metagraph = bittensor.Metagraph(netuid=1)
 
 # Instantiate a Bittensor endpoint.
 axon = bittensor.axon(wallet=wallet, metagraph=metagraph)

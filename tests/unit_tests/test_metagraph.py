@@ -20,7 +20,7 @@ import pytest
 import torch
 import bittensor
 
-from bittensor.metagraph import metagraph as Metagraph
+from bittensor.Metagraph import metagraph as Metagraph
 from unittest.mock import MagicMock
 
 
@@ -57,7 +57,7 @@ def mock_environment():
 
 def test_set_metagraph_attributes(mock_environment):
     subtensor, neurons = mock_environment
-    metagraph = bittensor.metagraph(1, sync=False)
+    metagraph = bittensor.Metagraph(1, sync=False)
     metagraph.neurons = neurons
     metagraph._set_metagraph_attributes(block=5, subtensor=subtensor)
 
@@ -95,7 +95,7 @@ def test_set_metagraph_attributes(mock_environment):
 
 def test_process_weights_or_bonds(mock_environment):
     _, neurons = mock_environment
-    metagraph = bittensor.metagraph(1, sync=False)
+    metagraph = bittensor.Metagraph(1, sync=False)
     metagraph.neurons = neurons
 
     # Test weights processing
