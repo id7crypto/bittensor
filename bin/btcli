@@ -4,7 +4,7 @@ import websocket
 
 import sys
 import shtab
-from bittensor import cli as btcli
+from bittensor import Cli as btcli
 from bittensor import logging as bt_logging
 
 

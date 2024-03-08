@@ -16,7 +16,7 @@ def post_install():
 
     # Generate the completion script
     completion_script = subprocess.check_output(
-        [sys.executable, "-m", "bittensor.cli", "--print-completion", shell]
+        [sys.executable, "-m", "bittensor.Cli", "--print-completion", shell]
     ).decode()
 
     # Append the completion script to the shell configuration file

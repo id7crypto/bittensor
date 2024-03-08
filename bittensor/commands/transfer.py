@@ -50,7 +50,7 @@ class TransferCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Transfer token of amount to destination."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -63,7 +63,7 @@ class TransferCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Transfer token of amount to destination."""
         wallet = bittensor.wallet(config=cli.config)
         subtensor.transfer(

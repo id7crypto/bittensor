@@ -160,7 +160,7 @@ class CLIErrorParser(argparse.ArgumentParser):
         sys.exit(2)
 
 
-class cli:
+class Cli:
     """
     Implementation of the Command Line Interface (CLI) class for the Bittensor protocol.
     This class handles operations like key management (hotkey and coldkey) and token transfer.
@@ -183,7 +183,7 @@ class cli:
 
         # If no config is provided, create a new one from args.
         if config is None:
-            config = cli.create_config(args)
+            config = Cli.create_config(args)
 
         self.config = config
         if self.config.command in ALIAS_TO_COMMAND:
@@ -195,7 +195,7 @@ class cli:
             sys.exit()
 
         # Check if the config is valid.
-        cli.check_config(self.config)
+        Cli.check_config(self.config)
 
         # If no_version_checking is not set or set as False in the config, version checking is done.
         if not self.config.get("no_version_checking", d=True):
@@ -217,7 +217,7 @@ class cli:
         """
         # Define the basic argument parser.
         parser = CLIErrorParser(
-            description=f"bittensor cli v{bittensor.__version__}",
+            description=f"Bittensor Cli v{bittensor.__version__}",
             usage="btcli <command> <command args>",
             add_help=True,
         )
@@ -259,7 +259,7 @@ class cli:
         Returns:
             bittensor.config: The configuration object for Bittensor CLI.
         """
-        parser = cli.__create_parser__()
+        parser = Cli.__create_parser__()
 
         # If no arguments are passed, print help text and exit the program.
         if len(args) == 0:

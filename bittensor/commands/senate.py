@@ -46,7 +46,7 @@ class SenateCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""View Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
@@ -60,7 +60,7 @@ class SenateCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""View Bittensor's governance protocol proposals"""
         console = bittensor.__console__
         console.print(
@@ -185,7 +185,7 @@ class ProposalsCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""View Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
@@ -199,7 +199,7 @@ class ProposalsCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""View Bittensor's governance protocol proposals"""
         console = bittensor.__console__
         console.print(
@@ -308,7 +308,7 @@ class ShowVotesCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""View Bittensor's governance protocol proposals active votes"""
         try:
             config = cli.config.copy()
@@ -322,7 +322,7 @@ class ShowVotesCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""View Bittensor's governance protocol proposals active votes"""
         console.print(
             ":satellite: Syncing with chain: [white]{}[/white] ...".format(
@@ -412,7 +412,7 @@ class SenateRegisterCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Register to participate in Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
@@ -426,7 +426,7 @@ class SenateRegisterCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Register to participate in Bittensor's governance protocol proposals"""
         wallet = bittensor.wallet(config=cli.config)
 
@@ -494,7 +494,7 @@ class SenateLeaveCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Discard membership in Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
@@ -508,7 +508,7 @@ class SenateLeaveCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.cli"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Cli"):
         r"""Discard membership in Bittensor's governance protocol proposals"""
         wallet = bittensor.wallet(config=cli.config)
 
@@ -568,7 +568,7 @@ class VoteCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Vote in Bittensor's governance protocol proposals"""
         try:
             config = cli.config.copy()
@@ -582,7 +582,7 @@ class VoteCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Vote in Bittensor's governance protocol proposals"""
         wallet = bittensor.wallet(config=cli.config)
 

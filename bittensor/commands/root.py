@@ -54,7 +54,7 @@ class RootRegisterCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Register to root network."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -67,7 +67,7 @@ class RootRegisterCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Register to root network."""
         wallet = bittensor.wallet(config=cli.config)
 
@@ -124,7 +124,7 @@ class RootList:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""List the root network"""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -137,7 +137,7 @@ class RootList:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""List the root network"""
         console.print(
             ":satellite: Syncing with chain: [white]{}[/white] ...".format(
@@ -267,7 +267,7 @@ class RootSetBoostCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Set weights for root network."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -280,7 +280,7 @@ class RootSetBoostCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Set weights for root network."""
         wallet = bittensor.wallet(config=cli.config)
         subnets: List[bittensor.SubnetInfo] = subtensor.get_all_subnets_info()
@@ -386,7 +386,7 @@ class RootSetSlashCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         """Set weights for root network with decreased values."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -399,7 +399,7 @@ class RootSetSlashCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         wallet = bittensor.wallet(config=cli.config)
         subnets: List[bittensor.SubnetInfo] = subtensor.get_all_subnets_info()
 
@@ -479,7 +479,7 @@ class RootSetWeightsCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Set weights for root network."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -492,7 +492,7 @@ class RootSetWeightsCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Set weights for root network."""
         wallet = bittensor.wallet(config=cli.config)
         subnets: List[bittensor.SubnetInfo] = subtensor.get_all_subnets_info()
@@ -593,7 +593,7 @@ class RootGetWeightsCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Get weights for root network."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -606,7 +606,7 @@ class RootGetWeightsCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Get weights for root network."""
         weights = subtensor.weights(0)
 

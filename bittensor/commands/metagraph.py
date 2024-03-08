@@ -70,7 +70,7 @@ class MetagraphCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Prints an entire metagraph."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -82,7 +82,7 @@ class MetagraphCommand:
                 subtensor.close()
                 bittensor.logging.debug("closing subtensor connection")
 
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Prints an entire metagraph."""
         console = bittensor.__console__
         console.print(

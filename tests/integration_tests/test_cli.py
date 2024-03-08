@@ -80,7 +80,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
 
     @staticmethod
     def construct_config():
-        parser = bittensor.cli.__create_parser__()
+        parser = bittensor.Cli.__create_parser__()
         defaults = bittensor.config(parser=parser, args=[])
         # Parse commands and subcommands
         for command in bittensor.ALL_COMMANDS:
@@ -113,7 +113,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         mock_hotkeys = ["hk0", "hk1", "hk2", "hk3", "hk4"]
 
@@ -220,7 +220,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         mock_hotkeys = ["hk0", "hk1", "hk2", "hk3", "hk4"]
 
@@ -322,7 +322,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_without_hotkeys_config(self, _):
@@ -333,7 +333,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_with_sort_by_config(self, _):
@@ -345,7 +345,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_with_sort_by_bad_column_name(self, _):
@@ -357,7 +357,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_without_sort_by_config(self, _):
@@ -368,7 +368,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_with_sort_order_config(self, _):
@@ -380,7 +380,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_with_sort_order_config_bad_sort_type(self, _):
@@ -392,7 +392,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_without_sort_order_config(self, _):
@@ -404,7 +404,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_with_width_config(self, _):
@@ -416,7 +416,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_without_width_config(self, _):
@@ -428,7 +428,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.all = False
         config.netuid = []  # Don't set, so it tries all networks.
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_overview_all(self, _):
@@ -439,7 +439,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         config.netuid = []  # Don't set, so it tries all networks.
 
         config.all = True
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
     def test_unstake_with_specific_hotkeys(self, _):
@@ -483,7 +483,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 stake=mock_stakes[wallet.hotkey_str].rao,
             )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -559,7 +559,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 stake=mock_stakes[wallet.hotkey_str].rao,
             )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -638,7 +638,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 stake=mock_stakes[wallet.hotkey_str].rao,
             )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -726,7 +726,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 stake=mock_stakes[wallet.hotkey_str].rao,
             )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -811,7 +811,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ss58_address=mock_coldkey_kp.ss58_address, balance=mock_balance.rao
         )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -886,7 +886,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ss58_address=mock_coldkey_kp.ss58_address, balance=mock_balance.rao
         )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -984,7 +984,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ss58_address=mock_coldkey_kp.ss58_address, balance=mock_balance.rao
         )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -1098,7 +1098,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ss58_address=mock_coldkey_kp.ss58_address, balance=mock_balance.rao
         )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -1196,7 +1196,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ss58_address=mock_coldkey_kp.ss58_address, balance=mock_balance.rao
         )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -1289,7 +1289,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ss58_address=mock_coldkey_kp.ss58_address, balance=mock_balance.rao
         )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -1376,7 +1376,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ss58_address=mock_coldkey_kp.ss58_address, balance=mock_balance.rao
         )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -1470,7 +1470,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ss58_address=mock_coldkey_kp.ss58_address, balance=mock_balance.rao
         )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             if kwargs.get("hotkey"):
@@ -1551,7 +1551,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             balance=mock_balance.rao,
         )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             hk = kwargs.get("hotkey")
@@ -1630,7 +1630,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         success = _subtensor_mock.nominate(wallet=mock_wallets[0])
         self.assertTrue(success)
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             hk = kwargs.get("hotkey")
@@ -1732,7 +1732,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         )
         self.assertAlmostEqual(stake.tao, mock_delegated.tao, places=4)
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             hk = kwargs.get("hotkey")
@@ -1800,7 +1800,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 balance=mock_balances[wallet.name].rao,
             )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             name_ = kwargs.get("name")
@@ -1868,7 +1868,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 balance=mock_balances[wallet.name].rao,
             )
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         def mock_get_wallet(*args, **kwargs):
             name_ = kwargs.get("name")
@@ -1929,7 +1929,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         )
 
         with patch("bittensor.wallet", return_value=mock_wallet) as mock_create_wallet:
-            cli = bittensor.cli(config)
+            cli = bittensor.Cli(config)
             cli.run()
             mock_create_wallet.assert_called_once()
 
@@ -1960,7 +1960,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 side_effect=MockException,
             ) as mock_is_stale:
                 with pytest.raises(MockException):
-                    cli = bittensor.cli(config)
+                    cli = bittensor.Cli(config)
                     cli.run()
                     mock_create_wallet.assert_called_once()
 
@@ -1998,7 +1998,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 coldkey_ss58=mock_wallet.coldkey.ss58_address,
             )
 
-            cli = bittensor.cli(config)
+            cli = bittensor.Cli(config)
             cli.run()
             mock_create_wallet.assert_called()
             self.assertEqual(mock_create_wallet.call_count, 2)
@@ -2043,7 +2043,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
 
         _subtensor_mock.neurons_lite(netuid=config.netuid)
 
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
 
         mock_console = MockConsole()
         with patch("bittensor.__console__", mock_console):
@@ -2075,7 +2075,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         # First create a new coldkey
         config.command = "wallet"
         config.subcommand = "new_coldkey"
-        cli = bittensor.cli(config)
+        cli = bittensor.Cli(config)
         cli.run()
 
         # Now let's give it a hotkey
@@ -2105,15 +2105,15 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
 @patch("bittensor.Subtensor", new_callable=return_mock_sub)
 class TestCLIWithNetworkUsingArgs(unittest.TestCase):
     """
-    Test the CLI by passing args directly to the bittensor.cli factory
+    Test the CLI by passing args directly to the bittensor.Cli factory
     """
 
     def test_list_delegates(self, _):
-        cli = bittensor.cli(args=["root", "list_delegates"])
+        cli = bittensor.Cli(args=["root", "list_delegates"])
         cli.run()
 
     def test_list_subnets(self, _):
-        cli = bittensor.cli(
+        cli = bittensor.Cli(
             args=[
                 "subnets",
                 "list",
@@ -2172,7 +2172,7 @@ class TestCLIWithNetworkUsingArgs(unittest.TestCase):
         with patch(
             "bittensor.wallet", return_value=mock_wallet
         ):  # Mock wallet creation. SHOULD NOT BE REGISTERED
-            cli = bittensor.cli(
+            cli = bittensor.Cli(
                 args=[
                     "root",
                     "delegate",

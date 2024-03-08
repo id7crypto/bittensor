@@ -55,7 +55,7 @@ class SetIdentityCommand:
         part of other scripts or applications.
     """
 
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Create a new or update existing identity on-chain."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -67,7 +67,7 @@ class SetIdentityCommand:
                 subtensor.close()
                 bittensor.logging.debug("closing subtensor connection")
 
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Create a new or update existing identity on-chain."""
         console = bittensor.__console__
 
@@ -272,7 +272,7 @@ class GetIdentityCommand:
         primarily used for informational purposes and has no side effects on the network state.
     """
 
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Queries the subtensor chain for user identity."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -284,7 +284,7 @@ class GetIdentityCommand:
                 subtensor.close()
                 bittensor.logging.debug("closing subtensor connection")
 
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         console = bittensor.__console__
 
         with console.status(":satellite: [bold green]Querying chain identity..."):

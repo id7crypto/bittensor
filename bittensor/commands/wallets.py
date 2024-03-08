@@ -762,7 +762,7 @@ class WalletBalanceCommand:
     """
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         """Check the balance of the wallet."""
         try:
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
@@ -775,7 +775,7 @@ class WalletBalanceCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         wallet = bittensor.wallet(config=cli.config)
 
         wallet_names = []

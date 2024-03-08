@@ -150,7 +150,7 @@ class UnStakeCommand:
         bittensor.Subtensor.add_args(unstake_parser)
 
     @staticmethod
-    def run(cli: "bittensor.cli"):
+    def run(cli: "bittensor.Cli"):
         r"""Unstake token of amount from hotkey(s)."""
         try:
             config = cli.config.copy()
@@ -164,7 +164,7 @@ class UnStakeCommand:
                 bittensor.logging.debug("closing subtensor connection")
 
     @staticmethod
-    def _run(cli: "bittensor.cli", subtensor: "bittensor.Subtensor"):
+    def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Unstake token of amount from hotkey(s)."""
         config = cli.config.copy()
         wallet = bittensor.wallet(config=config)
