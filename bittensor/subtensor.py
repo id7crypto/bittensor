@@ -135,7 +135,7 @@ class Subtensor:
         finney_subtensor.connect_websocket()
 
         # Register a new neuron on the network.
-        wallet = bittensor.wallet(...)  # Assuming a wallet instance is created.
+        wallet = bittensor.Wallet(...)  # Assuming a wallet instance is created.
         success = finney_subtensor.register(wallet=wallet, netuid=netuid)
 
         # Set inter-neuronal weights for collaborative learning.
@@ -443,7 +443,7 @@ class Subtensor:
     #####################
     def nominate(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         wait_for_finalization: bool = False,
         wait_for_inclusion: bool = True,
     ) -> bool:
@@ -453,7 +453,7 @@ class Subtensor:
         to participate in consensus and validation processes.
 
         Args:
-            wallet (bittensor.wallet): The wallet containing the hotkey to be nominated.
+            wallet (bittensor.Wallet): The wallet containing the hotkey to be nominated.
             wait_for_finalization (bool, optional): If ``True``, waits until the transaction is finalized on the blockchain.
             wait_for_inclusion (bool, optional): If ``True``, waits until the transaction is included in a block.
 
@@ -472,7 +472,7 @@ class Subtensor:
 
     def delegate(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         delegate_ss58: Optional[str] = None,
         amount: Optional[Union[Balance, float]] = None,
         wait_for_inclusion: bool = True,
@@ -485,7 +485,7 @@ class Subtensor:
         to participate in consensus and validation processes.
 
         Args:
-            wallet (bittensor.wallet): The wallet containing the hotkey to be nominated.
+            wallet (bittensor.Wallet): The wallet containing the hotkey to be nominated.
             wait_for_finalization (bool, optional): If ``True``, waits until the transaction is finalized on the blockchain.
             wait_for_inclusion (bool, optional): If ``True``, waits until the transaction is included in a block.
 
@@ -507,7 +507,7 @@ class Subtensor:
 
     def undelegate(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         delegate_ss58: Optional[str] = None,
         amount: Optional[Union[Balance, float]] = None,
         wait_for_inclusion: bool = True,
@@ -519,7 +519,7 @@ class Subtensor:
         reduces the staked amount on another neuron, effectively withdrawing support or speculation.
 
         Args:
-            wallet (bittensor.wallet): The wallet used for the undelegation process.
+            wallet (bittensor.Wallet): The wallet used for the undelegation process.
             delegate_ss58 (Optional[str]): The ``SS58`` address of the delegate neuron.
             amount (Union[Balance, float]): The amount of TAO to undelegate.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -544,7 +544,7 @@ class Subtensor:
 
     def send_extrinsic(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         module: str,
         function: str,
         params: dict,
@@ -560,7 +560,7 @@ class Subtensor:
         constructs and submits the extrinsic, handling retries and blockchain communication.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the extrinsic.
+            wallet (bittensor.Wallet): The wallet associated with the extrinsic.
             module (str): The module name for the extrinsic.
             function (str): The function name for the extrinsic.
             params (dict): The parameters for the extrinsic.
@@ -647,7 +647,7 @@ class Subtensor:
     #####################
     def set_weights(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         netuid: int,
         uids: Union[torch.LongTensor, list],
         weights: Union[torch.FloatTensor, list],
@@ -664,7 +664,7 @@ class Subtensor:
         of Bittensor's decentralized learning architecture.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron setting the weights.
+            wallet (bittensor.Wallet): The wallet associated with the neuron setting the weights.
             netuid (int): The unique identifier of the subnet.
             uid (int): Unique identifier for the caller on the subnet specified by `netuid`.
             uids (Union[torch.LongTensor, list]): The list of neuron UIDs that the weights are being set for.
@@ -711,7 +711,7 @@ class Subtensor:
 
     def _do_set_weights(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         uids: List[int],
         vals: List[int],
         netuid: int,
@@ -725,7 +725,7 @@ class Subtensor:
         retries and blockchain communication.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron setting the weights.
+            wallet (bittensor.Wallet): The wallet associated with the neuron setting the weights.
             uids (List[int]): List of neuron UIDs for which weights are being set.
             vals (List[int]): List of weight values corresponding to each UID.
             netuid (int): Unique identifier for the network.
@@ -781,7 +781,7 @@ class Subtensor:
     ######################
     def register(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         netuid: int,
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
@@ -801,7 +801,7 @@ class Subtensor:
         it to stake, set weights, and receive incentives.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron to be registered.
+            wallet (bittensor.Wallet): The wallet associated with the neuron to be registered.
             netuid (int): The unique identifier of the subnet.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
             wait_for_finalization (bool, optional): Waits for the transaction to be finalized on the blockchain.
@@ -832,8 +832,8 @@ class Subtensor:
 
     def swap_hotkey(
         self,
-        wallet: "bittensor.wallet",
-        new_wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
+        new_wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
         prompt: bool = False,
@@ -850,7 +850,7 @@ class Subtensor:
 
     def run_faucet(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
         prompt: bool = False,
@@ -869,7 +869,7 @@ class Subtensor:
         Bittensor network, enabling them to start with a small stake on testnet only.
 
         Args:
-            wallet (bittensor.wallet): The wallet for which the faucet transaction is to be run.
+            wallet (bittensor.Wallet): The wallet for which the faucet transaction is to be run.
             Other arguments: Various optional parameters to customize the faucet transaction process.
 
         Returns:
@@ -899,7 +899,7 @@ class Subtensor:
 
     def burned_register(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         netuid: int,
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
@@ -910,7 +910,7 @@ class Subtensor:
         involves recycling TAO tokens, allowing them to be re-mined by performing work on the network.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron to be registered.
+            wallet (bittensor.Wallet): The wallet associated with the neuron to be registered.
             netuid (int): The unique identifier of the subnet.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
             wait_for_finalization (bool, optional): Waits for the transaction to be finalized on the blockchain.
@@ -931,7 +931,7 @@ class Subtensor:
     def _do_pow_register(
         self,
         netuid: int,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         pow_result: POWSolution,
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
@@ -940,7 +940,7 @@ class Subtensor:
 
         Args:
             netuid (int): The subnet to register on.
-            wallet (bittensor.wallet): The wallet to register.
+            wallet (bittensor.Wallet): The wallet to register.
             pow_result (POWSolution): The PoW result to register.
             wait_for_inclusion (bool): If ``true``, waits for the extrinsic to be included in a block.
             wait_for_finalization (bool): If ``true``, waits for the extrinsic to be finalized.
@@ -991,7 +991,7 @@ class Subtensor:
     def _do_burned_register(
         self,
         netuid: int,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
     ) -> Tuple[bool, Optional[str]]:
@@ -1032,8 +1032,8 @@ class Subtensor:
 
     def _do_swap_hotkey(
         self,
-        wallet: "bittensor.wallet",
-        new_wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
+        new_wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
     ) -> Tuple[bool, Optional[str]]:
@@ -1077,7 +1077,7 @@ class Subtensor:
     ##################
     def transfer(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         dest: str,
         amount: Union[Balance, float],
         wait_for_inclusion: bool = True,
@@ -1090,7 +1090,7 @@ class Subtensor:
         between neurons.
 
         Args:
-            wallet (bittensor.wallet): The wallet from which funds are being transferred.
+            wallet (bittensor.Wallet): The wallet from which funds are being transferred.
             dest (str): The destination public key address.
             amount (Union[Balance, float]): The amount of TAO to be transferred.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -1114,7 +1114,7 @@ class Subtensor:
         )
 
     def get_transfer_fee(
-        self, wallet: "bittensor.wallet", dest: str, value: Union[Balance, float, int]
+        self, wallet: "bittensor.Wallet", dest: str, value: Union[Balance, float, int]
     ) -> Balance:
         """
         Calculates the transaction fee for transferring tokens from a wallet to a specified destination address.
@@ -1122,7 +1122,7 @@ class Subtensor:
         network conditions and transaction complexity.
 
         Args:
-            wallet (bittensor.wallet): The wallet from which the transfer is initiated.
+            wallet (bittensor.Wallet): The wallet from which the transfer is initiated.
             dest (str): The ``SS58`` address of the destination account.
             value (Union[Balance, float, int]): The amount of tokens to be transferred, specified as a Balance object, or in Tao (float) or Rao (int) units.
 
@@ -1162,7 +1162,7 @@ class Subtensor:
 
     def _do_transfer(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         dest: str,
         transfer_balance: Balance,
         wait_for_inclusion: bool = True,
@@ -1171,7 +1171,7 @@ class Subtensor:
         """Sends a transfer extrinsic to the chain.
 
         Args:
-            wallet (:func:`bittensor.wallet`): Wallet object.
+            wallet (:func:`bittensor.Wallet`): Wallet object.
             dest (str): Destination public key address.
             transfer_balance (:func:`Balance`): Amount to transfer.
             wait_for_inclusion (bool): If ``true``, waits for inclusion.
@@ -1241,7 +1241,7 @@ class Subtensor:
     #################
     def register_subnetwork(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = False,
         wait_for_finalization=True,
         prompt: bool = False,
@@ -1252,7 +1252,7 @@ class Subtensor:
         overall Bittensor network.
 
         Args:
-            wallet (bittensor.wallet): The wallet to be used for registration.
+            wallet (bittensor.Wallet): The wallet to be used for registration.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
             wait_for_finalization (bool, optional): Waits for the transaction to be finalized on the blockchain.
             prompt (bool, optional): If ``True``, prompts for user confirmation before proceeding.
@@ -1273,7 +1273,7 @@ class Subtensor:
 
     def set_hyperparameter(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         netuid: int,
         parameter: str,
         value,
@@ -1287,7 +1287,7 @@ class Subtensor:
         subnetwork.
 
         Args:
-            wallet (bittensor.wallet): The wallet used for setting the hyperparameter.
+            wallet (bittensor.Wallet): The wallet used for setting the hyperparameter.
             netuid (int): The unique identifier of the subnetwork.
             parameter (str): The name of the hyperparameter to be set.
             value: The new value for the hyperparameter.
@@ -1317,7 +1317,7 @@ class Subtensor:
     #################
     def serve(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         ip: str,
         port: int,
         protocol: int,
@@ -1334,7 +1334,7 @@ class Subtensor:
         communication within the network.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron being served.
+            wallet (bittensor.Wallet): The wallet associated with the neuron being served.
             ip (str): The IP address of the serving neuron.
             port (int): The port number on which the neuron is serving.
             protocol (int): The protocol type used by the neuron (e.g., GRPC, HTTP).
@@ -1395,7 +1395,7 @@ class Subtensor:
 
     def _do_serve_axon(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         call_params: AxonServeCallParams,
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
@@ -1405,7 +1405,7 @@ class Subtensor:
         creates and submits a transaction, enabling a neuron's Axon to serve requests on the network.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron.
+            wallet (bittensor.Wallet): The wallet associated with the neuron.
             call_params (AxonServeCallParams): Parameters required for the serve axon call.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
             wait_for_finalization (bool, optional): Waits for the transaction to be finalized on the blockchain.
@@ -1446,7 +1446,7 @@ class Subtensor:
 
     def serve_prometheus(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         port: int,
         netuid: int,
         wait_for_inclusion: bool = False,
@@ -1463,7 +1463,7 @@ class Subtensor:
 
     def _do_serve_prometheus(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         call_params: PrometheusServeCallParams,
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
@@ -1471,7 +1471,7 @@ class Subtensor:
         """
         Sends a serve prometheus extrinsic to the chain.
         Args:
-            wallet (:func:`bittensor.wallet`): Wallet object.
+            wallet (:func:`bittensor.Wallet`): Wallet object.
             call_params (:func:`PrometheusServeCallParams`): Prometheus serve call parameters.
             wait_for_inclusion (bool): If ``true``, waits for inclusion.
             wait_for_finalization (bool): If ``true``, waits for finalization.
@@ -1509,7 +1509,7 @@ class Subtensor:
 
     def _do_associate_ips(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         ip_info_list: List[IPInfo],
         netuid: int,
         wait_for_inclusion: bool = False,
@@ -1519,7 +1519,7 @@ class Subtensor:
         Sends an associate IPs extrinsic to the chain.
 
         Args:
-            wallet (:func:`bittensor.wallet`): Wallet object.
+            wallet (:func:`bittensor.Wallet`): Wallet object.
             ip_info_list (:func:`List[IPInfo]`): List of IPInfo objects.
             netuid (int): Netuid to associate IPs to.
             wait_for_inclusion (bool): If ``true``, waits for inclusion.
@@ -1565,7 +1565,7 @@ class Subtensor:
     #################
     def add_stake(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         hotkey_ss58: Optional[str] = None,
         amount: Optional[Union[Balance, float]] = None,
         wait_for_inclusion: bool = True,
@@ -1578,7 +1578,7 @@ class Subtensor:
         and earn incentives.
 
         Args:
-            wallet (bittensor.wallet): The wallet to be used for staking.
+            wallet (bittensor.Wallet): The wallet to be used for staking.
             hotkey_ss58 (Optional[str]): The ``SS58`` address of the hotkey associated with the neuron.
             amount (Union[Balance, float]): The amount of TAO to stake.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -1603,7 +1603,7 @@ class Subtensor:
 
     def add_stake_multiple(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         hotkey_ss58s: List[str],
         amounts: Optional[List[Union[Balance, float]]] = None,
         wait_for_inclusion: bool = True,
@@ -1615,7 +1615,7 @@ class Subtensor:
         allows for efficient staking across different neurons from a single wallet.
 
         Args:
-            wallet (bittensor.wallet): The wallet used for staking.
+            wallet (bittensor.Wallet): The wallet used for staking.
             hotkey_ss58s (List[str]): List of ``SS58`` addresses of hotkeys to stake to.
             amounts (List[Union[Balance, float]], optional): Corresponding amounts of TAO to stake for each hotkey.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -1640,7 +1640,7 @@ class Subtensor:
 
     def _do_stake(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         hotkey_ss58: str,
         amount: Balance,
         wait_for_inclusion: bool = True,
@@ -1649,7 +1649,7 @@ class Subtensor:
         """Sends a stake extrinsic to the chain.
 
         Args:
-            wallet (:func:`bittensor.wallet`): Wallet object that can sign the extrinsic.
+            wallet (:func:`bittensor.Wallet`): Wallet object that can sign the extrinsic.
             hotkey_ss58 (str): Hotkey ``ss58`` address to stake to.
             amount (:func:`Balance`): Amount to stake.
             wait_for_inclusion (bool): If ``true``, waits for inclusion before returning.
@@ -1693,7 +1693,7 @@ class Subtensor:
     ###################
     def unstake_multiple(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         hotkey_ss58s: List[str],
         amounts: Optional[List[Union[Balance, float]]] = None,
         wait_for_inclusion: bool = True,
@@ -1705,7 +1705,7 @@ class Subtensor:
         efficiently. This function is useful for managing the distribution of stakes across multiple neurons.
 
         Args:
-            wallet (bittensor.wallet): The wallet linked to the coldkey from which the stakes are being withdrawn.
+            wallet (bittensor.Wallet): The wallet linked to the coldkey from which the stakes are being withdrawn.
             hotkey_ss58s (List[str]): A list of hotkey ``SS58`` addresses to unstake from.
             amounts (List[Union[Balance, float]], optional): The amounts of TAO to unstake from each hotkey. If not provided, unstakes all available stakes.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -1730,7 +1730,7 @@ class Subtensor:
 
     def unstake(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         hotkey_ss58: Optional[str] = None,
         amount: Optional[Union[Balance, float]] = None,
         wait_for_inclusion: bool = True,
@@ -1742,7 +1742,7 @@ class Subtensor:
         individual neuron stakes within the Bittensor network.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron from which the stake is being removed.
+            wallet (bittensor.Wallet): The wallet associated with the neuron from which the stake is being removed.
             hotkey_ss58 (Optional[str]): The ``SS58`` address of the hotkey account to unstake from.
             amount (Union[Balance, float], optional): The amount of TAO to unstake. If not specified, unstakes all.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -1767,7 +1767,7 @@ class Subtensor:
 
     def _do_unstake(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         hotkey_ss58: str,
         amount: Balance,
         wait_for_inclusion: bool = True,
@@ -1776,7 +1776,7 @@ class Subtensor:
         """Sends an unstake extrinsic to the chain.
 
         Args:
-            wallet (:func:`bittensor.wallet`): Wallet object that can sign the extrinsic.
+            wallet (:func:`bittensor.Wallet`): Wallet object that can sign the extrinsic.
             hotkey_ss58 (str): Hotkey ``ss58`` address to unstake from.
             amount (:func:`Balance`): Amount to unstake.
             wait_for_inclusion (bool): If ``true``, waits for inclusion before returning.
@@ -1821,7 +1821,7 @@ class Subtensor:
 
     def register_senate(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = True,
         wait_for_finalization: bool = False,
         prompt: bool = False,
@@ -1831,7 +1831,7 @@ class Subtensor:
         individual neuron stakes within the Bittensor network.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron from which the stake is being removed.
+            wallet (bittensor.Wallet): The wallet associated with the neuron from which the stake is being removed.
             hotkey_ss58 (Optional[str]): The ``SS58`` address of the hotkey account to unstake from.
             amount (Union[Balance, float], optional): The amount of TAO to unstake. If not specified, unstakes all.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -1850,7 +1850,7 @@ class Subtensor:
 
     def leave_senate(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = True,
         wait_for_finalization: bool = False,
         prompt: bool = False,
@@ -1860,7 +1860,7 @@ class Subtensor:
         individual neuron stakes within the Bittensor network.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron from which the stake is being removed.
+            wallet (bittensor.Wallet): The wallet associated with the neuron from which the stake is being removed.
             hotkey_ss58 (Optional[str]): The ``SS58`` address of the hotkey account to unstake from.
             amount (Union[Balance, float], optional): The amount of TAO to unstake. If not specified, unstakes all.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -1879,7 +1879,7 @@ class Subtensor:
 
     def vote_senate(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         proposal_hash: str,
         proposal_idx: int,
         vote: bool,
@@ -1892,7 +1892,7 @@ class Subtensor:
         individual neuron stakes within the Bittensor network.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron from which the stake is being removed.
+            wallet (bittensor.Wallet): The wallet associated with the neuron from which the stake is being removed.
             hotkey_ss58 (Optional[str]): The ``SS58`` address of the hotkey account to unstake from.
             amount (Union[Balance, float], optional): The amount of TAO to unstake. If not specified, unstakes all.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -2071,7 +2071,7 @@ class Subtensor:
 
     def root_register(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
         prompt: bool = False,
@@ -2081,7 +2081,7 @@ class Subtensor:
         participating in the highest layer of decision-making and governance within the Bittensor network.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron to be registered on the root network.
+            wallet (bittensor.Wallet): The wallet associated with the neuron to be registered on the root network.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
             wait_for_finalization (bool, optional): Waits for the transaction to be finalized on the blockchain.
             prompt (bool, optional): If ``True``, prompts for user confirmation before proceeding.
@@ -2102,7 +2102,7 @@ class Subtensor:
 
     def _do_root_register(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
     ) -> Tuple[bool, Optional[str]]:
@@ -2140,7 +2140,7 @@ class Subtensor:
 
     def root_set_weights(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         netuids: Union[torch.LongTensor, list],
         weights: Union[torch.FloatTensor, list],
         version_key: int = 0,
@@ -2153,7 +2153,7 @@ class Subtensor:
         and interactions of neurons at the root level of the Bittensor network.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron setting the weights.
+            wallet (bittensor.Wallet): The wallet associated with the neuron setting the weights.
             netuids (Union[torch.LongTensor, list]): The list of neuron UIDs for which weights are being set.
             weights (Union[torch.FloatTensor, list]): The corresponding weights to be set for each UID.
             version_key (int, optional): Version key for compatibility with the network.
@@ -2227,7 +2227,7 @@ class Subtensor:
 
     def update_identity(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         identified: Optional[str] = None,
         params: dict = {},
         wait_for_inclusion: bool = True,
@@ -2241,7 +2241,7 @@ class Subtensor:
             See the `Bittensor CLI documentation <https://docs.bittensor.com/reference/btcli>`_ for supported identity parameters.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron whose identity is being updated.
+            wallet (bittensor.Wallet): The wallet associated with the neuron whose identity is being updated.
             identified (str, optional): The identified ``SS58`` address of the neuron. Defaults to the wallet's coldkey address.
             params (dict, optional): A dictionary of parameters to update in the neuron's identity.
             wait_for_inclusion (bool, optional): Waits for the transaction to be included in a block.
@@ -3866,7 +3866,7 @@ class Subtensor:
         return _result.value
 
     def neuron_for_wallet(
-        self, wallet: "bittensor.wallet", netuid: int, block: Optional[int] = None
+        self, wallet: "bittensor.Wallet", netuid: int, block: Optional[int] = None
     ) -> Optional[NeuronInfo]:
         """
         Retrieves information about a neuron associated with a given wallet on a specific subnet.
@@ -3874,7 +3874,7 @@ class Subtensor:
         the wallet's hotkey address.
 
         Args:
-            wallet (bittensor.wallet): The wallet associated with the neuron.
+            wallet (bittensor.Wallet): The wallet associated with the neuron.
             netuid (int): The unique identifier of the subnet.
             block (Optional[int], optional): The blockchain block number at which to perform the query.
 
@@ -4215,7 +4215,7 @@ class Subtensor:
 
     def _do_delegation(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         delegate_ss58: str,
         amount: "Balance",
         wait_for_inclusion: bool = True,
@@ -4250,7 +4250,7 @@ class Subtensor:
 
     def _do_undelegation(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         delegate_ss58: str,
         amount: "Balance",
         wait_for_inclusion: bool = True,
@@ -4288,7 +4288,7 @@ class Subtensor:
 
     def _do_nominate(
         self,
-        wallet: "bittensor.wallet",
+        wallet: "bittensor.Wallet",
         wait_for_inclusion: bool = True,
         wait_for_finalization: bool = False,
     ) -> bool:

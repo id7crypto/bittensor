@@ -34,7 +34,7 @@ import bittensor
 
 def test_some_functionality():
     # Setup any necessary objects or state.
-    wallet = bittensor.wallet()
+    wallet = bittensor.Wallet()
 
     # Call the function you're testing.
     result = wallet.create_new_coldkey()

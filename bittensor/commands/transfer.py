@@ -65,7 +65,7 @@ class TransferCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Transfer token of amount to destination."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         subtensor.transfer(
             wallet=wallet,
             dest=cli.config.dest,
@@ -90,7 +90,7 @@ class TransferCommand:
 
         # Get current balance and print to user.
         if not config.no_prompt:
-            wallet = bittensor.wallet(config=config)
+            wallet = bittensor.Wallet(config=config)
             subtensor = bittensor.Subtensor(config=config, log_verbose=False)
             with bittensor.__console__.status(":satellite: Checking Balance..."):
                 account_balance = subtensor.get_balance(wallet.coldkeypub.ss58_address)
@@ -129,5 +129,5 @@ class TransferCommand:
             "--amount", dest="amount", type=float, required=False
         )
 
-        bittensor.wallet.add_args(transfer_parser)
+        bittensor.Wallet.add_args(transfer_parser)
         bittensor.Subtensor.add_args(transfer_parser)

@@ -129,7 +129,7 @@ def check_for_cuda_reg_config(config: "bittensor.config") -> None:
                 config.pow_register.cuda.use_cuda = defaults.pow_register.cuda.use_cuda
 
 
-def get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.wallet"]:
+def get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.Wallet"]:
     hotkey_wallets = []
     hotkeys_path = wallet.path + "/" + wallet.name + "/hotkeys"
     try:
@@ -138,7 +138,7 @@ def get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.wallet"]:
         hotkey_files = []
     for hotkey_file_name in hotkey_files:
         try:
-            hotkey_for_name = bittensor.wallet(
+            hotkey_for_name = bittensor.Wallet(
                 path=wallet.path, name=wallet.name, hotkey=hotkey_file_name
             )
             if (
@@ -151,17 +151,17 @@ def get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.wallet"]:
     return hotkey_wallets
 
 
-def get_coldkey_wallets_for_path(path: str) -> List["bittensor.wallet"]:
+def get_coldkey_wallets_for_path(path: str) -> List["bittensor.Wallet"]:
     try:
         wallet_names = next(os.walk(os.path.expanduser(path)))[1]
-        return [bittensor.wallet(path=path, name=name) for name in wallet_names]
+        return [bittensor.Wallet(path=path, name=name) for name in wallet_names]
     except StopIteration:
         # No wallet files found.
         wallets = []
     return wallets
 
 
-def get_all_wallets_for_path(path: str) -> List["bittensor.wallet"]:
+def get_all_wallets_for_path(path: str) -> List["bittensor.Wallet"]:
     all_wallets = []
     cold_wallets = get_coldkey_wallets_for_path(path)
     for cold_wallet in cold_wallets:

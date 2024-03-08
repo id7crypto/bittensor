@@ -31,7 +31,7 @@ logger = logger.opt(colors=True)
 
 def root_register_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
     prompt: bool = False,
@@ -39,7 +39,7 @@ def root_register_extrinsic(
     r"""Registers the wallet to root network.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         wait_for_inclusion (bool):
             If set, waits for the extrinsic to enter a block before returning ``true``, or returns ``false`` if the extrinsic fails to enter the block within the timeout.
@@ -100,7 +100,7 @@ def root_register_extrinsic(
 
 def set_root_weights_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     netuids: Union[torch.LongTensor, list],
     weights: Union[torch.FloatTensor, list],
     version_key: int = 0,
@@ -111,7 +111,7 @@ def set_root_weights_extrinsic(
     r"""Sets the given weights and values on chain for wallet hotkey account.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         netuids (List[int]):
             The ``netuid`` of the subnet to set weights for.

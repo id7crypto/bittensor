@@ -69,7 +69,7 @@ class RootRegisterCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Register to root network."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         subtensor.root_register(wallet=wallet, prompt=not cli.config.no_prompt)
 
@@ -79,7 +79,7 @@ class RootRegisterCommand:
             "register", help="""Register a wallet to the root network."""
         )
 
-        bittensor.wallet.add_args(parser)
+        bittensor.Wallet.add_args(parser)
         bittensor.Subtensor.add_args(parser)
 
     @staticmethod
@@ -282,7 +282,7 @@ class RootSetBoostCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Set weights for root network."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         subnets: List[bittensor.SubnetInfo] = subtensor.get_all_subnets_info()
 
         root = subtensor.metagraph(0, lite=False)
@@ -322,7 +322,7 @@ class RootSetBoostCommand:
         parser.add_argument("--netuid", dest="netuid", type=int, required=False)
         parser.add_argument("--increase", dest="amount", type=float, required=False)
 
-        bittensor.wallet.add_args(parser)
+        bittensor.Wallet.add_args(parser)
         bittensor.Subtensor.add_args(parser)
 
     @staticmethod
@@ -400,7 +400,7 @@ class RootSetSlashCommand:
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         subnets: List[bittensor.SubnetInfo] = subtensor.get_all_subnets_info()
 
         bittensor.__console__.print(
@@ -439,7 +439,7 @@ class RootSetSlashCommand:
         parser.add_argument("--netuid", dest="netuid", type=int, required=False)
         parser.add_argument("--decrease", dest="amount", type=float, required=False)
 
-        bittensor.wallet.add_args(parser)
+        bittensor.Wallet.add_args(parser)
         bittensor.Subtensor.add_args(parser)
 
     @staticmethod
@@ -494,7 +494,7 @@ class RootSetWeightsCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Set weights for root network."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         subnets: List[bittensor.SubnetInfo] = subtensor.get_all_subnets_info()
 
         # Get values if not set.
@@ -545,7 +545,7 @@ class RootSetWeightsCommand:
         parser.add_argument("--netuids", dest="netuids", type=str, required=False)
         parser.add_argument("--weights", dest="weights", type=str, required=False)
 
-        bittensor.wallet.add_args(parser)
+        bittensor.Wallet.add_args(parser)
         bittensor.Subtensor.add_args(parser)
 
     @staticmethod
@@ -676,7 +676,7 @@ class RootGetWeightsCommand:
             "get_weights", help="""Get weights for root network."""
         )
 
-        bittensor.wallet.add_args(parser)
+        bittensor.Wallet.add_args(parser)
         bittensor.Subtensor.add_args(parser)
 
     @staticmethod

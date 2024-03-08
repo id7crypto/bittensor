@@ -30,7 +30,7 @@ logger = logger.opt(colors=True)
 
 def set_weights_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     netuid: int,
     uids: Union[torch.LongTensor, list],
     weights: Union[torch.FloatTensor, list],
@@ -44,7 +44,7 @@ def set_weights_extrinsic(
     Args:
         subtensor_endpoint (bittensor.Subtensor):
             Subtensor endpoint to use.
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         netuid (int):
             The ``netuid`` of the subnet to set weights for.

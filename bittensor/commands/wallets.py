@@ -56,7 +56,7 @@ class RegenColdkeyCommand:
 
     def run(cli):
         r"""Creates a new coldkey under this wallet."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         json_str: Optional[str] = None
         json_password: Optional[str] = None
@@ -149,7 +149,7 @@ class RegenColdkeyCommand:
             action="store_false",
             help="""Overwrite the old coldkey with the newly generated coldkey""",
         )
-        bittensor.wallet.add_args(regen_coldkey_parser)
+        bittensor.Wallet.add_args(regen_coldkey_parser)
         bittensor.Subtensor.add_args(regen_coldkey_parser)
 
 
@@ -178,7 +178,7 @@ class RegenColdkeypubCommand:
 
     def run(cli):
         r"""Creates a new coldkeypub under this wallet."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         wallet.regenerate_coldkeypub(
             ss58_address=cli.config.get("ss58_address"),
             public_key=cli.config.get("public_key_hex"),
@@ -236,7 +236,7 @@ class RegenColdkeypubCommand:
             action="store_true",
             help="""Overwrite the old coldkeypub file with the newly generated coldkeypub""",
         )
-        bittensor.wallet.add_args(regen_coldkeypub_parser)
+        bittensor.Wallet.add_args(regen_coldkeypub_parser)
         bittensor.Subtensor.add_args(regen_coldkeypub_parser)
 
 
@@ -270,7 +270,7 @@ class RegenHotkeyCommand:
 
     def run(cli):
         r"""Creates a new coldkey under this wallet."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         json_str: Optional[str] = None
         json_password: Optional[str] = None
@@ -368,7 +368,7 @@ class RegenHotkeyCommand:
             default=False,
             help="""Overwrite the old hotkey with the newly generated hotkey""",
         )
-        bittensor.wallet.add_args(regen_hotkey_parser)
+        bittensor.Wallet.add_args(regen_hotkey_parser)
         bittensor.Subtensor.add_args(regen_hotkey_parser)
 
 
@@ -398,7 +398,7 @@ class NewHotkeyCommand:
 
     def run(cli):
         """Creates a new hotke under this wallet."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         wallet.create_new_hotkey(
             n_words=cli.config.n_words,
             use_password=cli.config.use_password,
@@ -447,7 +447,7 @@ class NewHotkeyCommand:
             default=False,
             help="""Overwrite the old hotkey with the newly generated hotkey""",
         )
-        bittensor.wallet.add_args(new_hotkey_parser)
+        bittensor.Wallet.add_args(new_hotkey_parser)
         bittensor.Subtensor.add_args(new_hotkey_parser)
 
 
@@ -477,7 +477,7 @@ class NewColdkeyCommand:
 
     def run(cli):
         r"""Creates a new coldkey under this wallet."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         wallet.create_new_coldkey(
             n_words=cli.config.n_words,
             use_password=cli.config.use_password,
@@ -522,7 +522,7 @@ class NewColdkeyCommand:
             default=False,
             help="""Overwrite the old coldkey with the newly generated coldkey""",
         )
-        bittensor.wallet.add_args(new_coldkey_parser)
+        bittensor.Wallet.add_args(new_coldkey_parser)
         bittensor.Subtensor.add_args(new_coldkey_parser)
 
 
@@ -553,7 +553,7 @@ class WalletCreateCommand:
 
     def run(cli):
         r"""Creates a new coldkey and hotkey under this wallet."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         wallet.create_new_coldkey(
             n_words=cli.config.n_words,
             use_password=cli.config.use_password,
@@ -612,15 +612,15 @@ class WalletCreateCommand:
             default=False,
             help="""Overwrite the old hotkey with the newly generated hotkey""",
         )
-        bittensor.wallet.add_args(new_coldkey_parser)
+        bittensor.Wallet.add_args(new_coldkey_parser)
         bittensor.Subtensor.add_args(new_coldkey_parser)
 
 
-def _get_coldkey_wallets_for_path(path: str) -> List["bittensor.wallet"]:
+def _get_coldkey_wallets_for_path(path: str) -> List["bittensor.Wallet"]:
     """Get all coldkey wallet names from path."""
     try:
         wallet_names = next(os.walk(os.path.expanduser(path)))[1]
-        return [bittensor.wallet(path=path, name=name) for name in wallet_names]
+        return [bittensor.Wallet(path=path, name=name) for name in wallet_names]
     except StopIteration:
         # No wallet files found.
         wallets = []
@@ -657,7 +657,7 @@ class UpdateWalletCommand:
         if config.get("all", d=False) == True:
             wallets = _get_coldkey_wallets_for_path(config.wallet.path)
         else:
-            wallets = [bittensor.wallet(config=config)]
+            wallets = [bittensor.Wallet(config=config)]
 
         for wallet in wallets:
             print("\n===== ", wallet, " =====")
@@ -670,7 +670,7 @@ class UpdateWalletCommand:
             help="""Updates the wallet security using NaCL instead of ansible vault.""",
         )
         update_wallet_parser.add_argument("--all", action="store_true")
-        bittensor.wallet.add_args(update_wallet_parser)
+        bittensor.Wallet.add_args(update_wallet_parser)
         bittensor.Subtensor.add_args(update_wallet_parser)
 
     @staticmethod
@@ -776,7 +776,7 @@ class WalletBalanceCommand:
 
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         wallet_names = []
         coldkeys = []
@@ -810,7 +810,7 @@ class WalletBalanceCommand:
                 )
             }
         else:
-            coldkey_wallet = bittensor.wallet(config=cli.config)
+            coldkey_wallet = bittensor.Wallet(config=cli.config)
             if (
                 coldkey_wallet.coldkeypub_file.exists_on_device()
                 and not coldkey_wallet.coldkeypub_file.is_encrypted()
@@ -905,7 +905,7 @@ class WalletBalanceCommand:
             default=False,
         )
 
-        bittensor.wallet.add_args(balance_parser)
+        bittensor.Wallet.add_args(balance_parser)
         bittensor.Subtensor.add_args(balance_parser)
 
     @staticmethod
@@ -989,7 +989,7 @@ class GetWalletHistoryCommand:
     @staticmethod
     def run(cli):
         r"""Check the transfer history of the provided wallet."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         wallet_address = wallet.get_coldkeypub().ss58_address
         # Fetch all transfers
         transfers = get_wallet_transfers(wallet_address)
@@ -1005,7 +1005,7 @@ class GetWalletHistoryCommand:
             "history",
             help="""Fetch transfer history associated with the provided wallet""",
         )
-        bittensor.wallet.add_args(history_parser)
+        bittensor.Wallet.add_args(history_parser)
         bittensor.Subtensor.add_args(history_parser)
 
     @staticmethod

@@ -35,7 +35,7 @@ def legacy_encrypt_keyfile_data(keyfile_data: bytes, password: str = None) -> by
 
 def create_wallet(default_updated_password):
     # create an nacl wallet
-    wallet = bittensor.wallet(
+    wallet = bittensor.Wallet(
         name=f"mock-{str(time.time())}",
         path="/tmp/tests_wallets/do_not_use",
     )
@@ -63,7 +63,7 @@ def create_legacy_wallet(default_legacy_password=None, legacy_password=None):
         kwargs["password"] = legacy_password
         return legacy_encrypt_keyfile_data(**kwargs)
 
-    legacy_wallet = bittensor.wallet(
+    legacy_wallet = bittensor.Wallet(
         name=f"mock-legacy-{str(time.time())}",
         path="/tmp/tests_wallets/do_not_use",
     )
@@ -89,7 +89,7 @@ def wallet_update_setup():
     # Setup the default passwords and wallets
     default_updated_password = "nacl_password"
     default_legacy_password = "ansible_password"
-    empty_wallet = bittensor.wallet(
+    empty_wallet = bittensor.Wallet(
         name=f"mock-empty-{str(time.time())}",
         path="/tmp/tests_wallets/do_not_use",
     )
@@ -244,7 +244,7 @@ def test_check_and_update_excryption(wallet_update_setup, legacy_wallet=None):
     check_new_hotkey_file(legacy_wallet.hotkey_file)
 
     # get new keyfile data from wallet name
-    updated_legacy_wallet = bittensor.wallet(
+    updated_legacy_wallet = bittensor.Wallet(
         name=legacy_wallet.name,
         hotkey=legacy_wallet.hotkey_str,
         path="/tmp/tests_wallets/do_not_use",
@@ -264,7 +264,7 @@ def test_check_and_update_excryption(wallet_update_setup, legacy_wallet=None):
 
 @pytest.fixture
 def mock_wallet():
-    wallet = bittensor.wallet(
+    wallet = bittensor.Wallet(
         name=f"mock-{str(time.time())}",
         hotkey=f"mock-{str(time.time())}",
         path="/tmp/tests_wallets/do_not_use",

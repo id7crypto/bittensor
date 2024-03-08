@@ -24,7 +24,7 @@ from abc import abstractclassmethod
 from collections.abc import Mapping
 
 from hashlib import sha256
-from ..wallet import wallet
+from ..wallet import Wallet
 
 from ..chain_data import (
     NeuronInfo,
@@ -570,7 +570,7 @@ class MockSubtensor(subtensor):
 
         return defaults_mapping.get(name, None)
 
-    def commit(self, wallet: "wallet", netuid: int, data: str) -> None:
+    def commit(self, wallet: "Wallet", netuid: int, data: str) -> None:
         uid = self.get_uid_for_hotkey_on_subnet(
             hotkey_ss58=wallet.hotkey.ss58_address,
             netuid=netuid,
@@ -999,7 +999,7 @@ class MockSubtensor(subtensor):
     # Extrinsics
     def _do_delegation(
         self,
-        wallet: "wallet",
+        wallet: "Wallet",
         delegate_ss58: str,
         amount: "Balance",
         wait_for_inclusion: bool = True,
@@ -1022,7 +1022,7 @@ class MockSubtensor(subtensor):
 
     def _do_undelegation(
         self,
-        wallet: "wallet",
+        wallet: "Wallet",
         delegate_ss58: str,
         amount: "Balance",
         wait_for_inclusion: bool = True,
@@ -1043,7 +1043,7 @@ class MockSubtensor(subtensor):
 
     def _do_nominate(
         self,
-        wallet: "wallet",
+        wallet: "Wallet",
         wait_for_inclusion: bool = True,
         wait_for_finalization: bool = False,
     ) -> bool:
@@ -1063,13 +1063,13 @@ class MockSubtensor(subtensor):
             return True
 
     def get_transfer_fee(
-        self, wallet: "wallet", dest: str, value: Union["Balance", float, int]
+        self, wallet: "Wallet", dest: str, value: Union["Balance", float, int]
     ) -> "Balance":
         return Balance(700)
 
     def _do_transfer(
         self,
-        wallet: "wallet",
+        wallet: "Wallet",
         dest: str,
         transfer_balance: "Balance",
         wait_for_inclusion: bool = True,
@@ -1102,7 +1102,7 @@ class MockSubtensor(subtensor):
     def _do_pow_register(
         self,
         netuid: int,
-        wallet: "wallet",
+        wallet: "Wallet",
         pow_result: "POWSolution",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
@@ -1124,7 +1124,7 @@ class MockSubtensor(subtensor):
     def _do_burned_register(
         self,
         netuid: int,
-        wallet: "wallet",
+        wallet: "Wallet",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
     ) -> Tuple[bool, Optional[str]]:
@@ -1154,7 +1154,7 @@ class MockSubtensor(subtensor):
 
     def _do_stake(
         self,
-        wallet: "wallet",
+        wallet: "Wallet",
         hotkey_ss58: str,
         amount: "Balance",
         wait_for_inclusion: bool = True,
@@ -1225,7 +1225,7 @@ class MockSubtensor(subtensor):
 
     def _do_unstake(
         self,
-        wallet: "wallet",
+        wallet: "Wallet",
         hotkey_ss58: str,
         amount: "Balance",
         wait_for_inclusion: bool = True,
@@ -1420,7 +1420,7 @@ class MockSubtensor(subtensor):
 
     def _do_serve_prometheus(
         self,
-        wallet: "wallet",
+        wallet: "Wallet",
         call_params: "PrometheusServeCallParams",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,
@@ -1429,7 +1429,7 @@ class MockSubtensor(subtensor):
 
     def _do_set_weights(
         self,
-        wallet: "wallet",
+        wallet: "Wallet",
         netuid: int,
         uids: int,
         vals: List[int],
@@ -1441,7 +1441,7 @@ class MockSubtensor(subtensor):
 
     def _do_serve_axon(
         self,
-        wallet: "wallet",
+        wallet: "Wallet",
         call_params: "AxonServeCallParams",
         wait_for_inclusion: bool = False,
         wait_for_finalization: bool = True,

@@ -115,7 +115,7 @@ class SenateCommand:
             "senate", help="""View senate and it's members"""
         )
 
-        bittensor.wallet.add_args(senate_parser)
+        bittensor.Wallet.add_args(senate_parser)
         bittensor.Subtensor.add_args(senate_parser)
 
 
@@ -277,7 +277,7 @@ class ProposalsCommand:
             "proposals", help="""View active triumvirate proposals and their status"""
         )
 
-        bittensor.wallet.add_args(proposals_parser)
+        bittensor.Wallet.add_args(proposals_parser)
         bittensor.Subtensor.add_args(proposals_parser)
 
 
@@ -388,7 +388,7 @@ class ShowVotesCommand:
             help="""Set the proposal to show votes for.""",
             default="",
         )
-        bittensor.wallet.add_args(show_votes_parser)
+        bittensor.Wallet.add_args(show_votes_parser)
         bittensor.Subtensor.add_args(show_votes_parser)
 
 
@@ -428,7 +428,7 @@ class SenateRegisterCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Register to participate in Bittensor's governance protocol proposals"""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         # Unlock the wallet.
         wallet.hotkey
@@ -470,7 +470,7 @@ class SenateRegisterCommand:
             help="""Register as a senate member to participate in proposals""",
         )
 
-        bittensor.wallet.add_args(senate_register_parser)
+        bittensor.Wallet.add_args(senate_register_parser)
         bittensor.Subtensor.add_args(senate_register_parser)
 
 
@@ -510,7 +510,7 @@ class SenateLeaveCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Cli"):
         r"""Discard membership in Bittensor's governance protocol proposals"""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         # Unlock the wallet.
         wallet.hotkey
@@ -543,7 +543,7 @@ class SenateLeaveCommand:
             help="""Discard senate membership in the governance protocol""",
         )
 
-        bittensor.wallet.add_args(senate_leave_parser)
+        bittensor.Wallet.add_args(senate_leave_parser)
         bittensor.Subtensor.add_args(senate_leave_parser)
 
 
@@ -584,7 +584,7 @@ class VoteCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Vote in Bittensor's governance protocol proposals"""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         proposal_hash = cli.config.proposal_hash
         if len(proposal_hash) == 0:
@@ -646,5 +646,5 @@ class VoteCommand:
             help="""Set the proposal to show votes for.""",
             default="",
         )
-        bittensor.wallet.add_args(vote_parser)
+        bittensor.Wallet.add_args(vote_parser)
         bittensor.Subtensor.add_args(vote_parser)

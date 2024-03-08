@@ -23,7 +23,7 @@ import bittensor.utils.networking as net
 
 def prometheus_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     port: int,
     netuid: int,
     ip: int = None,
@@ -35,7 +35,7 @@ def prometheus_extrinsic(
     Args:
         subtensor (bittensor.Subtensor):
             Bittensor subtensor object.
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         ip (str):
             Endpoint host port i.e., ``192.122.31.4``.

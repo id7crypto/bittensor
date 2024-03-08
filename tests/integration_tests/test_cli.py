@@ -36,7 +36,7 @@ from bittensor.commands.delegates import _get_coldkey_wallets_for_path
 from bittensor.commands.identity import SetIdentityCommand
 from bittensor.commands.wallets import _get_coldkey_ss58_addresses_for_path
 from bittensor.mock import MockSubtensor
-from bittensor.wallet import wallet as Wallet
+from bittensor.Wallet import wallet as Wallet
 from tests.helpers import (
     MockConsole,
     _get_mock_keypair,
@@ -180,7 +180,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             "bittensor.commands.overview.get_hotkey_wallets_for_wallet"
         ) as mock_get_all_wallets:
             mock_get_all_wallets.return_value = mock_wallets
-            with patch("bittensor.wallet") as mock_create_wallet:
+            with patch("bittensor.Wallet") as mock_create_wallet:
                 mock_create_wallet.side_effect = mock_get_wallet
                 with patch("bittensor.__console__", mock_console):
                     cli.run()
@@ -282,7 +282,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             "bittensor.commands.overview.get_hotkey_wallets_for_wallet"
         ) as mock_get_all_wallets:
             mock_get_all_wallets.return_value = mock_wallets
-            with patch("bittensor.wallet") as mock_create_wallet:
+            with patch("bittensor.Wallet") as mock_create_wallet:
                 mock_create_wallet.side_effect = mock_get_wallet
                 with patch("bittensor.__console__", mock_console):
                     cli.run()
@@ -493,7 +493,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             # Check stakes before unstaking
@@ -573,7 +573,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             "bittensor.commands.unstake.get_hotkey_wallets_for_wallet"
         ) as mock_get_all_wallets:
             mock_get_all_wallets.return_value = mock_wallets
-            with patch("bittensor.wallet") as mock_create_wallet:
+            with patch("bittensor.Wallet") as mock_create_wallet:
                 mock_create_wallet.side_effect = mock_get_wallet
 
                 # Check stakes before unstaking
@@ -652,7 +652,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             "bittensor.commands.unstake.get_hotkey_wallets_for_wallet"
         ) as mock_get_all_wallets:
             mock_get_all_wallets.return_value = mock_wallets
-            with patch("bittensor.wallet") as mock_create_wallet:
+            with patch("bittensor.Wallet") as mock_create_wallet:
                 mock_create_wallet.side_effect = mock_get_wallet
 
                 # Check stakes before unstaking
@@ -740,7 +740,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             "bittensor.commands.unstake.get_hotkey_wallets_for_wallet"
         ) as mock_get_all_wallets:
             mock_get_all_wallets.return_value = mock_wallets
-            with patch("bittensor.wallet") as mock_create_wallet:
+            with patch("bittensor.Wallet") as mock_create_wallet:
                 mock_create_wallet.side_effect = mock_get_wallet
 
                 # Check stakes before unstaking
@@ -821,7 +821,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             # Check stakes before staking
@@ -896,7 +896,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
             with patch(
                 "bittensor.commands.stake.get_hotkey_wallets_for_wallet"
@@ -998,7 +998,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             "bittensor.commands.stake.get_hotkey_wallets_for_wallet"
         ) as mock_get_all_wallets:
             mock_get_all_wallets.return_value = mock_wallets
-            with patch("bittensor.wallet") as mock_create_wallet:
+            with patch("bittensor.Wallet") as mock_create_wallet:
                 mock_create_wallet.side_effect = mock_get_wallet
 
                 # Check stakes before staking
@@ -1108,7 +1108,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             # Check stakes before staking
@@ -1206,7 +1206,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             # Check stakes before staking
@@ -1299,7 +1299,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             # Check stakes before staking
@@ -1386,7 +1386,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             # Check stakes before staking
@@ -1480,7 +1480,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             # Check stakes before staking
@@ -1567,7 +1567,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 raise ValueError("Mock wallet not found")
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             cli.run()
@@ -1651,7 +1651,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 else:
                     return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             cli.run()
@@ -1753,7 +1753,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 else:
                     return mock_wallets[0]
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             cli.run()
@@ -1814,7 +1814,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             else:
                 raise ValueError(f"No mock wallet found with name: {name_}")
 
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             cli.run()
@@ -1883,7 +1883,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
                 raise ValueError(f"No mock wallet found with name: {name_}")
 
         mock_console = MockConsole()
-        with patch("bittensor.wallet") as mock_create_wallet:
+        with patch("bittensor.Wallet") as mock_create_wallet:
             mock_create_wallet.side_effect = mock_get_wallet
 
             with patch("bittensor.__console__", mock_console):
@@ -1928,7 +1928,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             balance=Balance.from_float(200.0),
         )
 
-        with patch("bittensor.wallet", return_value=mock_wallet) as mock_create_wallet:
+        with patch("bittensor.Wallet", return_value=mock_wallet) as mock_create_wallet:
             cli = bittensor.Cli(config)
             cli.run()
             mock_create_wallet.assert_called_once()
@@ -1954,7 +1954,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
         class MockException(Exception):
             pass
 
-        with patch("bittensor.wallet", return_value=mock_wallet) as mock_create_wallet:
+        with patch("bittensor.Wallet", return_value=mock_wallet) as mock_create_wallet:
             with patch(
                 "bittensor.extrinsics.registration.POWSolution.is_stale",
                 side_effect=MockException,
@@ -1992,7 +1992,7 @@ class TestCLIWithNetworkAndConfig(unittest.TestCase):
             ).rao,  # 1.0 tao extra for fees, etc
         )
 
-        with patch("bittensor.wallet", return_value=mock_wallet) as mock_create_wallet:
+        with patch("bittensor.Wallet", return_value=mock_wallet) as mock_create_wallet:
             old_stake = subtensor.get_stake_for_coldkey_and_hotkey(
                 hotkey_ss58=mock_wallet.hotkey.ss58_address,
                 coldkey_ss58=mock_wallet.coldkey.ss58_address,
@@ -2170,7 +2170,7 @@ class TestCLIWithNetworkUsingArgs(unittest.TestCase):
         )
 
         with patch(
-            "bittensor.wallet", return_value=mock_wallet
+            "bittensor.Wallet", return_value=mock_wallet
         ):  # Mock wallet creation. SHOULD NOT BE REGISTERED
             cli = bittensor.Cli(
                 args=[
@@ -2255,7 +2255,7 @@ def test_get_coldkey_wallets_for_path(
     for wallet in wallets:
         assert isinstance(
             wallet, Wallet
-        ), "The returned object should be an instance of bittensor.wallet"
+        ), "The returned object should be an instance of bittensor.Wallet"
 
 
 @pytest.mark.parametrize(
@@ -2370,7 +2370,7 @@ def test_set_identity_command(
     mock_wallet.coldkey = MagicMock()
 
     with patch("bittensor.Subtensor", return_value=mock_subtensor), patch(
-        "bittensor.wallet", return_value=mock_wallet
+        "bittensor.Wallet", return_value=mock_wallet
     ), patch("bittensor.__console__", MagicMock()), patch(
         "rich.prompt.Prompt.ask", side_effect=["y", "y"]
     ), patch(

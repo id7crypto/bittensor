@@ -63,7 +63,7 @@ def return_mock_sub_1(*args, **kwargs):
 def return_mock_wallet_factory(*args, **kwargs):
     return MagicMock(
         return_value=__mock_wallet_factory__(*args, **kwargs),
-        add_args=bittensor.wallet.add_args,
+        add_args=bittensor.Wallet.add_args,
     )
 
 
@@ -71,7 +71,7 @@ def return_mock_wallet_factory(*args, **kwargs):
     "bittensor.Subtensor",
     new_callable=return_mock_sub_1,
 )
-@patch("bittensor.wallet", new_callable=return_mock_wallet_factory)
+@patch("bittensor.Wallet", new_callable=return_mock_wallet_factory)
 class TestCLINoNetwork(unittest.TestCase):
     def setUp(self):
         self._config = TestCLINoNetwork.construct_config()
@@ -228,7 +228,7 @@ class TestCLINoNetwork(unittest.TestCase):
     def test_list(self, _, __):
         # Mock IO for wallet
         with patch(
-            "bittensor.wallet",
+            "bittensor.Wallet",
             side_effect=[
                 MagicMock(
                     coldkeypub_file=MagicMock(
@@ -281,7 +281,7 @@ class TestCLINoNetwork(unittest.TestCase):
 
     def test_list_no_wallet(self, _, __):
         with patch(
-            "bittensor.wallet",
+            "bittensor.Wallet",
             side_effect=[
                 MagicMock(
                     coldkeypub_file=MagicMock(
@@ -404,7 +404,7 @@ def return_mock_sub_2(*args, **kwargs):
     )
 
 
-@patch("bittensor.wallet", new_callable=return_mock_wallet_factory)
+@patch("bittensor.Wallet", new_callable=return_mock_wallet_factory)
 @patch("bittensor.Subtensor", new_callable=return_mock_sub_2)
 class TestEmptyArgs(unittest.TestCase):
     """

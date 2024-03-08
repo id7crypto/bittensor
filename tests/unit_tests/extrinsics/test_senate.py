@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock, patch
-from bittensor import subtensor, wallet
+from bittensor import subtensor, Wallet
 from bittensor.extrinsics.senate import register_senate_extrinsic
 
 
@@ -14,7 +14,7 @@ def mock_subtensor():
 
 @pytest.fixture
 def mock_wallet():
-    mock = MagicMock(spec=wallet)
+    mock = MagicMock(spec=Wallet)
     mock.coldkey = MagicMock()
     mock.hotkey = MagicMock()
     mock.hotkey.ss58_address = "fake_hotkey_address"

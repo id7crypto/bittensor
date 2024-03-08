@@ -146,7 +146,7 @@ class UnStakeCommand:
             default=False,
             help="""To specify all hotkeys. Specifying hotkeys will exclude them from this all.""",
         )
-        bittensor.wallet.add_args(unstake_parser)
+        bittensor.Wallet.add_args(unstake_parser)
         bittensor.Subtensor.add_args(unstake_parser)
 
     @staticmethod
@@ -167,7 +167,7 @@ class UnStakeCommand:
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Unstake token of amount from hotkey(s)."""
         config = cli.config.copy()
-        wallet = bittensor.wallet(config=config)
+        wallet = bittensor.Wallet(config=config)
 
         # Get the hotkey_names (if any) and the hotkey_ss58s.
         hotkeys_to_unstake_from: List[Tuple[Optional[str], str]] = []
@@ -176,7 +176,7 @@ class UnStakeCommand:
             hotkeys_to_unstake_from = [(None, cli.config.get("hotkey_ss58address"))]
         elif cli.config.get("all_hotkeys"):
             # Stake to all hotkeys.
-            all_hotkeys: List[bittensor.wallet] = get_hotkey_wallets_for_wallet(
+            all_hotkeys: List[bittensor.Wallet] = get_hotkey_wallets_for_wallet(
                 wallet=wallet
             )
             # Get the hotkeys to exclude. (d)efault to no exclusions.
@@ -197,7 +197,7 @@ class UnStakeCommand:
                 else:
                     # If the hotkey is not a valid ss58 address, we assume it is a hotkey name.
                     #  We then get the hotkey from the wallet and add it to the list.
-                    wallet_ = bittensor.wallet(
+                    wallet_ = bittensor.Wallet(
                         config=cli.config, hotkey=hotkey_ss58_or_hotkey_name
                     )
                     hotkeys_to_unstake_from.append(
@@ -211,7 +211,7 @@ class UnStakeCommand:
                 hotkeys_to_unstake_from = [(None, hotkey_ss58_or_name)]
             else:
                 # Hotkey is not a valid ss58 address, so we assume it is a hotkey name.
-                wallet_ = bittensor.wallet(
+                wallet_ = bittensor.Wallet(
                     config=cli.config, hotkey=hotkey_ss58_or_name
                 )
                 hotkeys_to_unstake_from = [
@@ -222,7 +222,7 @@ class UnStakeCommand:
             #  so we stake to that single hotkey.
             assert cli.config.wallet.hotkey is not None
             hotkeys_to_unstake_from = [
-                (None, bittensor.wallet(config=cli.config).hotkey.ss58_address)
+                (None, bittensor.Wallet(config=cli.config).hotkey.ss58_address)
             ]
 
         final_hotkeys: List[Tuple[str, str]] = []

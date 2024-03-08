@@ -27,7 +27,7 @@ from bittensor.utils.registration import POWSolution, create_pow
 
 def register_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     netuid: int,
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
@@ -44,7 +44,7 @@ def register_extrinsic(
     r"""Registers the wallet to the chain.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         netuid (int):
             The ``netuid`` of the subnet to register on.
@@ -216,7 +216,7 @@ def register_extrinsic(
 
 def burned_register_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     netuid: int,
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
@@ -225,7 +225,7 @@ def burned_register_extrinsic(
     r"""Registers the wallet to chain by recycling TAO.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         netuid (int):
             The ``netuid`` of the subnet to register on.
@@ -327,7 +327,7 @@ class MaxAttemptsException(Exception):
 
 def run_faucet_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
     prompt: bool = False,
@@ -343,7 +343,7 @@ def run_faucet_extrinsic(
     r"""Runs a continual POW to get a faucet of TAO on the test net.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         prompt (bool):
             If ``true``, the call waits for confirmation from the user before proceeding.
@@ -472,8 +472,8 @@ def run_faucet_extrinsic(
 
 def swap_hotkey_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
-    new_wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
+    new_wallet: "bittensor.Wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
     prompt: bool = False,

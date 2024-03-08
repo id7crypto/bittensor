@@ -26,7 +26,7 @@ from Crypto.Hash import keccak
 from .keyfile_mock import MockKeyfile
 
 
-class MockWallet(bittensor.wallet):
+class MockWallet(bittensor.Wallet):
     """
     Mocked Version of the bittensor wallet class, meant to be used for testing
     """

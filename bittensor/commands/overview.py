@@ -93,7 +93,7 @@ class OverviewCommand:
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Prints an overview for the wallet's colkey."""
         console = bittensor.__console__
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         all_hotkeys = []
         total_balance = bittensor.Balance(0)
@@ -112,7 +112,7 @@ class OverviewCommand:
             all_hotkeys = get_all_wallets_for_path(cli.config.wallet.path)
         else:
             # We are only printing keys for a single coldkey
-            coldkey_wallet = bittensor.wallet(config=cli.config)
+            coldkey_wallet = bittensor.Wallet(config=cli.config)
             if (
                 coldkey_wallet.coldkeypub_file.exists_on_device()
                 and not coldkey_wallet.coldkeypub_file.is_encrypted()
@@ -163,7 +163,7 @@ class OverviewCommand:
 
         all_wallet_names = set([wallet.name for wallet in all_hotkeys])
         all_coldkey_wallets = [
-            bittensor.wallet(name=wallet_name) for wallet_name in all_wallet_names
+            bittensor.Wallet(name=wallet_name) for wallet_name in all_wallet_names
         ]
 
         hotkey_coldkey_to_hotkey_wallet = {}
@@ -288,7 +288,7 @@ class OverviewCommand:
                     de_registered_neurons.append(de_registered_neuron)
 
                     # Add this hotkey to the wallets dict
-                    wallet_ = bittensor.wallet(
+                    wallet_ = bittensor.Wallet(
                         name=wallet,
                     )
                     wallet_.hotkey_ss58 = hotkey_addr
@@ -719,7 +719,7 @@ class OverviewCommand:
             help="""Set the netuid(s) to filter by.""",
             default=None,
         )
-        bittensor.wallet.add_args(overview_parser)
+        bittensor.Wallet.add_args(overview_parser)
         bittensor.Subtensor.add_args(overview_parser)
 
     @staticmethod

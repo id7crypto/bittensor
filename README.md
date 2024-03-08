@@ -66,7 +66,7 @@ Wallets can be created in two ways.
 1. Using the python-api
 ```python
 import bittensor
-wallet = bittensor.wallet()
+wallet = bittensor.Wallet()
 wallet.create_new_coldkey()
 wallet.create_new_hotkey()
 print (wallet)
@@ -225,7 +225,7 @@ Wallet: Interface over locally stored bittensor hot + coldkey styled wallets.
 ```python
 import bittensor
 # Bittensor's wallet maintenance class.
-wallet = bittensor.wallet() 
+wallet = bittensor.Wallet() 
 # Access the hotkey
 wallet.hotkey 
 # Access the coldkey
@@ -334,7 +334,7 @@ to send requests to those endpoints to receive inputs.
 
 Example:
 ```python
-dendrite_obj = dendrite( wallet = bittensor.wallet() )
+dendrite_obj = dendrite( wallet = bittensor.Wallet() )
 # pings the axon endpoint
 await d( <axon> )
 # ping multiple axon endpoints
@@ -396,7 +396,7 @@ That's it! For example:
 import bittensor
 
 class CustomSubnetAPI(bittensor.SubnetsAPI):
-    def __init__(self, wallet: "bittensor.wallet"):
+    def __init__(self, wallet: "bittensor.Wallet"):
         super().__init__(wallet)
         # Custom initialization here
 

@@ -25,7 +25,7 @@ from rich.prompt import Confirm
 
 def register_senate_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
     prompt: bool = False,
@@ -33,7 +33,7 @@ def register_senate_extrinsic(
     r"""Registers the wallet to chain for senate voting.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         wait_for_inclusion (bool):
             If set, waits for the extrinsic to enter a block before returning ``true``, or returns ``false`` if the extrinsic fails to enter the block within the timeout.
@@ -102,7 +102,7 @@ def register_senate_extrinsic(
 
 def leave_senate_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
     prompt: bool = False,
@@ -110,7 +110,7 @@ def leave_senate_extrinsic(
     r"""Removes the wallet from chain for senate voting.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         wait_for_inclusion (bool):
             If set, waits for the extrinsic to enter a block before returning ``true``, or returns ``false`` if the extrinsic fails to enter the block within the timeout.
@@ -179,7 +179,7 @@ def leave_senate_extrinsic(
 
 def vote_senate_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     proposal_hash: str,
     proposal_idx: int,
     vote: bool,
@@ -190,7 +190,7 @@ def vote_senate_extrinsic(
     r"""Removes the wallet from chain for senate voting.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         wait_for_inclusion (bool):
             If set, waits for the extrinsic to enter a block before returning ``true``, or returns ``false`` if the extrinsic fails to enter the block within the timeout.

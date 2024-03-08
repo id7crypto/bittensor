@@ -42,7 +42,7 @@ at the top of your script or source file to enable more verbose output logs.
 You can also write your own in the code simply:
 ```python
 # Bittensor's wallet maintenance class.
-wallet = bittensor.wallet()
+wallet = bittensor.Wallet()
 
 bittensor.logging.debug( f"wallet keypair: {wallet.hotkey}" )
 
@@ -103,7 +103,7 @@ Try to use the Bittensor package to create a wallet, connect to the axon running
 import bittensor
 
 # Bittensor's wallet maintenance class.
-wallet = bittensor.wallet()
+wallet = bittensor.Wallet()
 
 # Bittensor's chain interface.
 subtensor = bittensor.Subtensor()

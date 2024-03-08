@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock, patch
 from bittensor.Subtensor import Subtensor
-from bittensor.wallet import wallet as Wallet
+from bittensor.Wallet import wallet as Wallet
 
 
 # Mock the bittensor and related modules to avoid real network calls and wallet operations

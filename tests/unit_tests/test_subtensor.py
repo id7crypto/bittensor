@@ -32,7 +32,7 @@ def test_serve_axon_with_external_ip_set():
 
     mock_add_insecure_port = mock.MagicMock(return_value=None)
     mock_wallet = MagicMock(
-        spec=bittensor.wallet,
+        spec=bittensor.Wallet,
         coldkey=MagicMock(),
         coldkeypub=MagicMock(
             # mock ss58 address
@@ -81,7 +81,7 @@ def test_serve_axon_with_external_port_set():
     )
 
     mock_wallet = MagicMock(
-        spec=bittensor.wallet,
+        spec=bittensor.Wallet,
         coldkey=MagicMock(),
         coldkeypub=MagicMock(
             # mock ss58 address
@@ -127,7 +127,7 @@ def test_stake_multiple():
     mock_amount: bittensor.Balance = bittensor.Balance.from_tao(1.0)
 
     mock_wallet = MagicMock(
-        spec=bittensor.wallet,
+        spec=bittensor.Wallet,
         coldkey=MagicMock(),
         coldkeypub=MagicMock(
             # mock ss58 address

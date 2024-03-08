@@ -25,7 +25,7 @@ from bittensor.utils.balance import Balance
 
 def __do_remove_stake_single(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     hotkey_ss58: str,
     amount: "bittensor.Balance",
     wait_for_inclusion: bool = True,
@@ -35,7 +35,7 @@ def __do_remove_stake_single(
     Executes an unstake call to the chain using the wallet and the amount specified.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         hotkey_ss58 (str):
             Hotkey address to unstake from.
@@ -73,7 +73,7 @@ def __do_remove_stake_single(
 
 def unstake_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     hotkey_ss58: Optional[str] = None,
     amount: Optional[Union[Balance, float]] = None,
     wait_for_inclusion: bool = True,
@@ -83,7 +83,7 @@ def unstake_extrinsic(
     r"""Removes stake into the wallet coldkey from the specified hotkey ``uid``.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         hotkey_ss58 (Optional[str]):
             The ``ss58`` address of the hotkey to unstake from. By default, the wallet hotkey is used.
@@ -208,7 +208,7 @@ def unstake_extrinsic(
 
 def unstake_multiple_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     hotkey_ss58s: List[str],
     amounts: Optional[List[Union[Balance, float]]] = None,
     wait_for_inclusion: bool = True,
@@ -218,7 +218,7 @@ def unstake_multiple_extrinsic(
     r"""Removes stake from each ``hotkey_ss58`` in the list, using each amount, to a common coldkey.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             The wallet with the coldkey to unstake to.
         hotkey_ss58s (List[str]):
             List of hotkeys to unstake from.

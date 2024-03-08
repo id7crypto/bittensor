@@ -77,7 +77,7 @@ class Dendrite(torch.nn.Module):
 
     Example with a context manager::
 
-        >>> aysnc with Dendrite(wallet = bittensor.wallet()) as d:
+        >>> aysnc with Dendrite(wallet = bittensor.Wallet()) as d:
         >>>     print(d)
         >>>     d( <axon> ) # ping axon
         >>>     d( [<axons>] ) # ping multiple
@@ -87,7 +87,7 @@ class Dendrite(torch.nn.Module):
 
     Example without a context manager::
 
-        >>> d = Dendrite(wallet = bittensor.wallet() )
+        >>> d = Dendrite(wallet = bittensor.Wallet() )
         >>> print(d)
         >>> d( <axon> ) # ping axon
         >>> d( [<axons>] ) # ping multiple
@@ -95,14 +95,14 @@ class Dendrite(torch.nn.Module):
     """
 
     def __init__(
-        self, wallet: Optional[Union[bittensor.wallet, bittensor.Keypair]] = None
+        self, wallet: Optional[Union[bittensor.Wallet, bittensor.Keypair]] = None
     ):
         """
         Initializes the Dendrite object, setting up essential properties.
 
         Args:
-            wallet (Optional[Union['bittensor.wallet', 'bittensor.keypair']], optional):
-                The user's wallet or keypair used for signing messages. Defaults to ``None``, in which case a new :func:`bittensor.wallet().hotkey` is generated and used.
+            wallet (Optional[Union['bittensor.Wallet', 'bittensor.keypair']], optional):
+                The user's wallet or keypair used for signing messages. Defaults to ``None``, in which case a new :func:`bittensor.Wallet().hotkey` is generated and used.
         """
         # Initialize the parent class
         super(Dendrite, self).__init__()
@@ -115,8 +115,8 @@ class Dendrite(torch.nn.Module):
 
         # If a wallet or keypair is provided, use its hotkey. If not, generate a new one.
         self.keypair = (
-            wallet.hotkey if isinstance(wallet, bittensor.wallet) else wallet
-        ) or bittensor.wallet().hotkey
+            wallet.hotkey if isinstance(wallet, bittensor.Wallet) else wallet
+        ) or bittensor.Wallet().hotkey
 
         self.synapse_history: list = []
 
@@ -349,7 +349,7 @@ class Dendrite(torch.nn.Module):
         For example::
 
             >>> ...
-            >>> wallet = bittensor.wallet()                   # Initialize a wallet
+            >>> wallet = bittensor.Wallet()                   # Initialize a wallet
             >>> synapse = bittensor.Synapse(...)              # Create a synapse object that contains query data
             >>> dendrte = bittensor.Dendrite(wallet = wallet) # Initialize a Dendrite instance
             >>> axons = metagraph.axons                       # Create a list of axons to query

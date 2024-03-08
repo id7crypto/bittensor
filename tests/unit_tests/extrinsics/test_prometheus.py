@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import MagicMock, patch
 import bittensor
 from bittensor.Subtensor import subtensor as Subtensor
-from bittensor.wallet import wallet as Wallet
+from bittensor.Wallet import wallet as Wallet
 from bittensor.extrinsics.prometheus import prometheus_extrinsic
 
 
@@ -15,7 +15,7 @@ def mock_bittensor():
 
 @pytest.fixture
 def mock_wallet():
-    with patch("bittensor.wallet") as mock:
+    with patch("bittensor.Wallet") as mock:
         yield mock
 
 

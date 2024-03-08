@@ -77,7 +77,7 @@ class RegisterCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Register neuron by recycling some TAO."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         # Verify subnet exists
         if not subtensor.subnet_exists(netuid=cli.config.netuid):
@@ -123,7 +123,7 @@ class RegisterCommand:
             default=argparse.SUPPRESS,
         )
 
-        bittensor.wallet.add_args(register_parser)
+        bittensor.Wallet.add_args(register_parser)
         bittensor.Subtensor.add_args(register_parser)
 
     @staticmethod
@@ -207,7 +207,7 @@ class PowRegisterCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Register neuron."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         # Verify subnet exists
         if not subtensor.subnet_exists(netuid=cli.config.netuid):
@@ -320,7 +320,7 @@ class PowRegisterCommand:
             required=False,
         )
 
-        bittensor.wallet.add_args(register_parser)
+        bittensor.Wallet.add_args(register_parser)
         bittensor.Subtensor.add_args(register_parser)
 
     @staticmethod
@@ -407,7 +407,7 @@ class RunFaucetCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Register neuron."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         subtensor.run_faucet(
             wallet=wallet,
             prompt=not cli.config.no_prompt,
@@ -503,7 +503,7 @@ class RunFaucetCommand:
             help="""Set the number of Threads Per Block for CUDA.""",
             required=False,
         )
-        bittensor.wallet.add_args(run_faucet_parser)
+        bittensor.Wallet.add_args(run_faucet_parser)
         bittensor.Subtensor.add_args(run_faucet_parser)
 
     @staticmethod
@@ -532,12 +532,12 @@ class SwapHotkeyCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Swap your hotkey for all registered axons on the network."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         # This creates an unnecessary amount of extra data, but simplifies implementation.
         new_config = deepcopy(cli.config)
         new_config.wallet.hotkey = new_config.wallet.hotkey_b
-        new_wallet = bittensor.wallet(config=new_config)
+        new_wallet = bittensor.Wallet(config=new_config)
 
         subtensor.swap_hotkey(
             wallet=wallet,
@@ -561,7 +561,7 @@ class SwapHotkeyCommand:
             required=False,
         )
 
-        bittensor.wallet.add_args(swap_hotkey_parser)
+        bittensor.Wallet.add_args(swap_hotkey_parser)
         bittensor.Subtensor.add_args(swap_hotkey_parser)
 
     @staticmethod

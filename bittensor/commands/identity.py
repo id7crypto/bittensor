@@ -71,7 +71,7 @@ class SetIdentityCommand:
         r"""Create a new or update existing identity on-chain."""
         console = bittensor.__console__
 
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         id_dict = {
             "display": cli.config.display,
@@ -235,7 +235,7 @@ class SetIdentityCommand:
             type=str,
             help="""The twitter url for the identity.""",
         )
-        bittensor.wallet.add_args(new_coldkey_parser)
+        bittensor.Wallet.add_args(new_coldkey_parser)
         bittensor.Subtensor.add_args(new_coldkey_parser)
 
 
@@ -333,5 +333,5 @@ class GetIdentityCommand:
             default=None,
             help="""The coldkey or hotkey ss58 address to query.""",
         )
-        bittensor.wallet.add_args(new_coldkey_parser)
+        bittensor.Wallet.add_args(new_coldkey_parser)
         bittensor.Subtensor.add_args(new_coldkey_parser)

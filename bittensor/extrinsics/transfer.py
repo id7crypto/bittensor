@@ -26,7 +26,7 @@ from ..utils import is_valid_bittensor_address_or_public_key
 
 def transfer_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     dest: str,
     amount: Union[Balance, float],
     wait_for_inclusion: bool = True,
@@ -37,7 +37,7 @@ def transfer_extrinsic(
     r"""Transfers funds from this wallet to the destination public key address.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object to make transfer from.
         dest (str, ss58_address or ed25519):
             Destination public key address of reciever.

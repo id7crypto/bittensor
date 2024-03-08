@@ -25,7 +25,7 @@ from bittensor.utils.balance import Balance
 
 def add_stake_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     hotkey_ss58: Optional[str] = None,
     amount: Optional[Union[Balance, float]] = None,
     wait_for_inclusion: bool = True,
@@ -35,7 +35,7 @@ def add_stake_extrinsic(
     r"""Adds the specified amount of stake to passed hotkey ``uid``.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         hotkey_ss58 (Optional[str]):
             The ``ss58`` address of the hotkey account to stake to defaults to the wallet's hotkey.
@@ -202,7 +202,7 @@ def add_stake_extrinsic(
 
 def add_stake_multiple_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     hotkey_ss58s: List[str],
     amounts: Optional[List[Union[Balance, float]]] = None,
     wait_for_inclusion: bool = True,
@@ -212,7 +212,7 @@ def add_stake_multiple_extrinsic(
     r"""Adds stake to each ``hotkey_ss58`` in the list, using each amount, from a common coldkey.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object for the coldkey.
         hotkey_ss58s (List[str]):
             List of hotkeys to stake to.
@@ -427,7 +427,7 @@ def add_stake_multiple_extrinsic(
 
 def __do_add_stake_single(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     hotkey_ss58: str,
     amount: "bittensor.Balance",
     wait_for_inclusion: bool = True,
@@ -437,7 +437,7 @@ def __do_add_stake_single(
     Executes a stake call to the chain using the wallet and the amount specified.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         hotkey_ss58 (str):
             Hotkey to stake to.

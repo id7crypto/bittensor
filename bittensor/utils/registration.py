@@ -448,7 +448,7 @@ class RegistrationStatisticsLogger:
 
 def _solve_for_difficulty_fast(
     subtensor,
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     netuid: int,
     output_in_place: bool = True,
     num_processes: Optional[int] = None,
@@ -789,7 +789,7 @@ def _check_for_newest_block_and_update(
 
 def _solve_for_difficulty_fast_cuda(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     netuid: int,
     output_in_place: bool = True,
     update_interval: int = 50_000,
@@ -804,7 +804,7 @@ def _solve_for_difficulty_fast_cuda(
     Args:
         subtensor: bittensor.Subtensor
             The subtensor node to grab blocks
-        wallet: bittensor.wallet
+        wallet: bittensor.Wallet
             The wallet to register
         netuid: int
             The netuid of the subnet to register to.
@@ -1029,7 +1029,7 @@ def create_pow(
     Args:
         subtensor (:obj:`bittensor.Subtensor.subtensor`, `required`):
             The subtensor to create a proof of work for.
-        wallet (:obj:`bittensor.wallet.wallet`, `required`):
+        wallet (:obj:`bittensor.Wallet.wallet`, `required`):
             The wallet to create a proof of work for.
         netuid (:obj:`int`, `required`):
             The netuid for the subnet to create a proof of work for.

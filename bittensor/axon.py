@@ -252,7 +252,7 @@ class Axon:
         ).start()
 
     Args:
-        wallet (bittensor.wallet, optional): Wallet with hotkey and coldkeypub.
+        wallet (bittensor.Wallet, optional): Wallet with hotkey and coldkeypub.
         config (bittensor.config, optional): Configuration parameters for the Axon.
         port (int, optional): Port for server binding.
         ip (str, optional): Binding IP address.
@@ -289,7 +289,7 @@ class Axon:
 
     def __init__(
         self,
-        wallet: Optional["bittensor.wallet"] = None,
+        wallet: Optional["bittensor.Wallet"] = None,
         config: Optional["bittensor.config"] = None,
         port: Optional[int] = None,
         ip: Optional[str] = None,
@@ -301,7 +301,7 @@ class Axon:
         Args:
             config (:obj:`Optional[bittensor.config]`, `optional`):
                 bittensor.Axon.config()
-            wallet (:obj:`Optional[bittensor.wallet]`, `optional`):
+            wallet (:obj:`Optional[bittensor.Wallet]`, `optional`):
                 bittensor wallet with hotkey and coldkeypub.
             port (:type:`Optional[int]`, `optional`):
                 Binding port.
@@ -333,7 +333,7 @@ class Axon:
         self.config = config  # type: ignore [method-assign]
 
         # Get wallet or use default.
-        self.wallet = wallet or bittensor.wallet()
+        self.wallet = wallet or bittensor.Wallet()
 
         # Build Axon objects.
         self.uuid = str(uuid.uuid1())

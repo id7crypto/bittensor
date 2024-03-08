@@ -59,7 +59,7 @@ class ListCommand:
 
         root = Tree("Wallets")
         for w_name in wallets:
-            wallet_for_name = bittensor.wallet(path=cli.config.wallet.path, name=w_name)
+            wallet_for_name = bittensor.Wallet(path=cli.config.wallet.path, name=w_name)
             try:
                 if (
                     wallet_for_name.coldkeypub_file.exists_on_device()
@@ -79,7 +79,7 @@ class ListCommand:
                 hotkeys = next(os.walk(os.path.expanduser(hotkeys_path)))
                 if len(hotkeys) > 1:
                     for h_name in hotkeys[2]:
-                        hotkey_for_name = bittensor.wallet(
+                        hotkey_for_name = bittensor.Wallet(
                             path=cli.config.wallet.path, name=w_name, hotkey=h_name
                         )
                         try:
@@ -109,5 +109,5 @@ class ListCommand:
     @staticmethod
     def add_args(parser: argparse.ArgumentParser):
         list_parser = parser.add_parser("list", help="""List wallets""")
-        bittensor.wallet.add_args(list_parser)
+        bittensor.Wallet.add_args(list_parser)
         bittensor.Subtensor.add_args(list_parser)

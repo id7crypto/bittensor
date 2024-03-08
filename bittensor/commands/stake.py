@@ -75,13 +75,13 @@ class StakeCommand:
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Stake token of amount to hotkey(s)."""
         config = cli.config.copy()
-        wallet = bittensor.wallet(config=config)
+        wallet = bittensor.Wallet(config=config)
 
         # Get the hotkey_names (if any) and the hotkey_ss58s.
         hotkeys_to_stake_to: List[Tuple[Optional[str], str]] = []
         if config.get("all_hotkeys"):
             # Stake to all hotkeys.
-            all_hotkeys: List[bittensor.wallet] = get_hotkey_wallets_for_wallet(
+            all_hotkeys: List[bittensor.Wallet] = get_hotkey_wallets_for_wallet(
                 wallet=wallet
             )
             # Get the hotkeys to exclude. (d)efault to no exclusions.
@@ -102,7 +102,7 @@ class StakeCommand:
                 else:
                     # If the hotkey is not a valid ss58 address, we assume it is a hotkey name.
                     #  We then get the hotkey from the wallet and add it to the list.
-                    wallet_ = bittensor.wallet(
+                    wallet_ = bittensor.Wallet(
                         config=config, hotkey=hotkey_ss58_or_hotkey_name
                     )
                     hotkeys_to_stake_to.append(
@@ -116,7 +116,7 @@ class StakeCommand:
                 hotkeys_to_stake_to = [(None, hotkey_ss58_or_name)]
             else:
                 # Hotkey is not a valid ss58 address, so we assume it is a hotkey name.
-                wallet_ = bittensor.wallet(config=config, hotkey=hotkey_ss58_or_name)
+                wallet_ = bittensor.Wallet(config=config, hotkey=hotkey_ss58_or_name)
                 hotkeys_to_stake_to = [
                     (wallet_.hotkey_str, wallet_.hotkey.ss58_address)
                 ]
@@ -125,7 +125,7 @@ class StakeCommand:
             #  so we stake to that single hotkey.
             assert config.wallet.hotkey is not None
             hotkeys_to_stake_to = [
-                (None, bittensor.wallet(config=config).hotkey.ss58_address)
+                (None, bittensor.Wallet(config=config).hotkey.ss58_address)
             ]
 
         # Get coldkey balance
@@ -287,7 +287,7 @@ class StakeCommand:
             default=False,
             help="""To specify all hotkeys. Specifying hotkeys will exclude them from this all.""",
         )
-        bittensor.wallet.add_args(stake_parser)
+        bittensor.Wallet.add_args(stake_parser)
         bittensor.Subtensor.add_args(stake_parser)
 
 
@@ -308,17 +308,17 @@ import bittensor
 from typing import List, Tuple, Optional, Dict
 
 
-def _get_coldkey_wallets_for_path(path: str) -> List["bittensor.wallet"]:
+def _get_coldkey_wallets_for_path(path: str) -> List["bittensor.Wallet"]:
     try:
         wallet_names = next(os.walk(os.path.expanduser(path)))[1]
-        return [bittensor.wallet(path=path, name=name) for name in wallet_names]
+        return [bittensor.Wallet(path=path, name=name) for name in wallet_names]
     except StopIteration:
         # No wallet files found.
         wallets = []
     return wallets
 
 
-def _get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.wallet"]:
+def _get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.Wallet"]:
     hotkey_wallets = []
     hotkeys_path = wallet.path + "/" + wallet.name + "/hotkeys"
     try:
@@ -327,7 +327,7 @@ def _get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.wallet"]:
         hotkey_files = []
     for hotkey_file_name in hotkey_files:
         try:
-            hotkey_for_name = bittensor.wallet(
+            hotkey_for_name = bittensor.Wallet(
                 path=wallet.path, name=wallet.name, hotkey=hotkey_file_name
             )
             if (
@@ -389,7 +389,7 @@ class StakeShow:
         if cli.config.get("all", d=False) == True:
             wallets = _get_coldkey_wallets_for_path(cli.config.wallet.path)
         else:
-            wallets = [bittensor.wallet(config=cli.config)]
+            wallets = [bittensor.Wallet(config=cli.config)]
         registered_delegate_info: Optional[
             Dict[str, DelegatesDetails]
         ] = get_delegates_details(url=bittensor.__delegates_details_url__)
@@ -573,5 +573,5 @@ class StakeShow:
             default=False,
         )
 
-        bittensor.wallet.add_args(list_parser)
+        bittensor.Wallet.add_args(list_parser)
         bittensor.Subtensor.add_args(list_parser)

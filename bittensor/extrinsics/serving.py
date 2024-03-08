@@ -24,7 +24,7 @@ from ..errors import MetadataError
 
 def serve_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     ip: str,
     port: int,
     protocol: int,
@@ -38,7 +38,7 @@ def serve_extrinsic(
     r"""Subscribes a Bittensor endpoint to the subtensor chain.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             Bittensor wallet object.
         ip (str):
             Endpoint host port i.e., ``192.122.31.4``.
@@ -203,7 +203,7 @@ def serve_axon_extrinsic(
 
 def publish_metadata(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     netuid: int,
     type: str,
     data: bytes,
@@ -216,7 +216,7 @@ def publish_metadata(
     Args:
         subtensor (bittensor.Subtensor):
             The subtensor instance representing the Bittensor blockchain connection.
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             The wallet object used for authentication in the transaction.
         netuid (int):
             Network UID on which the metadata is to be published.

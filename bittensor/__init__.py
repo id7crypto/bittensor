@@ -238,7 +238,7 @@ configs = [
     Axon.config(),
     Subtensor.config(),
     PriorityThreadPoolExecutor.config(),
-    wallet.config(),
+    Wallet.config(),
     logging.config(),
 ]
 defaults = config.merge_all(configs)

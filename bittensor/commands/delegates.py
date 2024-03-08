@@ -35,10 +35,10 @@ import bittensor
 from typing import List, Dict, Optional
 
 
-def _get_coldkey_wallets_for_path(path: str) -> List["bittensor.wallet"]:
+def _get_coldkey_wallets_for_path(path: str) -> List["bittensor.Wallet"]:
     try:
         wallet_names = next(os.walk(os.path.expanduser(path)))[1]
-        return [bittensor.wallet(path=path, name=name) for name in wallet_names]
+        return [bittensor.Wallet(path=path, name=name) for name in wallet_names]
     except StopIteration:
         # No wallet files found.
         wallets = []
@@ -244,7 +244,7 @@ class DelegateStakeCommand:
         """Delegates stake to a chain delegate."""
         try:
             config = cli.config.copy()
-            wallet = bittensor.wallet(config=config)
+            wallet = bittensor.Wallet(config=config)
             subtensor: "bittensor.Subtensor" = bittensor.Subtensor(
                 config=config, log_verbose=False
             )
@@ -279,7 +279,7 @@ class DelegateStakeCommand:
         delegate_stake_parser.add_argument(
             "--amount", dest="amount", type=float, required=False
         )
-        bittensor.wallet.add_args(delegate_stake_parser)
+        bittensor.Wallet.add_args(delegate_stake_parser)
         bittensor.Subtensor.add_args(delegate_stake_parser)
 
     @staticmethod
@@ -386,7 +386,7 @@ class DelegateUnstakeCommand:
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         """Undelegates stake from a chain delegate."""
         config = cli.config.copy()
-        wallet = bittensor.wallet(config=config)
+        wallet = bittensor.Wallet(config=config)
         subtensor.undelegate(
             wallet=wallet,
             delegate_ss58=config.get("delegate_ss58key"),
@@ -414,7 +414,7 @@ class DelegateUnstakeCommand:
         undelegate_stake_parser.add_argument(
             "--amount", dest="amount", type=float, required=False
         )
-        bittensor.wallet.add_args(undelegate_stake_parser)
+        bittensor.Wallet.add_args(undelegate_stake_parser)
         bittensor.Subtensor.add_args(undelegate_stake_parser)
 
     @staticmethod
@@ -611,7 +611,7 @@ class NominateCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Nominate wallet."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         # Unlock the wallet.
         wallet.hotkey
@@ -668,7 +668,7 @@ class NominateCommand:
         nominate_parser = parser.add_parser(
             "nominate", help="""Become a delegate on the network"""
         )
-        bittensor.wallet.add_args(nominate_parser)
+        bittensor.Wallet.add_args(nominate_parser)
         bittensor.Subtensor.add_args(nominate_parser)
 
     @staticmethod
@@ -744,7 +744,7 @@ class MyDelegatesCommand:
         if config.get("all", d=None) == True:
             wallets = _get_coldkey_wallets_for_path(config.wallet.path)
         else:
-            wallets = [bittensor.wallet(config=config)]
+            wallets = [bittensor.Wallet(config=config)]
 
         table = Table(show_footer=True, pad_edge=False, box=None, expand=True)
         table.add_column(
@@ -879,7 +879,7 @@ class MyDelegatesCommand:
             help="""Check all coldkey wallets.""",
             default=False,
         )
-        bittensor.wallet.add_args(delegate_stake_parser)
+        bittensor.Wallet.add_args(delegate_stake_parser)
         bittensor.Subtensor.add_args(delegate_stake_parser)
 
     @staticmethod

@@ -29,14 +29,14 @@ logger = logger.opt(colors=True)
 
 def nominate_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     wait_for_finalization: bool = False,
     wait_for_inclusion: bool = True,
 ) -> bool:
     r"""Becomes a delegate for the hotkey.
 
     Args:
-        wallet (bittensor.wallet): The wallet to become a delegate for.
+        wallet (bittensor.Wallet): The wallet to become a delegate for.
     Returns:
         success (bool): ``True`` if the transaction was successful.
     """
@@ -95,7 +95,7 @@ def nominate_extrinsic(
 
 def delegate_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     delegate_ss58: Optional[str] = None,
     amount: Optional[Union[Balance, float]] = None,
     wait_for_inclusion: bool = True,
@@ -105,7 +105,7 @@ def delegate_extrinsic(
     r"""Delegates the specified amount of stake to the passed delegate.
 
     Args:
-        wallet (bittensor.wallet): Bittensor wallet object.
+        wallet (bittensor.Wallet): Bittensor wallet object.
         delegate_ss58 (Optional[str]): The ``ss58`` address of the delegate.
         amount (Union[Balance, float]): Amount to stake as bittensor balance, or ``float`` interpreted as Tao.
         wait_for_inclusion (bool): If set, waits for the extrinsic to enter a block before returning ``true``, or returns ``false`` if the extrinsic fails to enter the block within the timeout.
@@ -230,7 +230,7 @@ def delegate_extrinsic(
 
 def undelegate_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     delegate_ss58: Optional[str] = None,
     amount: Optional[Union[Balance, float]] = None,
     wait_for_inclusion: bool = True,
@@ -240,7 +240,7 @@ def undelegate_extrinsic(
     r"""Un-delegates stake from the passed delegate.
 
     Args:
-        wallet (bittensor.wallet): Bittensor wallet object.
+        wallet (bittensor.Wallet): Bittensor wallet object.
         delegate_ss58 (Optional[str]): The ``ss58`` address of the delegate.
         amount (Union[Balance, float]): Amount to unstake as bittensor balance, or ``float`` interpreted as Tao.
         wait_for_inclusion (bool): If set, waits for the extrinsic to enter a block before returning ``true``, or returns ``false`` if the extrinsic fails to enter the block within the timeout.

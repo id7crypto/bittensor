@@ -23,7 +23,7 @@ from rich.prompt import Confirm
 
 def register_subnetwork_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
     prompt: bool = False,
@@ -31,7 +31,7 @@ def register_subnetwork_extrinsic(
     r"""Registers a new subnetwork.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             bittensor wallet object.
         wait_for_inclusion (bool):
             If set, waits for the extrinsic to enter a block before returning ``true``, or returns ``false`` if the extrinsic fails to enter the block within the timeout.
@@ -119,7 +119,7 @@ from ..commands.network import HYPERPARAMS
 
 def set_hyperparameter_extrinsic(
     subtensor: "bittensor.Subtensor",
-    wallet: "bittensor.wallet",
+    wallet: "bittensor.Wallet",
     netuid: int,
     parameter: str,
     value,
@@ -130,7 +130,7 @@ def set_hyperparameter_extrinsic(
     r"""Sets a hyperparameter for a specific subnetwork.
 
     Args:
-        wallet (bittensor.wallet):
+        wallet (bittensor.Wallet):
             bittensor wallet object.
         netuid (int):
             Subnetwork ``uid``.

@@ -41,7 +41,7 @@ def dummy(synapse: SynapseDummy) -> SynapseDummy:
 def setup_dendrite():
     user_wallet = (
         _get_mock_wallet()
-    )  # assuming bittensor.wallet() returns a wallet object
+    )  # assuming bittensor.Wallet() returns a wallet object
     dendrite_obj = bittensor.Dendrite(user_wallet)
     return dendrite_obj
 

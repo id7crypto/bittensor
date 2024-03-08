@@ -36,17 +36,17 @@ import bittensor
 from typing import List, Tuple, Optional, Dict
 
 
-def _get_coldkey_wallets_for_path(path: str) -> List["bittensor.wallet"]:
+def _get_coldkey_wallets_for_path(path: str) -> List["bittensor.Wallet"]:
     try:
         wallet_names = next(os.walk(os.path.expanduser(path)))[1]
-        return [bittensor.wallet(path=path, name=name) for name in wallet_names]
+        return [bittensor.Wallet(path=path, name=name) for name in wallet_names]
     except StopIteration:
         # No wallet files found.
         wallets = []
     return wallets
 
 
-def _get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.wallet"]:
+def _get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.Wallet"]:
     hotkey_wallets = []
     hotkeys_path = wallet.path + "/" + wallet.name + "/hotkeys"
     try:
@@ -55,7 +55,7 @@ def _get_hotkey_wallets_for_wallet(wallet) -> List["bittensor.wallet"]:
         hotkey_files = []
     for hotkey_file_name in hotkey_files:
         try:
-            hotkey_for_name = bittensor.wallet(
+            hotkey_for_name = bittensor.Wallet(
                 path=wallet.path, name=wallet.name, hotkey=hotkey_file_name
             )
             if (
@@ -129,7 +129,7 @@ class InspectCommand:
             wallets = _get_coldkey_wallets_for_path(cli.config.wallet.path)
             all_hotkeys = get_all_wallets_for_path(cli.config.wallet.path)
         else:
-            wallets = [bittensor.wallet(config=cli.config)]
+            wallets = [bittensor.Wallet(config=cli.config)]
             all_hotkeys = get_hotkey_wallets_for_wallet(wallets[0])
 
         netuids = subtensor.get_all_subnet_netuids()
@@ -275,5 +275,5 @@ class InspectCommand:
             default=None,
         )
 
-        bittensor.wallet.add_args(inspect_parser)
+        bittensor.Wallet.add_args(inspect_parser)
         bittensor.Subtensor.add_args(inspect_parser)

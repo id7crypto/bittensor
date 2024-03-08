@@ -75,7 +75,7 @@ class RegisterSubnetworkCommand:
     @staticmethod
     def _run(cli: "bittensor.Cli", subtensor: "bittensor.Subtensor"):
         r"""Register a subnetwork"""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
 
         # Call register command.
         success = subtensor.register_subnetwork(
@@ -109,7 +109,7 @@ class RegisterSubnetworkCommand:
             help="""Create a new bittensor subnetwork on this chain.""",
         )
 
-        bittensor.wallet.add_args(parser)
+        bittensor.Wallet.add_args(parser)
         bittensor.Subtensor.add_args(parser)
 
 
@@ -362,7 +362,7 @@ class SubnetSudoCommand:
         subtensor: "bittensor.Subtensor",
     ):
         r"""Set subnet hyperparameters."""
-        wallet = bittensor.wallet(config=cli.config)
+        wallet = bittensor.Wallet(config=cli.config)
         print("\n")
         SubnetHyperparamsCommand.run(cli)
         if not cli.config.is_set("param") and not cli.config.no_prompt:
@@ -406,7 +406,7 @@ class SubnetSudoCommand:
         parser.add_argument("--param", dest="param", type=str, required=False)
         parser.add_argument("--value", dest="value", type=str, required=False)
 
-        bittensor.wallet.add_args(parser)
+        bittensor.Wallet.add_args(parser)
         bittensor.Subtensor.add_args(parser)
 
 
